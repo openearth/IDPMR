@@ -1,28 +1,21 @@
-<template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
-</template>
-
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import AppShell from "@/components/AppShell/AppShell.vue";
+import AppMap from "@/components/AppMap/AppMap.vue";
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
+    AppShell,
+    AppMap
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<template>
+  <div>
+    <app-shell header-title="IDPMR">
+      <template slot="map">
+        <AppMap />
+      </template>
+    </app-shell>
+  </div>
+</template>
