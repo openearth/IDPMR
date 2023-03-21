@@ -11,11 +11,14 @@
       </template>
     </app-header>
 
-    <v-main>
-      <slot name="map" />
-      <slot />
+    <template>
       <app-sidebar :open="sidebarIsOpen" />
-    </v-main>
+
+      <v-main>
+        <slot name="map" />
+        <slot />
+      </v-main>
+    </template>
   </v-app>
 </template>
 

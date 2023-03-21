@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app :color="color" :dark="theme === 'dark'" width="100%">
+  <v-app-bar app :color="color" :dark="theme === 'dark'" clipped-left>
     <v-app-bar-nav-icon v-if="open" @click.stop="onMenuButtonClick(false)">
       <v-icon>mdi-arrow-left</v-icon>
     </v-app-bar-nav-icon>
