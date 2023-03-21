@@ -1,41 +1,36 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from "vue";
+import VueRouter from "vue-router";
 
-import HomeView from '../views/HomeView.vue'
-import LayersView from '../views/LayersView.vue'
-import SettingsView from '../views/SettingsView.vue'
-import AdministrativeBoundariesView from '../views/AdministrativeBoundariesView.vue'
-
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: "history",
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: HomeView
+      path: "/",
+      name: "home",
+      component: () => import("../views/HomeView.vue"),
     },
     {
-      path: '/settings',
-      name: 'settings',
-      component: SettingsView,
-      redirect: '/settings/layers',
+      path: "/settings",
+      name: "settings",
+      component: () => import("../views/SettingsView.vue"),
+      redirect: "/settings/layers",
       children: [
         {
-          path: 'layers',
-          name: 'layers',
-          component: LayersView
+          path: "layers",
+          name: "layers",
+          component: () => import("../views/LayersView.vue"),
         },
         {
-          path: 'administrative-boundaries',
-          name: 'administrative-boundaries',
-          component: AdministrativeBoundariesView
-        }
-      ]
+          path: "administrative-boundaries",
+          name: "administrative-boundaries",
+          component: () => import("../views/AdministrativeBoundariesView.vue"),
+        },
+      ],
     },
-  ]
-})
+  ],
+});
 
-export default router
+export default router;

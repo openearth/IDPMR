@@ -8,11 +8,16 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@deltares/vue-components": "^0.5.0",
+    "@vue/composition-api": "^1.7.1",
     "core-js": "^3.8.3",
-    "vue": "^2.6.14",
+    "query-string": "^8.1.0",
+    "sortablejs": "^1.15.0",
+    "vue": "2.6",
     "vue-router": "^3.6.5",
-    "vue2mapbox-gl": "^0.14.0",
-    "vuetify": "^2.6.14"
+    "vue2mapbox-gl": "^0.13.1",
+    "vuetify": "^2.6.14",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

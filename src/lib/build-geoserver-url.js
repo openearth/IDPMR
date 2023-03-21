@@ -1,4 +1,4 @@
-import { stringify } from "query-string";
+import queryString from "query-string";
 
 export default function ({
   url,
@@ -13,7 +13,7 @@ export default function ({
     return undefined;
   }
 
-  const params = stringify(
+  const params = queryString.stringify(
     {
       service,
       request,

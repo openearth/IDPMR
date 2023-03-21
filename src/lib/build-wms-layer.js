@@ -1,12 +1,12 @@
 import buildGeoserverUrl from "./build-geoserver-url";
-import wms from "./wms";
 
-export default ({ url, id, layer, style = "", paint = {} }) => {
+export default ({ url, id, layer, version, style = "", paint = {} }) => {
   const tile = buildGeoserverUrl({
     url,
     service: "WMS",
     request: "GetMap",
     layers: layer,
+    version,
     style,
     width: 256,
     height: 256,
@@ -17,11 +17,15 @@ export default ({ url, id, layer, style = "", paint = {} }) => {
     encode: false,
   });
 
-  return wms({
+  return {
     id,
     layer,
-    tiles: [tile],
-    tileSize: 256,
+    type: "raster",
+    source: {
+      type: "raster",
+      tiles: [tile],
+      tileSize: 256,
+    },
     paint,
-  });
+  };
 };

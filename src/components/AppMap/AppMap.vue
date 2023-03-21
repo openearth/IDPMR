@@ -8,7 +8,11 @@
       :zoom="mapConfig.zoom"
       @mb-created="onMapCreated"
     >
-      <v-mapbox-layer :options="layer" />
+      <v-mapbox-layer
+        v-for="layer in activeLayers"
+        :key="layer.id"
+        :options="layer"
+      />
 
       <v-mapbox-geocoder />
       <map-control-fitbounds
@@ -42,21 +46,15 @@ export default {
           showCompass: false,
         },
       },
-      layer: {
-        id: "85222873",
-        layer: "boundary:AU.MaritimeBoundary",
-        type: "raster",
-        source: {
-          type: "raster",
-          tiles: [
-            "https://inspire.caris.nl/geoserver/boundary/wms?service=WMS&request=GetMap&width=256&height=256&layers=boundary:AU.MaritimeBoundary&styles=&version=1.3.0&crs=EPSG:3857&transparent=true&bbox={bbox-epsg-3857}&format=image/png",
-          ],
-          tileSize: 256,
-        },
-        paint: {},
-      },
     };
   },
+
+  computed: {
+    activeLayers() {
+      return this.$store.state.wmsLayers;
+    },
+  },
+
   methods: {
     onMapCreated(map) {
       this.$root.map = map;
