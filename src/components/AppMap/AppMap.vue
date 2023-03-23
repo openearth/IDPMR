@@ -9,13 +9,14 @@
       @mb-created="onMapCreated"
     >
       <v-mapbox-layer
-        v-for="layer in mangroveLayers"
+        v-for="layer in administrativeBoundariesLayers"
         :key="layer.id"
         :options="layer"
+        :opacity="0.5"
       />
 
       <v-mapbox-layer
-        v-for="layer in administrativeBoundariesLayers"
+        v-for="layer in mangroveLayers"
         :key="layer.id"
         :options="layer"
       />
