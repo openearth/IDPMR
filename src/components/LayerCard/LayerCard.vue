@@ -6,7 +6,7 @@
         layer.name
       }}</span>
       <div class="layer-card__action-icons">
-        <v-btn icon @click="toggleLayer(layer)">
+        <v-btn icon @click="toggleLayer">
           <v-icon v-if="active">mdi-eye</v-icon>
           <v-icon v-else> mdi-eye-off </v-icon>
         </v-btn>
@@ -28,8 +28,8 @@ export default {
     },
   },
   methods: {
-    toggleLayer(layer) {
-      this.$emit("toggle-layer", layer);
+    toggleLayer() {
+      this.$emit("toggle-layer", this.layer);
     },
   },
 };
