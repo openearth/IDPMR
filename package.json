@@ -8,8 +8,6 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@deltares/vue-components": "^0.5.0",
-    "@vue/composition-api": "^1.7.1",
     "core-js": "^3.8.3",
     "query-string": "^8.1.0",
     "sortablejs": "^1.15.0",
