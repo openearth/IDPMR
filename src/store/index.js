@@ -1,27 +1,36 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import buildWmsLayer from "@/lib/build-wms-layer";
+import { MANGROVE_LAYER_TYPE } from "@/lib/constants";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    layers: [],
-    wmsLayers: [],
+    mangroveLayers: [],
+    administrativeBoundariesLayers: [],
+    wmsMangroveLayers: [],
+    wmsAdministrativeBoundariesLayers: [],
   },
   mutations: {
-    SET_LAYERS(state, { layers }) {
-      state.layers = layers;
+    SET_MANGROVE_LAYERS(state, { layers }) {
+      state.mangroveLayers = layers;
     },
-    SET_WMS_LAYERS(state, { wmsLayers }) {
-      state.wmsLayers = wmsLayers;
+    SET_ADMINISTRATIVE_BOUNDARIES_LAYERS(state, { layers }) {
+      state.administrativeBoundariesLayers = layers;
+    },
+    SET_WMS_MANGROVE_LAYERS(state, { wmsLayers }) {
+      state.wmsMangroveLayers = wmsLayers;
+    },
+    SET_WMS_ADMINISTRATIVE_BOUNDARIES_LAYERS(state, { wmsLayers }) {
+      state.wmsAdministrativeBoundariesLayers = wmsLayers;
     },
   },
   actions: {
-    setLayers({ commit }, { layers }) {
-      commit("SET_LAYERS", { layers });
+    setLayers({ commit }, { layers, type = MANGROVE_LAYER_TYPE }) {
+      commit(`SET_${type}_LAYERS`, { layers });
       const wmsLayers = layers.map((layer) => buildWmsLayer(layer));
-      commit("SET_WMS_LAYERS", { wmsLayers });
+      commit(`SET_WMS_${type}_LAYERS`, { wmsLayers });
     },
   },
 });

@@ -16,6 +16,9 @@ export default {
       type: Array,
       required: true,
     },
+    layerType: {
+      type: String,
+    },
   },
   components: {
     LayerListControls,
@@ -24,11 +27,11 @@ export default {
     ...mapActions(["setLayers"]),
 
     onActiveLayerChange(activeLayers) {
-      this.setLayers({ layers: activeLayers });
+      this.setLayers({ layers: activeLayers, type: this.layerType });
     },
 
     onLayerSortingChange(sortedLayers) {
-      console.log(sortedLayers);
+      this.setLayers({ layers: sortedLayers, type: this.layerType });
     },
   },
 };

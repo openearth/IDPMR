@@ -9,7 +9,13 @@
       @mb-created="onMapCreated"
     >
       <v-mapbox-layer
-        v-for="layer in activeLayers"
+        v-for="layer in mangroveLayers"
+        :key="layer.id"
+        :options="layer"
+      />
+
+      <v-mapbox-layer
+        v-for="layer in administrativeBoundariesLayers"
         :key="layer.id"
         :options="layer"
       />
@@ -24,15 +30,22 @@
         position="bottom-right"
       />
     </v-mapbox>
+
+    <v-fade-transition mode="out-in">
+      <map-legend />
+    </v-fade-transition>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 import MapControlFitbounds from "@/components/MapboxMap/MapControlFitbounds.vue";
+import MapLegend from "@/components/MapboxMap/MapLegend.vue";
 
 export default {
   components: {
     MapControlFitbounds,
+    MapLegend,
   },
 
   data() {
@@ -49,11 +62,11 @@ export default {
     };
   },
 
-  computed: {
-    activeLayers() {
-      return this.$store.state.wmsLayers;
-    },
-  },
+  computed: mapState({
+    mangroveLayers: (state) => state.wmsMangroveLayers,
+    administrativeBoundariesLayers: (state) =>
+      state.wmsAdministrativeBoundariesLayers,
+  }),
 
   methods: {
     onMapCreated(map) {
@@ -70,6 +83,11 @@ export default {
 </script>
 
 <style>
+.app-map {
+  overflow: hidden;
+  position: relative;
+}
+
 .app-map,
 .app-map__map {
   height: 100%;
