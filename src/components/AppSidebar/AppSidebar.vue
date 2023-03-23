@@ -1,10 +1,13 @@
 <template>
   <v-navigation-drawer
     class="app-sidebar"
-    stateless
     :value="open"
-    :width="500"
-    absolute
+    width="500"
+    app
+    clipped
+    disable-resize-watcher
+    touchless
+    :mobile-breakpoint="0"
   >
     <router-view />
   </v-navigation-drawer>
