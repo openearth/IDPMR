@@ -16,6 +16,7 @@
     "vue": "2.6",
     "vue-router": "^3.6.5",
     "vue2mapbox-gl": "^0.13.1",
+    "vuedraggable": "^2.24.3",
     "vuetify": "^2.6.14",
     "vuex": "^3.6.2"
   },

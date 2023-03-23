@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import buildWmsLayer from "@/lib/build-wms-layer";
 import { MANGROVE_LAYER_TYPE } from "@/lib/constants";
+import router from "../router";
 
 Vue.use(Vuex);
 
@@ -11,6 +12,11 @@ export default new Vuex.Store({
     administrativeBoundariesLayers: [],
     wmsMangroveLayers: [],
     wmsAdministrativeBoundariesLayers: [],
+  },
+  getters: {
+    mangroveLayersIds: (state) => state.mangroveLayers.map((layer) => layer.id),
+    administrativeBoundariesLayersIds: (state) =>
+      state.administrativeBoundariesLayers.map((layer) => layer.id),
   },
   mutations: {
     SET_MANGROVE_LAYERS(state, { layers }) {
@@ -31,6 +37,13 @@ export default new Vuex.Store({
       commit(`SET_${type}_LAYERS`, { layers });
       const wmsLayers = layers.map((layer) => buildWmsLayer(layer));
       commit(`SET_WMS_${type}_LAYERS`, { wmsLayers });
+
+      if (type === MANGROVE_LAYER_TYPE) {
+        const layerIds = layers.map((layer) => layer.id).join(",");
+        router.replace({
+          query: { layers: layerIds },
+        });
+      }
     },
   },
 });

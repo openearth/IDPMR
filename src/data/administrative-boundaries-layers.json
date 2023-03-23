@@ -4,13 +4,13 @@
     "name": "Level 1",
     "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
     "version": "1.1.0",
-    "layer": "indonesia%3Aregions_admin1"
+    "layer": "regions_admin1"
   },
   {
     "id": "level-2",
     "name": "Level 2",
     "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
     "version": "1.1.0",
-    "layer": "indonesia%3Aregions_admin2"
+    "layer": "regions_admin2"
   }
 ]

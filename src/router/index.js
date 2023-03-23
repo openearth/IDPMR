@@ -1,5 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from "../store";
+
+let hasHadFirstRoute = false;
 
 Vue.use(VueRouter);
 
@@ -31,6 +34,21 @@ const router = new VueRouter({
       ],
     },
   ],
+});
+
+router.beforeEach((to, from, next) => {
+  const layers = store.getters["mangroveLayersIds"].join(",");
+
+  if (hasHadFirstRoute === false) {
+    hasHadFirstRoute = true;
+    return next();
+  }
+
+  if (!!to.query.layers !== !!layers) {
+    next({ ...to, query: { layers } });
+  } else {
+    next();
+  }
 });
 
 export default router;

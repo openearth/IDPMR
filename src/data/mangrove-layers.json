@@ -4,34 +4,34 @@
     "name": "Mangrove 2015",
     "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
     "version": "1.1.0",
-    "layer": "indonesia%3Agmw_v3_2015_vec"
+    "layer": "gmw_v3_2015_vec"
   },
   {
     "id": "mangrove-2016",
     "name": "Mangrove 2016",
     "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
     "version": "1.1.0",
-    "layer": "indonesia%3Agmw_v3_2016_vec"
+    "layer": "gmw_v3_2016_vec"
   },
   {
     "id": "mangrove-2017",
     "name": "Mangrove 2017",
     "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
     "version": "1.1.0",
-    "layer": "indonesia%3Agmw_v3_2017_vec"
+    "layer": "gmw_v3_2017_vec"
   },
   {
     "id": "mangrove-2019",
     "name": "Mangrove 2019",
     "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
     "version": "1.1.0",
-    "layer": "indonesia%3Agmw_v3_2019_vec"
+    "layer": "gmw_v3_2019_vec"
   },
   {
     "id": "mangrove-2020",
     "name": "Mangrove 2020",
     "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
     "version": "1.1.0",
-    "layer": "indonesia%3Agmw_v3_2020_vec"
+    "layer": "gmw_v3_2020_vec"
   }
 ]

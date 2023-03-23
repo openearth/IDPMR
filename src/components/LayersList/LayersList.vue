@@ -1,16 +1,31 @@
 <template>
-  <layer-list-controls
-    :layers="layers"
-    @active-layers-change="onActiveLayerChange"
-    @layer-sorting-change="onLayerSortingChange"
-  />
+  <draggable
+    tag="ul"
+    v-model="sortedLayers"
+    class="layers-list"
+    @end="updateLayers"
+  >
+    <li class="layers-list__item" v-for="layer in sortedLayers" :key="layer.id">
+      <layer-card
+        :layer="layer"
+        :active="activeLayers.some((l) => l.id === layer.id)"
+        @toggle-layer="toggleLayer"
+      />
+    </li>
+  </draggable>
 </template>
 
 <script>
-import { LayerListControls } from "@deltares/vue-components";
 import { mapActions } from "vuex";
+import draggable from "vuedraggable";
+import LayerCard from "@/components/LayerCard/LayerCard.vue";
+import { MANGROVE_LAYER_TYPE } from "@/lib/constants";
 
 export default {
+  components: {
+    draggable,
+    LayerCard,
+  },
   props: {
     layers: {
       type: Array,
@@ -20,19 +35,54 @@ export default {
       type: String,
     },
   },
-  components: {
-    LayerListControls,
+  data() {
+    return {
+      activeLayers: [],
+      sortedLayers: this.layers,
+    };
   },
   methods: {
     ...mapActions(["setLayers"]),
 
-    onActiveLayerChange(activeLayers) {
-      this.setLayers({ layers: activeLayers, type: this.layerType });
+    toggleLayer(layer) {
+      if (this.activeLayers.some((l) => l.id === layer.id)) {
+        this.activeLayers = this.activeLayers.filter((l) => l.id !== layer.id);
+      } else {
+        this.activeLayers.push(layer);
+      }
     },
 
-    onLayerSortingChange(sortedLayers) {
-      this.setLayers({ layers: sortedLayers, type: this.layerType });
+    updateLayers() {
+      const activeSortedLayers = this.sortedLayers.filter((layer) =>
+        this.activeLayers.some((l) => l.id === layer.id)
+      );
+
+      this.setLayers({ layers: activeSortedLayers, type: this.layerType });
+    },
+  },
+  mounted() {
+    if (this.layerType === MANGROVE_LAYER_TYPE) {
+      this.activeLayers = this.layers.filter((layer) =>
+        this.$route.query.layers.includes(layer.id)
+      );
+    }
+  },
+  watch: {
+    activeLayers() {
+      this.updateLayers();
     },
   },
 };
 </script>
+
+<style>
+ul.layers-list {
+  list-style: none;
+  padding: 8px;
+  margin: 0;
+}
+
+.layers-list__item + .layers-list__item {
+  margin-top: 8px;
+}
+</style>
