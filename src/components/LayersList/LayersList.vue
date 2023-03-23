@@ -63,7 +63,7 @@ export default {
   mounted() {
     if (this.layerType === MANGROVE_LAYER_TYPE) {
       this.activeLayers = this.layers.filter((layer) =>
-        this.$route.query.layers.includes(layer.id)
+        this.$route.query.layers?.includes(layer.id)
       );
     }
   },
