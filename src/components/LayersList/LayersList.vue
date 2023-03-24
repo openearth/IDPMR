@@ -16,10 +16,8 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
 import draggable from "vuedraggable";
 import LayerCard from "@/components/LayerCard/LayerCard.vue";
-import { MANGROVE_LAYER_TYPE } from "@/lib/constants";
 
 export default {
   components: {
@@ -31,9 +29,6 @@ export default {
       type: Array,
       required: true,
     },
-    layerType: {
-      type: String,
-    },
   },
   data() {
     return {
@@ -42,8 +37,6 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["setLayers"]),
-
     toggleLayer(layer) {
       if (this.activeLayers.some((l) => l.id === layer.id)) {
         this.activeLayers = this.activeLayers.filter((l) => l.id !== layer.id);
@@ -57,15 +50,13 @@ export default {
         this.activeLayers.some((l) => l.id === layer.id)
       );
 
-      this.setLayers({ layers: activeSortedLayers, type: this.layerType });
+      this.$emit("select-layers", { layers: activeSortedLayers });
     },
   },
   mounted() {
-    if (this.layerType === MANGROVE_LAYER_TYPE) {
-      this.activeLayers = this.layers.filter((layer) =>
-        this.$route.query.layers?.includes(layer.id)
-      );
-    }
+    this.activeLayers = this.layers.filter((layer) =>
+      this.$route.query.layers?.includes(layer.id)
+    );
   },
   watch: {
     activeLayers() {
@@ -78,7 +69,7 @@ export default {
 <style>
 ul.layers-list {
   list-style: none;
-  padding: 8px;
+  padding: 0;
   margin: 0;
 }
 

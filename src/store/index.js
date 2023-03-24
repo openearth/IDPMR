@@ -1,7 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import buildWmsLayer from "@/lib/build-wms-layer";
-import { MANGROVE_LAYER_TYPE } from "@/lib/constants";
 import router from "../router";
 
 Vue.use(Vuex);
@@ -9,41 +8,56 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     mangroveLayers: [],
-    administrativeBoundariesLayers: [],
+    administrativeBoundariesLayer: null,
     wmsMangroveLayers: [],
-    wmsAdministrativeBoundariesLayers: [],
+    wmsAdministrativeBoundariesLayer: null,
   },
   getters: {
     mangroveLayersIds: (state) => state.mangroveLayers.map((layer) => layer.id),
-    administrativeBoundariesLayersIds: (state) =>
-      state.administrativeBoundariesLayers.map((layer) => layer.id),
+    administrativeBoundariesLayerId: (state) =>
+      state.administrativeBoundariesLayer?.id,
   },
   mutations: {
     SET_MANGROVE_LAYERS(state, { layers }) {
       state.mangroveLayers = layers;
     },
-    SET_ADMINISTRATIVE_BOUNDARIES_LAYERS(state, { layers }) {
-      state.administrativeBoundariesLayers = layers;
+    SET_ADMINISTRATIVE_BOUNDARIES_LAYER(state, { layer }) {
+      state.administrativeBoundariesLayer = layer;
     },
     SET_WMS_MANGROVE_LAYERS(state, { wmsLayers }) {
       state.wmsMangroveLayers = wmsLayers;
     },
-    SET_WMS_ADMINISTRATIVE_BOUNDARIES_LAYERS(state, { wmsLayers }) {
-      state.wmsAdministrativeBoundariesLayers = wmsLayers;
+    SET_WMS_ADMINISTRATIVE_BOUNDARIES_LAYER(state, { wmsLayer }) {
+      state.wmsAdministrativeBoundariesLayer = wmsLayer;
     },
   },
   actions: {
-    setLayers({ commit }, { layers, type = MANGROVE_LAYER_TYPE }) {
-      commit(`SET_${type}_LAYERS`, { layers });
+    setMangroveLayers({ commit }, { layers }) {
+      commit("SET_MANGROVE_LAYERS", { layers });
       const wmsLayers = layers.map((layer) => buildWmsLayer(layer));
-      commit(`SET_WMS_${type}_LAYERS`, { wmsLayers });
+      commit("SET_WMS_MANGROVE_LAYERS", { wmsLayers });
 
-      if (type === MANGROVE_LAYER_TYPE) {
-        const layerIds = layers.map((layer) => layer.id).join(",");
-        router.replace({
-          query: { layers: layerIds },
-        });
-      }
+      const layerIds = layers.map((layer) => layer.id).join(",");
+      router.replace({
+        query: { layers: layerIds },
+      });
+    },
+    setAdministrativeBoundariesLayer({ commit }, { layer }) {
+      commit("SET_ADMINISTRATIVE_BOUNDARIES_LAYER", { layer });
+      const wmsLayer = buildWmsLayer(layer);
+      commit("SET_WMS_ADMINISTRATIVE_BOUNDARIES_LAYER", { wmsLayer });
+
+      router.replace({
+        query: { administrative_boundaries: layer.id },
+      });
+    },
+    removeAdministrativeBoundariesLayer({ commit }) {
+      commit("SET_ADMINISTRATIVE_BOUNDARIES_LAYER", { layer: null });
+      commit("SET_WMS_ADMINISTRATIVE_BOUNDARIES_LAYER", { wmsLayer: null });
+
+      router.replace({
+        query: { administrative_boundaries: null },
+      });
     },
   },
 });

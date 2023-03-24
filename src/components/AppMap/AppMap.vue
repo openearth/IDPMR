@@ -9,9 +9,9 @@
       @mb-created="onMapCreated"
     >
       <v-mapbox-layer
-        v-for="layer in administrativeBoundariesLayers"
-        :key="layer.id"
-        :options="layer"
+        v-if="administrativeBoundariesLayer"
+        :key="administrativeBoundariesLayer.id"
+        :options="administrativeBoundariesLayer"
         :opacity="0.5"
       />
 
@@ -65,8 +65,8 @@ export default {
 
   computed: mapState({
     mangroveLayers: (state) => state.wmsMangroveLayers,
-    administrativeBoundariesLayers: (state) =>
-      state.wmsAdministrativeBoundariesLayers,
+    administrativeBoundariesLayer: (state) =>
+      state.wmsAdministrativeBoundariesLayer,
   }),
 
   methods: {

@@ -38,14 +38,22 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const layers = store.getters["mangroveLayersIds"].join(",");
+  const administrativeBoundaryLayer =
+    store.getters["administrativeBoundariesLayerId"];
 
   if (hasHadFirstRoute === false) {
     hasHadFirstRoute = true;
     return next();
   }
 
-  if (!!to.query.layers !== !!layers) {
-    next({ ...to, query: { layers } });
+  if (
+    !!to.query.layers !== !!layers ||
+    !!to.query.administrative_boundaries !== !!administrativeBoundaryLayer
+  ) {
+    next({
+      ...to,
+      query: { layers, administrative_boundaries: administrativeBoundaryLayer },
+    });
   } else {
     next();
   }

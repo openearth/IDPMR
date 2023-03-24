@@ -1,13 +1,13 @@
 <template>
-  <main>
-    <layers-list :layers="layers" :layer-type="layerType" />
+  <main class="container">
+    <layers-list :layers="layers" @select-layers="setMangroveLayers" />
   </main>
 </template>
 
 <script>
 import LayersList from "@/components/LayersList/LayersList.vue";
 import layers from "@/data/mangrove-layers";
-import { MANGROVE_LAYER_TYPE } from "@/lib/constants";
+import { mapActions } from "vuex";
 
 export default {
   components: {
@@ -16,8 +16,10 @@ export default {
   data() {
     return {
       layers,
-      layerType: MANGROVE_LAYER_TYPE,
     };
+  },
+  methods: {
+    ...mapActions(["setMangroveLayers"]),
   },
 };
 </script>
