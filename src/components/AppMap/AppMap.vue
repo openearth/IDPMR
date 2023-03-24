@@ -12,7 +12,7 @@
         v-if="administrativeBoundariesLayer"
         :key="administrativeBoundariesLayer.id"
         :options="administrativeBoundariesLayer"
-        :opacity="0.5"
+        :opacity="0.3"
       />
 
       <v-mapbox-layer
@@ -20,6 +20,8 @@
         :key="layer.id"
         :options="layer"
       />
+
+      <map-draw-control :drawn-feature="selectedFeature" />
 
       <v-mapbox-geocoder />
       <map-control-fitbounds
@@ -42,23 +44,21 @@
 import { mapState } from "vuex";
 import MapControlFitbounds from "@/components/MapboxMap/MapControlFitbounds.vue";
 import MapLegend from "@/components/MapboxMap/MapLegend.vue";
+import MapDrawControl from "@/components/MapboxMap/MapDrawControl.vue";
+import mapConfig from "@/lib/map-config";
 
 export default {
   components: {
     MapControlFitbounds,
     MapLegend,
+    MapDrawControl,
   },
 
   data() {
     return {
       mapConfig: {
         accessToken: process.env.VUE_APP_MAPBOX_TOKEN,
-        style: "mapbox://styles/siggyf/ckww2c33f0xlf15nujlx41fe2",
-        center: [118.69, -3.64],
-        zoom: 4,
-        navigationOptions: {
-          showCompass: false,
-        },
+        ...mapConfig,
       },
     };
   },
@@ -67,6 +67,7 @@ export default {
     mangroveLayers: (state) => state.wmsMangroveLayers,
     administrativeBoundariesLayer: (state) =>
       state.wmsAdministrativeBoundariesLayer,
+    selectedFeature: (state) => state.selectedFeature,
   }),
 
   methods: {

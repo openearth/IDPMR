@@ -8,9 +8,10 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     mangroveLayers: [],
-    administrativeBoundariesLayer: null,
     wmsMangroveLayers: [],
+    administrativeBoundariesLayer: null,
     wmsAdministrativeBoundariesLayer: null,
+    selectedFeature: null,
   },
   getters: {
     mangroveLayersIds: (state) => state.mangroveLayers.map((layer) => layer.id),
@@ -29,6 +30,9 @@ export default new Vuex.Store({
     },
     SET_WMS_ADMINISTRATIVE_BOUNDARIES_LAYER(state, { wmsLayer }) {
       state.wmsAdministrativeBoundariesLayer = wmsLayer;
+    },
+    SET_SELECTED_FEATURE(state, { selectedFeature }) {
+      state.selectedFeature = selectedFeature;
     },
   },
   actions: {
@@ -57,6 +61,24 @@ export default new Vuex.Store({
 
       router.replace({
         query: { administrative_boundaries: null },
+      });
+    },
+    setSelectedFeature({ commit }, { selectedFeature }) {
+      commit("SET_SELECTED_FEATURE", { selectedFeature });
+
+      router.replace({
+        query: {
+          selected_feature:
+            selectedFeature.properties.name_1 ||
+            selectedFeature.properties.name_2,
+        },
+      });
+    },
+    removeSelectedFeature({ commit }) {
+      commit("SET_SELECTED_FEATURE", { selectedFeature: null });
+
+      router.replace({
+        query: { selected_feature: null },
       });
     },
   },
