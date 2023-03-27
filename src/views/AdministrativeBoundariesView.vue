@@ -83,10 +83,12 @@ export default {
         );
       }
       // If there is a selected feature on the store, set it
-      this.selectedFeatureName =
-        this.initiallySelectedFeature?.properties[
-          this.selectedLayer.propertyName
-        ];
+      if (this.initiallySelectedFeature) {
+        this.selectedFeatureName =
+          this.initiallySelectedFeature.properties[
+            this.selectedLayer.propertyName
+          ];
+      }
       this.loading = false;
     },
     async getSelectedFeature() {
