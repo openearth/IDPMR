@@ -28,8 +28,8 @@
     </transition>
   </div>
 </template>
-  
-  <script>
+
+<script>
 export default {
   data: () => ({
     drawer: false,
@@ -44,4 +44,3 @@ export default {
   }),
 };
 </script>
-  

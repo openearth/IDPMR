@@ -8,7 +8,20 @@
       :zoom="mapConfig.zoom"
       @mb-created="onMapCreated"
     >
-      <v-mapbox-layer :options="layer" />
+      <v-mapbox-layer
+        v-if="administrativeBoundariesLayer"
+        :key="administrativeBoundariesLayer.id"
+        :options="administrativeBoundariesLayer"
+        :opacity="0.3"
+      />
+
+      <v-mapbox-layer
+        v-for="layer in mangroveLayers"
+        :key="layer.id"
+        :options="layer"
+      />
+
+      <map-draw-control :drawn-feature="selectedFeature" />
 
       <v-mapbox-geocoder />
       <map-control-fitbounds
@@ -20,15 +33,25 @@
         position="bottom-right"
       />
     </v-mapbox>
+
+    <v-fade-transition mode="out-in">
+      <map-legend />
+    </v-fade-transition>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
 import MapControlFitbounds from "@/components/MapboxMap/MapControlFitbounds.vue";
+import MapLegend from "@/components/MapboxMap/MapLegend.vue";
+import MapDrawControl from "@/components/MapboxMap/MapDrawControl.vue";
+import { bbox } from "@turf/turf";
 
 export default {
   components: {
     MapControlFitbounds,
+    MapLegend,
+    MapDrawControl,
   },
 
   data() {
@@ -42,21 +65,15 @@ export default {
           showCompass: false,
         },
       },
-      layer: {
-        id: "85222873",
-        layer: "boundary:AU.MaritimeBoundary",
-        type: "raster",
-        source: {
-          type: "raster",
-          tiles: [
-            "https://inspire.caris.nl/geoserver/boundary/wms?service=WMS&request=GetMap&width=256&height=256&layers=boundary:AU.MaritimeBoundary&styles=&version=1.3.0&crs=EPSG:3857&transparent=true&bbox={bbox-epsg-3857}&format=image/png",
-          ],
-          tileSize: 256,
-        },
-        paint: {},
-      },
     };
   },
+
+  computed: mapState({
+    mangroveLayers: "wmsMangroveLayers",
+    administrativeBoundariesLayer: "wmsAdministrativeBoundariesLayer",
+    selectedFeature: "selectedFeature",
+  }),
+
   methods: {
     onMapCreated(map) {
       this.$root.map = map;
@@ -67,11 +84,30 @@ export default {
         zoom: this.mapConfig.zoom,
       });
     },
+    zoomToSelectedFeature() {
+      const boundingBox = bbox(this.selectedFeature);
+      this.$root.map.fitBounds(boundingBox, { padding: 80 });
+    },
+  },
+
+  watch: {
+    selectedFeature(value) {
+      if (value) {
+        this.zoomToSelectedFeature();
+      } else {
+        this.fitToBounds();
+      }
+    },
   },
 };
 </script>
 
 <style>
+.app-map {
+  overflow: hidden;
+  position: relative;
+}
+
 .app-map,
 .app-map__map {
   height: 100%;
