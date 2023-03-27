@@ -45,7 +45,7 @@ import { mapState } from "vuex";
 import MapControlFitbounds from "@/components/MapboxMap/MapControlFitbounds.vue";
 import MapLegend from "@/components/MapboxMap/MapLegend.vue";
 import MapDrawControl from "@/components/MapboxMap/MapDrawControl.vue";
-import mapConfig from "@/lib/map-config";
+import { bbox } from "@turf/turf";
 
 export default {
   components: {
@@ -58,7 +58,12 @@ export default {
     return {
       mapConfig: {
         accessToken: process.env.VUE_APP_MAPBOX_TOKEN,
-        ...mapConfig,
+        style: "mapbox://styles/siggyf/ckww2c33f0xlf15nujlx41fe2",
+        center: [118.69, -3.64],
+        zoom: 4,
+        navigationOptions: {
+          showCompass: false,
+        },
       },
     };
   },
@@ -78,6 +83,20 @@ export default {
         center: this.mapConfig.center,
         zoom: this.mapConfig.zoom,
       });
+    },
+    zoomToSelectedFeature() {
+      const boundingBox = bbox(this.selectedFeature);
+      this.$root.map.fitBounds(boundingBox, { padding: 80 });
+    },
+  },
+
+  watch: {
+    selectedFeature(value) {
+      if (value) {
+        this.zoomToSelectedFeature();
+      } else {
+        this.fitToBounds();
+      }
     },
   },
 };
