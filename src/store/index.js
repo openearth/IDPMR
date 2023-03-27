@@ -12,6 +12,15 @@ export default new Vuex.Store({
     wmsAdministrativeBoundariesLayer: null,
     selectedFeature: null,
   },
+  getters: {
+    isEmpty(state) {
+      return (
+        state.mangroveLayers.length === 0 &&
+        !state.administrativeBoundariesLayer &&
+        !state.selectedFeature
+      );
+    },
+  },
   mutations: {
     SET_MANGROVE_LAYERS(state, { layers }) {
       state.mangroveLayers = layers;
