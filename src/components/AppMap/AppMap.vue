@@ -64,10 +64,9 @@ export default {
   },
 
   computed: mapState({
-    mangroveLayers: (state) => state.wmsMangroveLayers,
-    administrativeBoundariesLayer: (state) =>
-      state.wmsAdministrativeBoundariesLayer,
-    selectedFeature: (state) => state.selectedFeature,
+    mangroveLayers: "wmsMangroveLayers",
+    administrativeBoundariesLayer: "wmsAdministrativeBoundariesLayer",
+    selectedFeature: "selectedFeature",
   }),
 
   methods: {

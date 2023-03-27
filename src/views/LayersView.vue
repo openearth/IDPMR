@@ -1,13 +1,17 @@
 <template>
   <main class="container">
-    <layers-list :layers="layers" @select-layers="setMangroveLayers" />
+    <layers-list
+      :layers="layers"
+      :initiallySelectedLayers="mangroveLayers"
+      @select-layers="setMangroveLayers"
+    />
   </main>
 </template>
 
 <script>
 import LayersList from "@/components/LayersList/LayersList.vue";
 import layers from "@/data/mangrove-layers";
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   components: {
@@ -17,6 +21,9 @@ export default {
     return {
       layers,
     };
+  },
+  computed: {
+    ...mapState(["mangroveLayers"]),
   },
   methods: {
     ...mapActions(["setMangroveLayers"]),

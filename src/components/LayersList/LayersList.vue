@@ -29,6 +29,10 @@ export default {
       type: Array,
       required: true,
     },
+    initiallySelectedLayers: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
@@ -54,9 +58,7 @@ export default {
     },
   },
   mounted() {
-    this.activeLayers = this.layers.filter((layer) =>
-      this.$route.query.layers?.includes(layer.id)
-    );
+    this.activeLayers = [...this.initiallySelectedLayers];
   },
   watch: {
     activeLayers() {

@@ -1,8 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import store from "../store";
-
-let hasHadFirstRoute = false;
 
 Vue.use(VueRouter);
 
@@ -34,29 +31,6 @@ const router = new VueRouter({
       ],
     },
   ],
-});
-
-router.beforeEach((to, from, next) => {
-  const layers = store.getters["mangroveLayersIds"].join(",");
-  const administrativeBoundaryLayer =
-    store.getters["administrativeBoundariesLayerId"];
-
-  if (hasHadFirstRoute === false) {
-    hasHadFirstRoute = true;
-    return next();
-  }
-
-  if (
-    !!to.query.layers !== !!layers ||
-    !!to.query.administrative_boundaries !== !!administrativeBoundaryLayer
-  ) {
-    next({
-      ...to,
-      query: { layers, administrative_boundaries: administrativeBoundaryLayer },
-    });
-  } else {
-    next();
-  }
 });
 
 export default router;

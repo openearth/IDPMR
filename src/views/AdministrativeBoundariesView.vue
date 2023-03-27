@@ -13,7 +13,7 @@
 
     <v-autocomplete
       v-if="selectedLayer && selectedLayer.id"
-      v-model="selectedFeature"
+      v-model="selectedFeatureName"
       label="Select an administrative boundary"
       :items="formattedFeatures"
       dense
@@ -27,7 +27,7 @@
 
 <script>
 import layers from "@/data/administrative-boundaries-layers";
-import { mapActions } from "vuex";
+import { mapActions, mapState } from "vuex";
 import axios from "axios";
 import buildFeatureUrl from "@/lib/build-feature-url";
 
@@ -36,11 +36,15 @@ export default {
     return {
       layers,
       selectedLayer: null,
-      selectedFeature: null,
+      selectedFeatureName: null,
       loading: false,
     };
   },
   computed: {
+    ...mapState({
+      initiallySelectedLayer: "administrativeBoundariesLayer",
+      initiallySelectedFeature: "selectedFeature",
+    }),
     formattedLayers() {
       const formatted = this.layers.map((layer) => ({
         text: layer.name,
@@ -53,10 +57,10 @@ export default {
       const formatted = (this.selectedLayer?.features || []).map(
         (features) => ({
           text: features.properties[this.selectedLayer.propertyName],
-          value: features,
+          value: features.properties[this.selectedLayer.propertyName],
         })
       );
-      return [{ text: "No selection", value: {} }, ...formatted];
+      return [{ text: "No selection", value: "" }, ...formatted];
     },
   },
   methods: {
@@ -78,6 +82,11 @@ export default {
             : layer
         );
       }
+      // If there is a selected feature on the store, set it
+      this.selectedFeatureName =
+        this.initiallySelectedFeature?.properties[
+          this.selectedLayer.propertyName
+        ];
       this.loading = false;
     },
     async getSelectedFeature() {
@@ -85,8 +94,7 @@ export default {
       const { data } = await axios(
         buildFeatureUrl({
           ...this.selectedLayer,
-          filter:
-            this.selectedFeature.properties[this.selectedLayer.propertyName],
+          filter: this.selectedFeatureName,
         })
       );
       if (data.features[0]) {
@@ -96,9 +104,7 @@ export default {
     },
   },
   mounted() {
-    this.selectedLayer = this.layers.find(
-      (layer) => this.$route.query.administrative_boundaries === layer.id
-    );
+    this.selectedLayer = this.initiallySelectedLayer;
   },
   watch: {
     selectedLayer() {
@@ -111,8 +117,8 @@ export default {
         this.selectedFeature = null;
       }
     },
-    selectedFeature() {
-      if (this.selectedFeature?.id) {
+    selectedFeatureName() {
+      if (this.selectedFeatureName !== "") {
         this.getSelectedFeature();
       } else {
         this.removeSelectedFeature();
