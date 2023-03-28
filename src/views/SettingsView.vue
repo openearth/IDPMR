@@ -9,7 +9,10 @@
       <v-tab
         v-for="tab in tabs"
         :key="tab.name"
-        :to="`${tab.page}`"
+        :to="{
+          path: tab.page,
+          query: $route.query,
+        }"
         :ripple="false"
         :exact-path="tab.page === '/'"
         :disabled="tab.disabled"
@@ -42,5 +45,38 @@ export default {
       },
     ],
   }),
+  beforeMount() {
+    this.initializeStore();
+
+    this.unwatch = this.$store.watch(
+      (state) => state.mangroveLayers,
+      this.syncRouteToStore
+    );
+  },
+  destroyed() {
+    this.unwatch();
+  },
+  methods: {
+    initializeStore() {
+      const layers = this.$route.query.layers;
+
+      if (layers) {
+        this.$store.dispatch("setMangroveLayersById", {
+          layerIds: layers.split(","),
+        });
+      }
+    },
+    syncRouteToStore() {
+      this.$router.replace({
+        ...this.$router.currentRoute,
+        query: {
+          ...this.$router.currentRoute.query,
+          layers: this.$store.state.mangroveLayers
+            .map((layer) => layer.id)
+            .join(","),
+        },
+      });
+    },
+  },
 };
 </script>

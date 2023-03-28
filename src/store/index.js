@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import buildWmsLayer from "@/lib/build-wms-layer";
+import allLayers from "@/data/mangrove-layers.json";
 
 Vue.use(Vuex);
 
@@ -33,6 +34,15 @@ export default new Vuex.Store({
     setMangroveLayers({ commit }, { layers }) {
       commit("SET_MANGROVE_LAYERS", { layers });
       const wmsLayers = layers.map((layer) => buildWmsLayer(layer));
+      commit("SET_WMS_MANGROVE_LAYERS", { wmsLayers });
+    },
+    setMangroveLayersById({ commit }, { layerIds }) {
+      const layers = allLayers.filter((layer) => layerIds.includes(layer.id));
+
+      commit("SET_MANGROVE_LAYERS", { layers: layers });
+
+      const wmsLayers = layers.map((layer) => buildWmsLayer(layer));
+
       commit("SET_WMS_MANGROVE_LAYERS", { wmsLayers });
     },
     setAdministrativeBoundariesLayer({ commit }, { layer }) {
