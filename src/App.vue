@@ -1,5 +1,5 @@
 <template>
-  <v-app :style="{ height: '100%' }">
+  <v-app>
     <app-header title="IDPRM" theme="dark"></app-header>
 
     <v-main>
