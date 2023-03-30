@@ -81,12 +81,12 @@ export default {
     this.unwatch();
   },
   methods: {
-    ...mapActions(["setMangroveLayers"]),
+    ...mapActions(["setMangroveLayers", "setMangroveLayersById"]),
     initializeStore() {
       const layers = this.$route.query.layers;
 
       if (layers) {
-        this.$store.dispatch("setMangroveLayersById", {
+        this.setMangroveLayersById({
           layerIds: layers.split(","),
         });
       }
