@@ -7,7 +7,7 @@
             <slot name="settings" />
           </v-card>
           <v-card class="pa-4 rounded-lg" outlined tile>
-            <slot name="meta-1" />
+            <slot name="sidebar" />
           </v-card>
         </v-col>
         <v-col cols="12" :md="6" :lg="8">
@@ -17,6 +17,11 @@
         </v-col>
       </v-row>
       <v-row>
+        <v-col v-if="$slots['meta-1']" cols="12" :md="6" :lg="4">
+          <v-card class="pa-4 rounded-lg" outlined tile>
+            <slot name="meta-1" />
+          </v-card>
+        </v-col>
         <v-col v-if="$slots['meta-2']" cols="12" :md="6" :lg="4">
           <v-card class="pa-4 rounded-lg" outlined tile>
             <slot name="meta-2" />
@@ -25,11 +30,6 @@
         <v-col v-if="$slots['meta-3']" cols="12" :md="6" :lg="4">
           <v-card class="pa-4 rounded-lg" outlined tile>
             <slot name="meta-3" />
-          </v-card>
-        </v-col>
-        <v-col v-if="$slots['meta-4']" cols="12" :md="6" :lg="4">
-          <v-card class="pa-4 rounded-lg" outlined tile>
-            <slot name="meta-4" />
           </v-card>
         </v-col>
       </v-row>
