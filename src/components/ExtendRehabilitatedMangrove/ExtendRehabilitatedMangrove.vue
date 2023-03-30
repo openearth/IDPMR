@@ -1,10 +1,7 @@
 <template>
-  <v-card>
-    <v-card-title>Extent rehabilitated mangrove (ha)</v-card-title>
-    <v-progress-linear :value="progress" height="25">
-      <strong>{{ Math.ceil(progress) }}%</strong>
-    </v-progress-linear>
-  </v-card>
+  <v-progress-linear :value="progress" height="25" :color="color">
+    <strong>{{ Math.ceil(progress) }}%</strong>
+  </v-progress-linear>
 </template>
 
 <script>
@@ -15,5 +12,16 @@ export default {
       required: true,
     },
   },
-}
+  computed: {
+    color() {
+      if (this.progress < 33) {
+        return "red";
+      } else if (this.progress < 66) {
+        return "orange";
+      } else {
+        return "green";
+      }
+    },
+  },
+};
 </script>

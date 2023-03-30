@@ -1,8 +1,9 @@
 <template>
   <div>
     <v-select
-      v-model="selectedLayer"
+      :value="selectedLayer"
       :items="formattedLayers"
+      @change="handleSelectedLayerChange"
       dense
       outlined
       hide-details
@@ -21,15 +22,6 @@
       :disabled="loading"
       class="administrative-boundaries__select"
     />
-
-    <template v-if="showCharts">
-      <ExtendRehabilitatedMangrove v-if="layerIsCountry" :progress="progress" />
-      <AnnualProgress :option="barChartOption" :message="chartDataMessage" />
-      <ContributionByProvinceToGoal
-        v-if="layerIsCountry"
-        :option="pieChartOption"
-      />
-    </template>
   </div>
 </template>
 
@@ -38,71 +30,28 @@ import layers from "@/data/administrative-boundaries-layers";
 import { mapActions, mapState } from "vuex";
 import axios from "axios";
 import buildFeatureUrl from "@/lib/build-feature-url";
-import ExtendRehabilitatedMangrove from "@/components/ExtendRehabilitatedMangrove/ExtendRehabilitatedMangrove.vue";
-import AnnualProgress from "@/components/AnnualProgress/AnnualProgress.vue";
-import ContributionByProvinceToGoal from "@/components/ContributionByProvinceToGoal/ContributionByProvinceToGoal.vue";
-import propertiesToChartData from "@/lib/properties-to-chart-data";
 
 const defaultLayer = { text: "Country", value: "country" };
 
 export default {
-  components: {
-    ExtendRehabilitatedMangrove,
-    AnnualProgress,
-    ContributionByProvinceToGoal,
-  },
+  components: {},
   data() {
     return {
       layers,
-      selectedLayer: null,
       selectedFeatureName: null,
       loading: false,
       countryAreaLoading: false,
       chartDataMessage: "",
       progress: 33,
-      barChartOption: {
-        grid: {
-          containLabel: true,
-        },
-        xAxis: {
-          type: "category",
-          data: [],
-        },
-        yAxis: {
-          type: "value",
-        },
-        series: [
-          {
-            data: [],
-            color: ["#1976d2"],
-            type: "bar",
-          },
-        ],
-      },
-      pieChartOption: {
-        tooltip: {
-          trigger: "item",
-        },
-        series: [
-          {
-            type: "pie",
-            radius: "50%",
-            data: [
-              { value: 1048, name: "Bali" },
-              { value: 735, name: "Maluku Utara" },
-              { value: 580, name: "Lampung" },
-              { value: 484, name: "Kepulauan Riua" },
-              { value: 300, name: "Sumatera Barat" },
-            ],
-          },
-        ],
-      },
+      annualProgressData: [],
+      piechartData: [],
     };
   },
   computed: {
     ...mapState({
       initiallySelectedLayer: "administrativeBoundariesLayer",
       initiallySelectedFeature: "selectedFeature",
+      selectedLayer: "selectedLayer",
     }),
     formattedLayers() {
       const formatted = this.layers.map((layer) => ({
@@ -146,7 +95,11 @@ export default {
       "removeAdministrativeBoundariesLayer",
       "setSelectedFeature",
       "removeSelectedFeature",
+      "setSelectedLayer",
     ]),
+    handleSelectedLayerChange(layer) {
+      this.setSelectedLayer({ layer });
+    },
     async getFeatures() {
       this.loading = true;
       // If the features are already loaded, don't fetch them again
@@ -171,6 +124,7 @@ export default {
     },
     async getSelectedFeature() {
       this.loading = true;
+
       const { data } = await axios(
         buildFeatureUrl({
           ...this.selectedLayer,
@@ -182,79 +136,19 @@ export default {
         this.setSelectedFeature({ selectedFeature: data.features[0] });
       }
 
-      const { data: areaData } = await axios(
-        buildFeatureUrl({
-          ...this.selectedLayer,
-          layer:
-            this.selectedLayer.name === "Provinces"
-              ? "indonesia:regions_admin1"
-              : "indonesia:regions_admin2",
-          filter: this.selectedFeatureName,
-        })
-      );
-
-      this.setChartData(areaData);
-
       this.loading = false;
-    },
-
-    setChartData(data) {
-      const properties = data?.features?.[0]?.properties;
-
-      if (properties) {
-        const { years, areas } = propertiesToChartData(properties);
-        this.barChartOption.xAxis.data = years;
-        this.barChartOption.series[0].data = areas;
-        this.chartDataMessage = "";
-      } else {
-        this.resetChartData();
-        this.chartDataMessage = "Chart data unavailable";
-      }
-    },
-
-    resetChartData() {
-      this.barChartOption.xAxis.data = [];
-      this.barChartOption.series[0].data = [];
-    },
-
-    async getCountryArea() {
-      this.countryAreaLoading = true;
-
-      const { data } = await axios(
-        buildFeatureUrl({
-          url: "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
-          maxFeatures: 1,
-          layer: "indonesia:regions_admin0",
-        })
-      );
-
-      this.setChartData(data);
-
-      this.countryAreaLoading = false;
     },
   },
   mounted() {
-    this.selectedLayer = this.initiallySelectedLayer || defaultLayer.value;
+    this.setSelectedLayer({
+      layer: this.initiallySelectedLayer || defaultLayer.value,
+    });
   },
   watch: {
     selectedLayer() {
-      if (this.selectedLayer === defaultLayer.value) {
-        this.getCountryArea();
-      }
-
       if (this.selectedLayer?.id) {
         this.setAdministrativeBoundariesLayer({ layer: this.selectedLayer });
         this.getFeatures();
-
-        if (this.selectedFeatureName) {
-          this.getSelectedFeature();
-        } else {
-          this.resetChartData();
-        }
-      } else {
-        this.removeAdministrativeBoundariesLayer();
-        this.removeSelectedFeature();
-        this.selectedFeature = null;
       }
     },
     selectedFeatureName() {
@@ -262,7 +156,6 @@ export default {
         this.getSelectedFeature();
       } else {
         this.removeSelectedFeature();
-        this.resetChartData();
       }
     },
   },

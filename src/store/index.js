@@ -11,6 +11,7 @@ export default new Vuex.Store({
     wmsMangroveLayers: [],
     administrativeBoundariesLayer: null,
     wmsAdministrativeBoundariesLayer: null,
+    selectedLayer: null,
     selectedFeature: null,
   },
   mutations: {
@@ -29,6 +30,9 @@ export default new Vuex.Store({
     SET_SELECTED_FEATURE(state, { selectedFeature }) {
       state.selectedFeature = selectedFeature;
     },
+    SET_SELECTED_LAYER(state, { layer }) {
+      state.selectedLayer = layer;
+    }
   },
   actions: {
     setMangroveLayers({ commit }, { layers }) {
@@ -60,5 +64,8 @@ export default new Vuex.Store({
     removeSelectedFeature({ commit }) {
       commit("SET_SELECTED_FEATURE", { selectedFeature: null });
     },
+    setSelectedLayer({ commit }, { layer }) {
+      commit("SET_SELECTED_LAYER", { layer });
+    }
   },
 });
