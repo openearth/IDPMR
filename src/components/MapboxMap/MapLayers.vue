@@ -8,7 +8,7 @@
     :max-width="maxLayersWidth"
   >
     <v-card-title class="map-layer__title subtitle-2" @click="toggleLegend">
-      Layers
+      Spatial data
 
       <v-icon
         class="map-layer__button"

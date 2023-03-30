@@ -1,7 +1,7 @@
 <template>
   <dashboard-layout>
     <template slot="settings">
-      <h2 class="text-h6 mb-4">Area</h2>
+      <h2 class="text-h6 mb-4">Administrative level</h2>
 
       <area-select />
     </template>
