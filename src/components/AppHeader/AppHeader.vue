@@ -1,20 +1,12 @@
 <template>
   <v-app-bar app :color="color" :dark="theme === 'dark'" clipped-left>
-    <v-app-bar-nav-icon v-if="open" @click.stop="onMenuButtonClick(false)">
-      <v-icon>mdi-arrow-left</v-icon>
-    </v-app-bar-nav-icon>
-    <v-app-bar-nav-icon v-else @click.stop="onMenuButtonClick(true)">
-      <v-icon>mdi-arrow-right</v-icon>
-    </v-app-bar-nav-icon>
-
     <v-toolbar-title v-if="title">
       {{ title }}
     </v-toolbar-title>
 
-    <v-tabs right style="width: auto">
-      <v-tab :to="{ name: 'home' }" exact> Introduction </v-tab>
-      <v-tab :to="{ name: 'settings' }"> Layers </v-tab>
-    </v-tabs>
+    <v-btn class="ml-auto" fab small color="primary">
+      <v-icon dark> mdi-information-symbol </v-icon>
+    </v-btn>
   </v-app-bar>
 </template>
 

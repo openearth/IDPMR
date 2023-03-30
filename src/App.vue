@@ -1,21 +1,19 @@
 <template>
-  <div>
-    <app-shell header-title="IDPMR">
-      <template slot="map">
-        <app-map />
-      </template>
-    </app-shell>
-  </div>
+  <v-app>
+    <app-header title="IDPRM" theme="dark" />
+
+    <v-main>
+      <router-view />
+    </v-main>
+  </v-app>
 </template>
 
 <script>
-import AppShell from "@/components/AppShell/AppShell.vue";
-import AppMap from "@/components/AppMap/AppMap.vue";
+import AppHeader from "@/components/AppHeader/AppHeader.vue";
 
 export default {
   components: {
-    AppShell,
-    AppMap,
+    AppHeader,
   },
 };
 </script>

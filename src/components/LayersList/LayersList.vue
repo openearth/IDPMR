@@ -31,7 +31,7 @@ export default {
     },
     initiallySelectedLayers: {
       type: Array,
-      required: true,
+      default: () => [],
     },
   },
   data() {

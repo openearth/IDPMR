@@ -112,6 +112,7 @@ export default {
 .app-map {
   overflow: hidden;
   position: relative;
+  min-height: 400px;
 }
 
 .app-map,
