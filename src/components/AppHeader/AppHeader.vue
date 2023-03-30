@@ -1,5 +1,11 @@
 <template>
-  <v-app-bar app :color="color" :dark="theme === 'dark'" clipped-left>
+  <v-app-bar
+    app
+    :color="color"
+    :dark="theme === 'dark'"
+    clipped-left
+    class="app-header__app-bar"
+  >
     <v-toolbar-title v-if="title">
       {{ title }}
     </v-toolbar-title>
@@ -42,3 +48,14 @@ export default {
   },
 };
 </script>
+
+<style>
+.app-header__app-bar {
+  background: rgb(19, 81, 55);
+  background: linear-gradient(
+    36deg,
+    rgba(19, 81, 55, 1) 71%,
+    rgba(71, 116, 27, 1) 100%
+  );
+}
+</style>
