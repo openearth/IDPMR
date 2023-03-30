@@ -1,13 +1,13 @@
 <template>
   <div>
     <v-select
-      v-model="selectedLayer"
-      label="Select a type"
+      :value="selectedLayer"
       :items="formattedLayers"
+      @change="handleSelectedLayerChange"
       dense
       outlined
       hide-details
-      :disabled="loading"
+      :disabled="loading || countryAreaLoading"
       class="administrative-boundaries__select"
     />
 
@@ -24,26 +24,34 @@
     />
   </div>
 </template>
-  
-  <script>
+
+<script>
 import layers from "@/data/administrative-boundaries-layers";
 import { mapActions, mapState } from "vuex";
 import axios from "axios";
 import buildFeatureUrl from "@/lib/build-feature-url";
 
+const defaultLayer = { text: "Country", value: "country" };
+
 export default {
+  components: {},
   data() {
     return {
       layers,
-      selectedLayer: null,
       selectedFeatureName: null,
       loading: false,
+      countryAreaLoading: false,
+      chartDataMessage: "",
+      progress: 33,
+      annualProgressData: [],
+      piechartData: [],
     };
   },
   computed: {
     ...mapState({
       initiallySelectedLayer: "administrativeBoundariesLayer",
       initiallySelectedFeature: "selectedFeature",
+      selectedLayer: "selectedLayer",
     }),
     formattedLayers() {
       const formatted = this.layers.map((layer) => ({
@@ -51,7 +59,8 @@ export default {
         value: layer,
         features: layer.features,
       }));
-      return [{ text: "No selection", value: {} }, ...formatted];
+
+      return [defaultLayer, ...formatted];
     },
     formattedFeatures() {
       const formatted = (this.selectedLayer?.features || []).map(
@@ -60,7 +69,24 @@ export default {
           value: features.properties[this.selectedLayer.propertyName],
         })
       );
+
       return [{ text: "No selection", value: "" }, ...formatted];
+    },
+    showCharts() {
+      if (this.selectedLayer === "country") {
+        return true;
+      } else if (
+        (this.selectedLayer?.name === "Provinces" ||
+          this.selectedLayer?.name === "Regencies") &&
+        this.selectedFeatureName
+      ) {
+        return true;
+      }
+
+      return false;
+    },
+    layerIsCountry() {
+      return this.selectedLayer === "country";
     },
   },
   methods: {
@@ -69,7 +95,11 @@ export default {
       "removeAdministrativeBoundariesLayer",
       "setSelectedFeature",
       "removeSelectedFeature",
+      "setSelectedLayer",
     ]),
+    handleSelectedLayerChange(layer) {
+      this.setSelectedLayer({ layer });
+    },
     async getFeatures() {
       this.loading = true;
       // If the features are already loaded, don't fetch them again
@@ -89,34 +119,36 @@ export default {
             this.selectedLayer.propertyName
           ];
       }
+
       this.loading = false;
     },
     async getSelectedFeature() {
       this.loading = true;
+
       const { data } = await axios(
         buildFeatureUrl({
           ...this.selectedLayer,
           filter: this.selectedFeatureName,
         })
       );
+
       if (data.features[0]) {
         this.setSelectedFeature({ selectedFeature: data.features[0] });
       }
+
       this.loading = false;
     },
   },
   mounted() {
-    this.selectedLayer = this.initiallySelectedLayer;
+    this.setSelectedLayer({
+      layer: this.initiallySelectedLayer || defaultLayer.value,
+    });
   },
   watch: {
     selectedLayer() {
       if (this.selectedLayer?.id) {
         this.setAdministrativeBoundariesLayer({ layer: this.selectedLayer });
         this.getFeatures();
-      } else {
-        this.removeAdministrativeBoundariesLayer();
-        this.removeSelectedFeature();
-        this.selectedFeature = null;
       }
     },
     selectedFeatureName() {
@@ -129,8 +161,18 @@ export default {
   },
 };
 </script>
-  
-  <style>
+
+<style>
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.chart {
+  height: 400px;
+}
+
 .administrative-boundaries__select + .administrative-boundaries__select {
   margin-top: 16px;
 }
