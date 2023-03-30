@@ -32,11 +32,16 @@
       </v-card>
 
       <v-card>
-        <v-card-title>Chart</v-card-title>
+        <v-card-title>Bar chart</v-card-title>
         <v-card-subtitle v-if="chartDataMessage">{{
           chartDataMessage
         }}</v-card-subtitle>
-        <v-chart v-else class="chart" :option="option" />
+        <v-chart v-else class="chart" :option="barChartOption" />
+      </v-card>
+
+      <v-card v-if="showPieChart">
+        <v-card-title>Pie chart</v-card-title>
+        <v-chart class="chart" :option="pieChartOption" />
       </v-card>
     </template>
   </main>
@@ -49,12 +54,12 @@ import axios from 'axios'
 import buildFeatureUrl from '@/lib/build-feature-url'
 import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
-import { BarChart } from 'echarts/charts'
-import { GridComponent } from 'echarts/components'
+import { BarChart, PieChart } from 'echarts/charts'
+import { GridComponent, TooltipComponent } from 'echarts/components'
 import VChart from 'vue-echarts'
 import propertiesToChartData from '@/lib/properties-to-chart-data'
 
-use([CanvasRenderer, BarChart, GridComponent])
+use([CanvasRenderer, BarChart, GridComponent, PieChart, TooltipComponent])
 
 const defaultLayer = { text: 'Country', value: 'country' }
 
@@ -71,7 +76,7 @@ export default {
       countryAreaLoading: false,
       chartDataMessage: '',
       progress: 33,
-      option: {
+      barChartOption: {
         grid: {
           containLabel: true,
         },
@@ -87,6 +92,24 @@ export default {
             data: [],
             color: ['#1976d2'],
             type: 'bar',
+          },
+        ],
+      },
+      pieChartOption: {
+        tooltip: {
+          trigger: 'item',
+        },
+        series: [
+          {
+            type: 'pie',
+            radius: '50%',
+            data: [
+              { value: 1048, name: 'Bali' },
+              { value: 735, name: 'Maluku Utara' },
+              { value: 580, name: 'Lampung' },
+              { value: 484, name: 'Kepulauan Riua' },
+              { value: 300, name: 'Sumatera Barat' },
+            ],
           },
         ],
       },
@@ -128,6 +151,9 @@ export default {
       }
 
       return false
+    },
+    showPieChart() {
+      return this.selectedLayer === 'country'
     },
   },
   methods: {
@@ -193,8 +219,8 @@ export default {
 
       if (properties) {
         const { years, areas } = propertiesToChartData(properties)
-        this.option.xAxis.data = years
-        this.option.series[0].data = areas
+        this.barChartOption.xAxis.data = years
+        this.barChartOption.series[0].data = areas
         this.chartDataMessage = ''
       } else {
         this.resetChartData()
@@ -203,8 +229,8 @@ export default {
     },
 
     resetChartData() {
-      this.option.xAxis.data = []
-      this.option.series[0].data = []
+      this.barChartOption.xAxis.data = []
+      this.barChartOption.series[0].data = []
     },
 
     async getCountryArea() {
