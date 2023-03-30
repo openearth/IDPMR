@@ -28,16 +28,6 @@
 import { mapState } from "vuex";
 
 export default {
-  props: {
-    layers: {
-      type: Array,
-      required: true,
-    },
-    initiallySelectedLayers: {
-      type: Array,
-      default: () => [],
-    },
-  },
   data: () => ({
     maxLayersHeight: "calc(100vh - 106px)", // subtracts toolbar, margin and padding.
     maxLayersWidth: "calc(100vw - 32px)", // subtracts padding.
@@ -99,4 +89,3 @@ export default {
   width: auto;
 }
 </style>
-  
