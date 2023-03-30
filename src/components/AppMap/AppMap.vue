@@ -98,6 +98,12 @@ export default {
         this.fitToBounds();
       }
     },
+
+    administrativeBoundariesLayer(value) {
+      if (!value) {
+        this.fitToBounds();
+      }
+    },
   },
 };
 </script>
@@ -106,6 +112,7 @@ export default {
 .app-map {
   overflow: hidden;
   position: relative;
+  min-height: 400px;
 }
 
 .app-map,

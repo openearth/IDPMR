@@ -20,39 +20,43 @@
     </template>
 
     <template slot="meta-1">
-      <h2 class="text-h6 mb-4">Progress over time (mock image)</h2>
+      <h2 class="text-h6 mb-4">Extent rehabilitated mangrove (ha)</h2>
 
-      <img
-        :style="{ width: '100%' }"
-        src="https://datavizproject.com/wp-content/uploads/types/Bar-Chart-Vertical.png"
-      />
+      <extend-rehabilitated-mangrove v-if="progress" :progress="progress" />
+      <v-card-subtitle v-else>No data available</v-card-subtitle>
     </template>
     <template slot="meta-2">
-      <h2 class="text-h6 mb-4">Progress over time (mock image)</h2>
+      <h2 class="text-h6 mb-4">Annual progress (ha)</h2>
 
-      <img
-        :style="{ width: '100%' }"
-        src="https://datavizproject.com/wp-content/uploads/types/Bar-Chart-Vertical.png"
-      />
+      <annual-progress :data="annualProgressData" />
     </template>
     <template slot="meta-3">
-      <h2 class="text-h6 mb-4">Progress over time (mock image)</h2>
+      <h2 class="text-h6 mb-4">Contribution by province to goal (%)</h2>
 
-      <img
-        :style="{ width: '100%' }"
-        src="https://datavizproject.com/wp-content/uploads/types/Bar-Chart-Vertical.png"
+      <contribution-by-province-to-goal
+        v-if="selectedLayerIsCountry"
+        :data="contributionByProvinceToGoalData"
       />
+      <v-card-subtitle v-else>No data available</v-card-subtitle>
     </template>
   </dashboard-layout>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+import axios from "axios";
 import layers from "@/data/mangrove-layers";
 import DashboardLayout from "@/components/DashboardLayout/DashboardLayout.vue";
 import AreaSelect from "@/components/AreaSelect/AreaSelect.vue";
 import LayersList from "@/components/LayersList/LayersList.vue";
 import AppMap from "@/components/AppMap/AppMap.vue";
+import ExtendRehabilitatedMangrove from "@/components/ExtendRehabilitatedMangrove/ExtendRehabilitatedMangrove.vue";
+import AnnualProgress from "@/components/AnnualProgress/AnnualProgress.vue";
+import ContributionByProvinceToGoal from "@/components/ContributionByProvinceToGoal/ContributionByProvinceToGoal.vue";
+import buildFeatureUrl from "@/lib/build-feature-url";
+
+const geoserverIndonesiaBaseUrl =
+  "https://deltaresdata.openearth.eu/geoserver/indonesia/wms";
 
 export default {
   components: {
@@ -60,14 +64,49 @@ export default {
     AreaSelect,
     LayersList,
     AppMap,
+    ExtendRehabilitatedMangrove,
+    AnnualProgress,
+    ContributionByProvinceToGoal,
   },
   data() {
     return {
       layers,
+      annualProgressData: {},
+      contributionByProvinceToGoalData: [],
     };
   },
   computed: {
-    ...mapState(["mangroveLayers"]),
+    ...mapState(["mangroveLayers", "selectedFeature", "selectedLayer"]),
+    selectedLayerIsCountry() {
+      return this.selectedLayer === "country";
+    },
+    progress() {
+      if (this.selectedLayerIsCountry) {
+        const latestValue =
+          this.annualProgressData?.features?.[0]?.properties?.mg_area2020 || 0;
+        return this.getPercentage(latestValue, 600000);
+      }
+
+      return null;
+    },
+  },
+  watch: {
+    selectedLayer(value) {
+      this.resetChartData();
+
+      if (value === "country") {
+        this.removeSelectedFeature();
+        this.getCountryArea();
+        this.getProvincesArea();
+      }
+    },
+    selectedFeature(value) {
+      this.resetChartData();
+
+      if (value?.properties.name_1 || value?.properties.name_2) {
+        this.getSelectedFeatureData(value);
+      }
+    },
   },
   beforeMount() {
     this.initializeStore();
@@ -81,7 +120,11 @@ export default {
     this.unwatch();
   },
   methods: {
-    ...mapActions(["setMangroveLayers", "setMangroveLayersById"]),
+    ...mapActions([
+      "setMangroveLayers",
+      "setMangroveLayersById",
+      "removeSelectedFeature",
+    ]),
     initializeStore() {
       const layers = this.$route.query.layers;
 
@@ -101,6 +144,80 @@ export default {
             .join(","),
         },
       });
+    },
+    async getCountryArea() {
+      const { data } = await axios(
+        buildFeatureUrl({
+          url: geoserverIndonesiaBaseUrl,
+          maxFeatures: 1,
+          layer: "indonesia:regions_admin0",
+        })
+      );
+
+      this.annualProgressData = data;
+    },
+    async getProvincesArea() {
+      const { data } = await axios(
+        buildFeatureUrl({
+          url: geoserverIndonesiaBaseUrl,
+          propertyName: "name_1,mg_area2020",
+          layer: "indonesia:regions_admin1",
+        })
+      );
+
+      let totalRestoredArea = 0;
+
+      const contributionByProvinceToGoalData = data?.features.map((feature) => {
+        const area = feature?.properties?.mg_area2020;
+        totalRestoredArea += area;
+
+        return {
+          name: feature?.properties?.name_1,
+          value: this.getPercentage(area, 600000),
+        };
+      });
+
+      const toRestoreArea = this.getPercentage(
+        600000 - totalRestoredArea,
+        600000
+      );
+
+      contributionByProvinceToGoalData.push({
+        value: toRestoreArea,
+        name: "To Restore",
+        itemStyle: {
+          color: "#D3D3D3",
+        },
+      });
+
+      this.contributionByProvinceToGoalData = contributionByProvinceToGoalData;
+    },
+    async getSelectedFeatureData() {
+      const { data: areaData } = await axios(
+        buildFeatureUrl({
+          ...this.selectedLayer,
+          layer:
+            this.selectedLayer.name === "Provinces"
+              ? "indonesia:regions_admin1"
+              : "indonesia:regions_admin2",
+          filter:
+            this.selectedFeature.properties.name_1 ||
+            this.selectedFeature.properties.name_2,
+        })
+      );
+
+      this.annualProgressData = areaData;
+
+      this.loading = false;
+    },
+    resetChartData() {
+      if (this.annualProgressData.xAxis && this.annualProgressData.series[0]) {
+        this.annualProgressData.xAxis.data = [];
+        this.annualProgressData.series[0].data = [];
+      }
+    },
+    getPercentage(value, total) {
+      return (value / total) * 100;
     },
   },
 };
