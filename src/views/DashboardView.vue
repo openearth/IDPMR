@@ -1,22 +1,24 @@
 <template>
   <dashboard-layout>
-    <template slot="sidebar-start">
+    <template slot="settings">
       <h2 class="text-h6 mb-4">Area</h2>
 
       <area-select />
     </template>
     <template slot="sidebar-end">
       <h2 class="text-h6 mb-4">Layers</h2>
-
-      <layers-list
-        :layers="layers"
-        :initiallySelectedLayers="mangroveLayers"
-        @select-layers="setMangroveLayers"
-      />
     </template>
 
     <template slot="main">
-      <app-map />
+      <app-map>
+        <template slot="layers-panel">
+          <layers-list
+            :layers="layers"
+            :initiallySelectedLayers="mangroveLayers"
+            @select-layers="setMangroveLayers"
+          />
+        </template>
+      </app-map>
     </template>
 
     <template slot="meta-1">

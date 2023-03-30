@@ -35,6 +35,12 @@
     </v-mapbox>
 
     <v-fade-transition mode="out-in">
+      <map-layers>
+        <slot name="layers-panel" />
+      </map-layers>
+    </v-fade-transition>
+
+    <v-fade-transition mode="out-in">
       <map-legend />
     </v-fade-transition>
   </div>
@@ -42,16 +48,18 @@
 
 <script>
 import { mapState } from "vuex";
-import MapControlFitbounds from "@/components/MapboxMap/MapControlFitbounds.vue";
-import MapLegend from "@/components/MapboxMap/MapLegend.vue";
-import MapDrawControl from "@/components/MapboxMap/MapDrawControl.vue";
 import { bbox } from "@turf/turf";
+import MapLegend from "@/components/MapboxMap/MapLegend.vue";
+import MapControlFitbounds from "@/components/MapboxMap/MapControlFitbounds.vue";
+import MapDrawControl from "@/components/MapboxMap/MapDrawControl.vue";
+import MapLayers from "@/components/MapboxMap/MapLayers.vue";
 
 export default {
   components: {
     MapControlFitbounds,
     MapLegend,
     MapDrawControl,
+    MapLayers,
   },
 
   data() {
@@ -106,7 +114,6 @@ export default {
 .app-map {
   overflow: hidden;
   position: relative;
-  min-height: 400px;
 }
 
 .app-map,

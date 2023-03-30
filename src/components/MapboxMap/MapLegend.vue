@@ -4,7 +4,7 @@
     :class="{ 'map-legend--open': showLegend }"
     elevation="4"
     :max-height="maxLegendHeight"
-    width="360"
+    width="280px"
     :max-width="maxLegendWidth"
     v-if="mangroveLayers.length > 0"
   >
