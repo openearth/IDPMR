@@ -10,7 +10,11 @@
       {{ title }}
     </v-toolbar-title>
 
-    <introduction-dialog class="ml-auto" />
+    <introduction-dialog class="ml-auto mr-2" />
+
+    <v-btn fab small outlined>
+      <v-icon> mdi-account </v-icon>
+    </v-btn>
   </v-app-bar>
 </template>
 
