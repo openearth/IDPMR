@@ -1,5 +1,5 @@
 <template>
-  <main class="container">
+  <div>
     <v-select
       v-model="selectedLayer"
       label="Select a type"
@@ -22,10 +22,10 @@
       :disabled="loading"
       class="administrative-boundaries__select"
     />
-  </main>
+  </div>
 </template>
-
-<script>
+  
+  <script>
 import layers from "@/data/administrative-boundaries-layers";
 import { mapActions, mapState } from "vuex";
 import axios from "axios";
@@ -129,9 +129,10 @@ export default {
   },
 };
 </script>
-
-<style>
+  
+  <style>
 .administrative-boundaries__select + .administrative-boundaries__select {
   margin-top: 16px;
 }
 </style>
+  
