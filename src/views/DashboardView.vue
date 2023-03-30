@@ -5,20 +5,18 @@
 
       <area-select />
     </template>
-    <template slot="sidebar-end">
-      <h2 class="text-h6 mb-4">Layers</h2>
+    <template slot="sidebar">
+      <h2 class="text-h6 mb-4">Spatial data</h2>
+
+      <layers-list
+        :layers="layers"
+        :initiallySelectedLayers="mangroveLayers"
+        @select-layers="setMangroveLayers"
+      />
     </template>
 
     <template slot="main">
-      <app-map>
-        <template slot="layers-panel">
-          <layers-list
-            :layers="layers"
-            :initiallySelectedLayers="mangroveLayers"
-            @select-layers="setMangroveLayers"
-          />
-        </template>
-      </app-map>
+      <app-map />
     </template>
 
     <template slot="meta-1">
