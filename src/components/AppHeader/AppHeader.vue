@@ -4,15 +4,18 @@
       {{ title }}
     </v-toolbar-title>
 
-    <v-btn class="ml-auto" fab small color="primary">
-      <v-icon dark> mdi-information-symbol </v-icon>
-    </v-btn>
+    <introduction-dialog class="ml-auto" />
   </v-app-bar>
 </template>
 
 <script>
+import IntroductionDialog from "../IntroductionDialog/IntroductionDialog.vue";
+
 export default {
   name: "AppHeader",
+  components: {
+    IntroductionDialog,
+  },
   props: {
     title: {
       type: String,
