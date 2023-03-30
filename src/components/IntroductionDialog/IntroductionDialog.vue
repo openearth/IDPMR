@@ -13,6 +13,11 @@
         <v-card-text> </v-card-text>
 
         <v-card-actions>
+          <v-checkbox
+            v-model="hide"
+            @change="updateUserPreference"
+            label="Don't show this again"
+          ></v-checkbox>
           <v-spacer></v-spacer>
           <v-btn color="primary" @click="dialog = false">Get started</v-btn>
         </v-card-actions>
@@ -26,7 +31,22 @@ export default {
   data() {
     return {
       dialog: false,
+      hide: false,
     };
+  },
+  methods: {
+    updateUserPreference() {
+      if (this.hide) {
+        localStorage.introductionDialog = this.hide;
+      } else {
+        localStorage.removeItem("introductionDialog");
+      }
+    },
+  },
+  mounted() {
+    if (!localStorage.introductionDialog) {
+      this.dialog = true;
+    }
   },
 };
 </script>
