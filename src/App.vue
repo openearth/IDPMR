@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <app-header title="IDPRM" theme="dark"></app-header>
+    <app-header title="IDPRM" theme="dark" />
 
     <v-main>
       <router-view />
