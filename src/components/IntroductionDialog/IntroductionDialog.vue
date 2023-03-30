@@ -2,22 +2,35 @@
   <div class="text-center">
     <v-dialog v-model="dialog" width="500">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn fab small color="primary" v-bind="attrs" v-on="on">
-          <v-icon dark> mdi-information-symbol </v-icon>
+        <v-btn fab small outlined v-bind="attrs" v-on="on">
+          <v-icon> mdi-information-symbol </v-icon>
         </v-btn>
       </template>
 
       <v-card>
         <v-card-title class="text-h5"> Introduction </v-card-title>
 
-        <v-card-text> </v-card-text>
+        <v-card-text>
+          <p>
+            The IDPMR portal is the viewport of the Integrated Data Management
+            Platform for Mangrove Rehabilitation and is in use to better
+            coordinate and monitor progress of mangrove rehabilitation.
+          </p>
+          <p>
+            World Bank are working with the Coordinating Ministry of Maritime
+            Affairs and Investment (CMMAI) to enable a data-driven approach to
+            manage and monitore the rehabilitation of Indonesia’s mangrove
+            resources.
+          </p>
+          <p>
+            It comprises four main components, namely, Institutional
+            Arrangements, People, Data, and Systems. The IDPMR integrates
+            spatial and non-spatial data from various different agencies.
+          </p>
+          <p>Worldbank and CMMAI</p>
+        </v-card-text>
 
         <v-card-actions>
-          <v-checkbox
-            v-model="hide"
-            @change="updateUserPreference"
-            label="Don't show this again"
-          ></v-checkbox>
           <v-spacer></v-spacer>
           <v-btn color="primary" @click="dialog = false">Get started</v-btn>
         </v-card-actions>
@@ -31,21 +44,12 @@ export default {
   data() {
     return {
       dialog: false,
-      hide: false,
     };
-  },
-  methods: {
-    updateUserPreference() {
-      if (this.hide) {
-        localStorage.introductionDialog = this.hide;
-      } else {
-        localStorage.removeItem("introductionDialog");
-      }
-    },
   },
   mounted() {
     if (!localStorage.introductionDialog) {
       this.dialog = true;
+      localStorage.introductionDialog = true;
     }
   },
 };
