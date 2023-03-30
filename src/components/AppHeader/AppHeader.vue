@@ -6,7 +6,7 @@
     clipped-left
     class="app-header__app-bar"
   >
-    <v-toolbar-title v-if="title">
+    <v-toolbar-title class="font-weight-bold" v-if="title">
       {{ title }}
     </v-toolbar-title>
 
