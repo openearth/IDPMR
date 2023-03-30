@@ -68,7 +68,7 @@ export default {
         accessToken: process.env.VUE_APP_MAPBOX_TOKEN,
         style: "mapbox://styles/siggyf/ckww2c33f0xlf15nujlx41fe2",
         center: [118.69, -3.64],
-        zoom: 3.5,
+        zoom: 4,
         navigationOptions: {
           showCompass: false,
         },
