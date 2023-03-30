@@ -23,26 +23,9 @@
     />
 
     <template v-if="showCharts">
-      <v-card>
-        <v-card-title>Progress linear</v-card-title>
-
-        <v-progress-linear :value="progress" height="25">
-          <strong>{{ Math.ceil(progress) }}%</strong>
-        </v-progress-linear>
-      </v-card>
-
-      <v-card>
-        <v-card-title>Bar chart</v-card-title>
-        <v-card-subtitle v-if="chartDataMessage">{{
-          chartDataMessage
-        }}</v-card-subtitle>
-        <v-chart v-else class="chart" :option="barChartOption" />
-      </v-card>
-
-      <v-card v-if="showPieChart">
-        <v-card-title>Pie chart</v-card-title>
-        <v-chart class="chart" :option="pieChartOption" />
-      </v-card>
+      <ExtendRehabilitatedMangrove v-if="layerIsCountry" :progress="progress" />
+      <AnnualProgress :option="barChartOption" :message="chartDataMessage" />
+      <ContributionByProvinceToGoal v-if="layerIsCountry" :option="pieChartOption" />
     </template>
   </main>
 </template>
@@ -52,20 +35,18 @@ import layers from '@/data/administrative-boundaries-layers'
 import { mapActions, mapState } from 'vuex'
 import axios from 'axios'
 import buildFeatureUrl from '@/lib/build-feature-url'
-import { use } from 'echarts/core'
-import { CanvasRenderer } from 'echarts/renderers'
-import { BarChart, PieChart } from 'echarts/charts'
-import { GridComponent, TooltipComponent } from 'echarts/components'
-import VChart from 'vue-echarts'
+import ExtendRehabilitatedMangrove from '@/components/ExtendRehabilitatedMangrove/ExtendRehabilitatedMangrove.vue'
+import AnnualProgress from '@/components/AnnualProgress/AnnualProgress.vue'
+import ContributionByProvinceToGoal from '@/components/ContributionByProvinceToGoal/ContributionByProvinceToGoal.vue'
 import propertiesToChartData from '@/lib/properties-to-chart-data'
-
-use([CanvasRenderer, BarChart, GridComponent, PieChart, TooltipComponent])
 
 const defaultLayer = { text: 'Country', value: 'country' }
 
 export default {
   components: {
-    VChart,
+    ExtendRehabilitatedMangrove,
+    AnnualProgress,
+    ContributionByProvinceToGoal,
   },
   data() {
     return {
@@ -152,7 +133,7 @@ export default {
 
       return false
     },
-    showPieChart() {
+    layerIsCountry() {
       return this.selectedLayer === 'country'
     },
   },
