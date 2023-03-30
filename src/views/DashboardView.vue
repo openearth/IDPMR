@@ -1,22 +1,21 @@
 <template>
   <dashboard-layout>
-    <template slot="sidebar-start">
+    <template slot="settings">
       <h2 class="text-h6 mb-4">Administrative level</h2>
 
       <area-select />
     </template>
-    <template slot="sidebar-end">
-      <h2 class="text-h6 mb-4">Spatial data</h2>
-
-      <layers-list
-        :layers="layers"
-        :initiallySelectedLayers="mangroveLayers"
-        @select-layers="setMangroveLayers"
-      />
-    </template>
 
     <template slot="main">
-      <app-map />
+      <app-map>
+        <template slot="layers-panel">
+          <layers-list
+            :layers="layers"
+            :initiallySelectedLayers="mangroveLayers"
+            @select-layers="setMangroveLayers"
+          />
+        </template>
+      </app-map>
     </template>
 
     <template slot="meta-1">
@@ -43,20 +42,20 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
-import axios from 'axios'
-import layers from '@/data/mangrove-layers'
-import DashboardLayout from '@/components/DashboardLayout/DashboardLayout.vue'
-import AreaSelect from '@/components/AreaSelect/AreaSelect.vue'
-import LayersList from '@/components/LayersList/LayersList.vue'
-import AppMap from '@/components/AppMap/AppMap.vue'
-import ExtendRehabilitatedMangrove from '@/components/ExtendRehabilitatedMangrove/ExtendRehabilitatedMangrove.vue'
-import AnnualProgress from '@/components/AnnualProgress/AnnualProgress.vue'
-import ContributionByProvinceToGoal from '@/components/ContributionByProvinceToGoal/ContributionByProvinceToGoal.vue'
-import buildFeatureUrl from '@/lib/build-feature-url'
+import { mapState, mapActions } from "vuex";
+import axios from "axios";
+import layers from "@/data/mangrove-layers";
+import DashboardLayout from "@/components/DashboardLayout/DashboardLayout.vue";
+import AreaSelect from "@/components/AreaSelect/AreaSelect.vue";
+import LayersList from "@/components/LayersList/LayersList.vue";
+import AppMap from "@/components/AppMap/AppMap.vue";
+import ExtendRehabilitatedMangrove from "@/components/ExtendRehabilitatedMangrove/ExtendRehabilitatedMangrove.vue";
+import AnnualProgress from "@/components/AnnualProgress/AnnualProgress.vue";
+import ContributionByProvinceToGoal from "@/components/ContributionByProvinceToGoal/ContributionByProvinceToGoal.vue";
+import buildFeatureUrl from "@/lib/build-feature-url";
 
 const geoserverIndonesiaBaseUrl =
-  'https://deltaresdata.openearth.eu/geoserver/indonesia/wms'
+  "https://deltaresdata.openearth.eu/geoserver/indonesia/wms";
 
 export default {
   components: {
@@ -73,65 +72,65 @@ export default {
       layers,
       annualProgressData: {},
       contributionByProvinceToGoalData: [],
-    }
+    };
   },
   computed: {
-    ...mapState(['mangroveLayers', 'selectedFeature', 'selectedLayer']),
+    ...mapState(["mangroveLayers", "selectedFeature", "selectedLayer"]),
     selectedLayerIsCountry() {
-      return this.selectedLayer === 'country'
+      return this.selectedLayer === "country";
     },
     progress() {
       if (this.selectedLayerIsCountry) {
         const latestValue =
-          this.annualProgressData?.features?.[0]?.properties?.mg_area2020 || 0
-        return this.getPercentage(latestValue, 600000)
+          this.annualProgressData?.features?.[0]?.properties?.mg_area2020 || 0;
+        return this.getPercentage(latestValue, 600000);
       }
 
-      return null
+      return null;
     },
   },
   watch: {
     selectedLayer(value) {
-      this.resetChartData()
+      this.resetChartData();
 
-      if (value === 'country') {
-        this.removeSelectedFeature()
-        this.getCountryArea()
-        this.getProvincesArea()
+      if (value === "country") {
+        this.removeSelectedFeature();
+        this.getCountryArea();
+        this.getProvincesArea();
       }
     },
     selectedFeature(value) {
-      this.resetChartData()
+      this.resetChartData();
 
       if (value?.properties.name_1 || value?.properties.name_2) {
-        this.getSelectedFeatureData(value)
+        this.getSelectedFeatureData(value);
       }
     },
   },
   beforeMount() {
-    this.initializeStore()
+    this.initializeStore();
 
     this.unwatch = this.$store.watch(
       (state) => state.mangroveLayers,
       this.syncRouteToStore
-    )
+    );
   },
   destroyed() {
-    this.unwatch()
+    this.unwatch();
   },
   methods: {
     ...mapActions([
-      'setMangroveLayers',
-      'setMangroveLayersById',
-      'removeSelectedFeature',
+      "setMangroveLayers",
+      "setMangroveLayersById",
+      "removeSelectedFeature",
     ]),
     initializeStore() {
-      const layers = this.$route.query.layers
+      const layers = this.$route.query.layers;
 
       if (layers) {
         this.setMangroveLayersById({
-          layerIds: layers.split(','),
-        })
+          layerIds: layers.split(","),
+        });
       }
     },
     syncRouteToStore() {
@@ -141,35 +140,35 @@ export default {
           ...this.$router.currentRoute.query,
           layers: this.$store.state.mangroveLayers
             .map((layer) => layer.id)
-            .join(','),
+            .join(","),
         },
-      })
+      });
     },
     async getCountryArea() {
       const { data } = await axios(
         buildFeatureUrl({
           url: geoserverIndonesiaBaseUrl,
           maxFeatures: 1,
-          layer: 'indonesia:regions_admin0',
+          layer: "indonesia:regions_admin0",
         })
-      )
+      );
 
-      this.annualProgressData = data
+      this.annualProgressData = data;
     },
     async getProvincesArea() {
       const { data } = await axios(
         buildFeatureUrl({
           url: geoserverIndonesiaBaseUrl,
-          propertyName: 'name_1,mg_area2020',
-          layer: 'indonesia:regions_admin1',
+          propertyName: "name_1,mg_area2020",
+          layer: "indonesia:regions_admin1",
         })
-      )
+      );
 
-      let totalRestoredArea = 0
+      let totalRestoredArea = 0;
 
       const contributionByProvinceToGoalData = data?.features.map((feature) => {
-        const area = feature?.properties?.mg_area2020
-        totalRestoredArea += area
+        const area = feature?.properties?.mg_area2020;
+        totalRestoredArea += area;
 
         return {
           name: feature?.properties?.name_1,
@@ -179,56 +178,56 @@ export default {
               show: false,
             },
           },
-        }
-      })
+        };
+      });
 
       const toRestoreArea = this.getPercentage(
         600000 - totalRestoredArea,
         600000
-      )
+      );
 
       contributionByProvinceToGoalData.push({
         value: toRestoreArea,
-        name: 'To Restore',
+        name: "To Restore",
         label: {
           normal: {
             show: false,
           },
         },
         itemStyle: {
-          color: '#D3D3D3',
+          color: "#D3D3D3",
         },
-      })
+      });
 
-      this.contributionByProvinceToGoalData = contributionByProvinceToGoalData
+      this.contributionByProvinceToGoalData = contributionByProvinceToGoalData;
     },
     async getSelectedFeatureData() {
       const { data: areaData } = await axios(
         buildFeatureUrl({
           ...this.selectedLayer,
           layer:
-            this.selectedLayer.name === 'Provinces'
-              ? 'indonesia:regions_admin1'
-              : 'indonesia:regions_admin2',
+            this.selectedLayer.name === "Provinces"
+              ? "indonesia:regions_admin1"
+              : "indonesia:regions_admin2",
           filter:
             this.selectedFeature.properties.name_1 ||
             this.selectedFeature.properties.name_2,
         })
-      )
+      );
 
-      this.annualProgressData = areaData
+      this.annualProgressData = areaData;
 
-      this.loading = false
+      this.loading = false;
     },
     resetChartData() {
       if (this.annualProgressData.xAxis && this.annualProgressData.series[0]) {
-        this.annualProgressData.xAxis.data = []
-        this.annualProgressData.series[0].data = []
+        this.annualProgressData.xAxis.data = [];
+        this.annualProgressData.series[0].data = [];
       }
     },
     getPercentage(value, total) {
-      return (value / total) * 100
+      return (value / total) * 100;
     },
   },
-}
+};
 </script>

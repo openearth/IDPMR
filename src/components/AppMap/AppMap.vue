@@ -35,6 +35,12 @@
     </v-mapbox>
 
     <v-fade-transition mode="out-in">
+      <map-layers>
+        <slot name="layers-panel" />
+      </map-layers>
+    </v-fade-transition>
+
+    <v-fade-transition mode="out-in">
       <map-legend />
     </v-fade-transition>
   </div>
@@ -42,16 +48,18 @@
 
 <script>
 import { mapState } from "vuex";
-import MapControlFitbounds from "@/components/MapboxMap/MapControlFitbounds.vue";
-import MapLegend from "@/components/MapboxMap/MapLegend.vue";
-import MapDrawControl from "@/components/MapboxMap/MapDrawControl.vue";
 import { bbox } from "@turf/turf";
+import MapLegend from "@/components/MapboxMap/MapLegend.vue";
+import MapControlFitbounds from "@/components/MapboxMap/MapControlFitbounds.vue";
+import MapDrawControl from "@/components/MapboxMap/MapDrawControl.vue";
+import MapLayers from "@/components/MapboxMap/MapLayers.vue";
 
 export default {
   components: {
     MapControlFitbounds,
     MapLegend,
     MapDrawControl,
+    MapLayers,
   },
 
   data() {
@@ -60,7 +68,7 @@ export default {
         accessToken: process.env.VUE_APP_MAPBOX_TOKEN,
         style: "mapbox://styles/siggyf/ckww2c33f0xlf15nujlx41fe2",
         center: [118.69, -3.64],
-        zoom: 4,
+        zoom: 3.5,
         navigationOptions: {
           showCompass: false,
         },
@@ -98,12 +106,12 @@ export default {
         this.fitToBounds();
       }
     },
-    
+
     administrativeBoundariesLayer(value) {
       if (!value) {
         this.fitToBounds();
       }
-    }
+    },
   },
 };
 </script>
@@ -112,7 +120,7 @@ export default {
 .app-map {
   overflow: hidden;
   position: relative;
-  min-height: 400px;
+  min-height: 60vh;
 }
 
 .app-map,
