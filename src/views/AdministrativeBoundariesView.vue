@@ -23,21 +23,8 @@
     />
 
     <template v-if="showCharts">
-      <v-card>
-        <v-card-title>Progress linear</v-card-title>
-
-        <v-progress-linear :value="progress" height="25">
-          <strong>{{ Math.ceil(progress) }}%</strong>
-        </v-progress-linear>
-      </v-card>
-
-      <v-card>
-        <v-card-title>Chart</v-card-title>
-        <v-card-subtitle v-if="chartDataMessage">{{
-          chartDataMessage
-        }}</v-card-subtitle>
-        <v-chart v-else class="chart" :option="option" />
-      </v-card>
+      <ExtendRehabilitatedMangrove :progress="progress" />
+      <AnnualProgress :option="option" :message="chartDataMessage" />
     </template>
   </main>
 </template>
@@ -47,20 +34,16 @@ import layers from '@/data/administrative-boundaries-layers'
 import { mapActions, mapState } from 'vuex'
 import axios from 'axios'
 import buildFeatureUrl from '@/lib/build-feature-url'
-import { use } from 'echarts/core'
-import { CanvasRenderer } from 'echarts/renderers'
-import { BarChart } from 'echarts/charts'
-import { GridComponent } from 'echarts/components'
-import VChart from 'vue-echarts'
+import ExtendRehabilitatedMangrove from '@/components/ExtendRehabilitatedMangrove/ExtendRehabilitatedMangrove.vue'
+import AnnualProgress from '@/components/AnnualProgress/AnnualProgress.vue'
 import propertiesToChartData from '@/lib/properties-to-chart-data'
-
-use([CanvasRenderer, BarChart, GridComponent])
 
 const defaultLayer = { text: 'Country', value: 'country' }
 
 export default {
   components: {
-    VChart,
+    ExtendRehabilitatedMangrove,
+    AnnualProgress,
   },
   data() {
     return {
