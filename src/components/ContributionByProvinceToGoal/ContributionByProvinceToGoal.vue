@@ -33,13 +33,7 @@ export default {
           {
             type: "pie",
             radius: "50%",
-            data: [
-              { value: 1048, name: "Bali" },
-              { value: 735, name: "Maluku Utara" },
-              { value: 580, name: "Lampung" },
-              { value: 484, name: "Kepulauan Riua" },
-              { value: 300, name: "Sumatera Barat" },
-            ],
+            data: [],
           },
         ],
       },
