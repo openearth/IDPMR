@@ -33,6 +33,7 @@ export default {
           {
             type: "pie",
             radius: "50%",
+            avoidLabelOverlap: false,
             data: [],
           },
         ],

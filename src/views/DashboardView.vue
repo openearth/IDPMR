@@ -174,11 +174,6 @@ export default {
         return {
           name: feature?.properties?.name_1,
           value: this.getPercentage(area, 600000),
-          label: {
-            normal: {
-              show: false,
-            },
-          },
         };
       });
 
@@ -190,11 +185,6 @@ export default {
       contributionByProvinceToGoalData.push({
         value: toRestoreArea,
         name: "To Restore",
-        label: {
-          normal: {
-            show: false,
-          },
-        },
         itemStyle: {
           color: "#D3D3D3",
         },
