@@ -9,26 +9,8 @@ const router = new VueRouter({
   routes: [
     {
       path: "/",
-      name: "home",
-      component: () => import("../views/HomeView.vue"),
-    },
-    {
-      path: "/settings",
-      name: "settings",
-      component: () => import("../views/SettingsView.vue"),
-      redirect: "/settings/layers",
-      children: [
-        {
-          path: "layers",
-          name: "layers",
-          component: () => import("../views/LayersView.vue"),
-        },
-        {
-          path: "administrative-boundaries",
-          name: "administrative-boundaries",
-          component: () => import("../views/AdministrativeBoundariesView.vue"),
-        },
-      ],
+      name: "dashboard",
+      component: () => import("../views/DashboardView.vue"),
     },
   ],
 });

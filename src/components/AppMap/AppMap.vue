@@ -7,6 +7,7 @@
       :center="mapConfig.center"
       :zoom="mapConfig.zoom"
       @mb-created="onMapCreated"
+      @mb-load="onMapLoaded"
     >
       <v-mapbox-layer
         v-if="administrativeBoundariesLayer"
@@ -56,6 +57,10 @@ export default {
 
   data() {
     return {
+      // keeps track of if map is loaded,
+      // this is needed because loading the children before the map is loaded
+      // will cause the map to throw errors
+      loaded: false,
       mapConfig: {
         accessToken: process.env.VUE_APP_MAPBOX_TOKEN,
         style: "mapbox://styles/siggyf/ckww2c33f0xlf15nujlx41fe2",
@@ -77,6 +82,9 @@ export default {
   methods: {
     onMapCreated(map) {
       this.$root.map = map;
+    },
+    onMapLoaded() {
+      this.loaded = false;
     },
     fitToBounds() {
       this.$root.map.flyTo({
@@ -106,6 +114,7 @@ export default {
 .app-map {
   overflow: hidden;
   position: relative;
+  min-height: 400px;
 }
 
 .app-map,
