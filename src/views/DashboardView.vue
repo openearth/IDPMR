@@ -47,7 +47,7 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import axios from "axios";
-import layers from "@/data/mangrove-layers";
+import tabs from "@/data/tabs";
 import DashboardLayout from "@/components/DashboardLayout/DashboardLayout.vue";
 import AreaSelect from "@/components/AreaSelect/AreaSelect.vue";
 import LayersList from "@/components/LayersList/LayersList.vue";
@@ -72,7 +72,6 @@ export default {
   },
   data() {
     return {
-      layers,
       annualProgressData: {},
       contributionByProvinceToGoalData: [],
     };
@@ -90,6 +89,12 @@ export default {
       }
 
       return null;
+    },
+    currentTab() {
+      return tabs.find((tab) => tab.slug === this.$route.path)?.id;
+    },
+    layers() {
+      return tabs.find((tab) => tab.id === this.currentTab)?.layers || [];
     },
   },
   watch: {

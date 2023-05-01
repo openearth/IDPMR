@@ -1,5 +1,5 @@
 import buildWmsLayer from "@/lib/build-wms-layer";
-import allLayers from "@/data/mangrove-layers.json";
+import tabs from "@/data/tabs.json";
 
 export default {
   namespaced: true,
@@ -38,6 +38,7 @@ export default {
       commit("SET_WMS_MANGROVE_LAYERS", { wmsLayers });
     },
     setMangroveLayersById({ commit }, { layerIds }) {
+      const allLayers = tabs.map((tab) => tab.layers).flat();
       const layers = allLayers.filter((layer) => layerIds.includes(layer.id));
 
       commit("SET_MANGROVE_LAYERS", { layers: layers });

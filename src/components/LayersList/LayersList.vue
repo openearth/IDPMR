@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       activeLayers: [],
-      sortedLayers: this.layers,
+      sortedLayers: [],
     };
   },
   methods: {
@@ -59,10 +59,14 @@ export default {
   },
   mounted() {
     this.activeLayers = [...this.initiallySelectedLayers];
+    this.sortedLayers = [...this.layers];
   },
   watch: {
     activeLayers() {
       this.updateLayers();
+    },
+    layers() {
+      this.sortedLayers = [...this.layers];
     },
   },
 };

@@ -1,0 +1,65 @@
+[
+  {
+    "id": "mangrove-extent",
+    "slug": "/",
+    "title": "Mangrove Extent",
+    "layers": [
+      {
+        "id": "mangrove-2015",
+        "name": "Mangrove 2015",
+        "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
+        "version": "1.1.0",
+        "layer": "gmw_v3_2015_vec"
+      },
+      {
+        "id": "mangrove-2016",
+        "name": "Mangrove 2016",
+        "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
+        "version": "1.1.0",
+        "layer": "gmw_v3_2016_vec"
+      },
+      {
+        "id": "mangrove-2017",
+        "name": "Mangrove 2017",
+        "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
+        "version": "1.1.0",
+        "layer": "gmw_v3_2017_vec"
+      },
+      {
+        "id": "mangrove-2019",
+        "name": "Mangrove 2019",
+        "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
+        "version": "1.1.0",
+        "layer": "gmw_v3_2019_vec"
+      },
+      {
+        "id": "mangrove-2020",
+        "name": "Mangrove 2020",
+        "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
+        "version": "1.1.0",
+        "layer": "gmw_v3_2020_vec"
+      }
+    ]
+  },
+  {
+    "id": "blue-carbon",
+    "slug": "/blue-carbon",
+    "title": "Blue Carbon",
+    "layers": [
+      {
+        "id": "prm-2020",
+        "name": "PRM 2020",
+        "url": "https://services3.arcgis.com/AvRv3WI698ynGlkI/arcgis/rest/services/PRM_2020/FeatureServer/0",
+        "version": "1.1.0",
+        "layer": "gmw_v3_2015_vec"
+      },
+      {
+        "id": "prm-2021",
+        "name": "PRM 2021",
+        "url": "https://services3.arcgis.com/AvRv3WI698ynGlkI/arcgis/rest/services/PRM_2021/FeatureServer/0",
+        "version": "1.1.0",
+        "layer": "gmw_v3_2016_vec"
+      }
+    ]
+  }
+]

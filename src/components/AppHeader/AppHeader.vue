@@ -10,7 +10,13 @@
       {{ title }}
     </v-toolbar-title>
 
-    <introduction-dialog class="ml-auto mr-2" />
+    <v-tabs class="app-header__tabs mr-4" v-model="currentTab" right>
+      <v-tab v-for="tab in tabs" :key="tab.id" :to="tab.slug" exact-path>
+        {{ tab.title }}
+      </v-tab>
+    </v-tabs>
+
+    <introduction-dialog class="mr-2" />
     <authentication />
   </v-app-bar>
 </template>
@@ -18,12 +24,19 @@
 <script>
 import IntroductionDialog from "../IntroductionDialog/IntroductionDialog.vue";
 import Authentication from "../Authentication/Authentication.vue";
+import tabs from "@/data/tabs";
 
 export default {
   name: "AppHeader",
   components: {
     IntroductionDialog,
     Authentication,
+  },
+  data() {
+    return {
+      tabs,
+      currentTab: "",
+    };
   },
   props: {
     title: {
@@ -44,11 +57,6 @@ export default {
       default: true,
     },
   },
-  methods: {
-    onMenuButtonClick(value) {
-      this.$emit("toggleSidebar", value);
-    },
-  },
 };
 </script>
 
@@ -60,5 +68,8 @@ export default {
     rgba(19, 81, 55, 1) 71%,
     rgba(71, 116, 27, 1) 100%
   );
+}
+.app-header__tabs.v-tabs {
+  width: auto;
 }
 </style>
