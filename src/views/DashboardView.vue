@@ -8,11 +8,13 @@
     <template slot="sidebar">
       <h2 class="text-h6 mb-4">Spatial data</h2>
 
-      <layers-list
-        :layers="layers"
-        :initiallySelectedLayers="mangroveLayers"
-        @select-layers="setMangroveLayers"
-      />
+      <div class="dashboard-view__scrollable-list">
+        <layers-list
+          :layers="layers"
+          :initiallySelectedLayers="mangroveLayers"
+          @select-layers="setMangroveLayers"
+        />
+      </div>
     </template>
 
     <template slot="main">
@@ -222,3 +224,12 @@ export default {
   },
 };
 </script>
+
+<style>
+.dashboard-view__scrollable-list {
+  max-height: 300px;
+  overflow: hidden;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+</style>
