@@ -28,12 +28,12 @@
       <v-card-subtitle v-else>No data available</v-card-subtitle>
     </template>
     <template slot="meta-2">
-      <h2 class="text-h6 mb-4">Annual progress (ha)</h2>
+      <h2 class="text-h6 mb-4 mr-10">Annual progress (ha)</h2>
 
       <annual-progress :data="annualProgressData" />
     </template>
     <template slot="meta-3">
-      <h2 class="text-h6 mb-4">Contribution by province to goal (%)</h2>
+      <h2 class="text-h6 mb-4 mr-10">Contribution by province to goal (%)</h2>
 
       <contribution-by-province-to-goal
         v-if="selectedLayerIsCountry"
