@@ -60,7 +60,10 @@ export default {
     showLegend: false,
   }),
 
-  computed: mapState(["mangroveLayers", "administrativeBoundariesLayers"]),
+  computed: mapState("data", [
+    "mangroveLayers",
+    "administrativeBoundariesLayers",
+  ]),
 
   methods: {
     legendUrl(layer) {

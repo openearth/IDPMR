@@ -75,9 +75,9 @@ export default {
       ],
     };
   },
-  computed: mapState(["currentUser"]),
+  computed: mapState("authentication", ["currentUser"]),
   methods: {
-    ...mapActions(["setCurrentUser", "removeCurrentUser"]),
+    ...mapActions("authentication", ["setCurrentUser", "removeCurrentUser"]),
     validate() {
       this.$refs.form.validate();
     },

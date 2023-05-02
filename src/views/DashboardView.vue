@@ -78,7 +78,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(["mangroveLayers", "selectedFeature", "selectedLayer"]),
+    ...mapState("data", ["mangroveLayers", "selectedFeature", "selectedLayer"]),
     selectedLayerIsCountry() {
       return this.selectedLayer === "country";
     },
@@ -114,7 +114,7 @@ export default {
     this.initializeStore();
 
     this.unwatch = this.$store.watch(
-      (state) => state.mangroveLayers,
+      (state) => state.data.mangroveLayers,
       this.syncRouteToStore
     );
   },
@@ -122,7 +122,7 @@ export default {
     this.unwatch();
   },
   methods: {
-    ...mapActions([
+    ...mapActions("data", [
       "setMangroveLayers",
       "setMangroveLayersById",
       "removeSelectedFeature",
@@ -141,7 +141,7 @@ export default {
         ...this.$router.currentRoute,
         query: {
           ...this.$router.currentRoute.query,
-          layers: this.$store.state.mangroveLayers
+          layers: this.$store.state.data.mangroveLayers
             .map((layer) => layer.id)
             .join(","),
         },
