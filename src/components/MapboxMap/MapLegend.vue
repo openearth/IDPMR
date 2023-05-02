@@ -6,7 +6,7 @@
     :max-height="maxLegendHeight"
     width="280px"
     :max-width="maxLegendWidth"
-    v-if="dataLayers.length > 0"
+    v-if="mangroveLayers.length > 0"
   >
     <v-card-title class="map-legend__title subtitle-2" @click="toggleLegend">
       Legends
@@ -19,9 +19,12 @@
       </v-icon>
     </v-card-title>
 
-    <v-card-text v-if="dataLayers.length >= 2" class="map-legend__content">
+    <v-card-text v-if="mangroveLayers.length >= 2" class="map-legend__content">
       <v-expansion-panels multiple>
-        <v-expansion-panel v-for="(layer, index) in dataLayers" :key="index">
+        <v-expansion-panel
+          v-for="(layer, index) in mangroveLayers"
+          :key="index"
+        >
           <v-expansion-panel-header>
             {{ layer.name }}
           </v-expansion-panel-header>
@@ -34,9 +37,13 @@
 
     <v-card-text v-else class="map-legend__content">
       <p class="body-1 mb-2">
-        {{ dataLayers[0].name }}
+        {{ mangroveLayers[0].name }}
       </p>
-      <img class="map-legend__image" alt="" :src="legendUrl(dataLayers[0])" />
+      <img
+        class="map-legend__image"
+        alt=""
+        :src="legendUrl(mangroveLayers[0])"
+      />
     </v-card-text>
   </v-card>
 </template>
@@ -53,7 +60,10 @@ export default {
     showLegend: false,
   }),
 
-  computed: mapState("data", ["dataLayers", "administrativeBoundariesLayers"]),
+  computed: mapState("data", [
+    "mangroveLayers",
+    "administrativeBoundariesLayers",
+  ]),
 
   methods: {
     legendUrl(layer) {

@@ -16,7 +16,7 @@
       />
 
       <v-mapbox-layer
-        v-for="layer in dataLayers"
+        v-for="layer in mangroveLayers"
         :key="layer.id"
         :options="layer"
       />
@@ -69,7 +69,7 @@ export default {
   },
 
   computed: mapState("data", {
-    dataLayers: "wmsDataLayers",
+    mangroveLayers: "wmsMangroveLayers",
     administrativeBoundariesLayer: "wmsAdministrativeBoundariesLayer",
     selectedFeature: "selectedFeature",
   }),
