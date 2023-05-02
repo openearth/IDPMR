@@ -1,4 +1,4 @@
-import queryString from 'query-string'
+import queryString from "query-string";
 
 // GeoServer - GetFeature Docs
 // https://docs.geoserver.org/stable/en/user/services/wfs/reference.html#getfeature
@@ -10,23 +10,23 @@ export default function ({
   maxFeatures = null,
 }) {
   const params = {
-    request: 'GetFeature',
-    service: 'WFS',
-    version: '1.1.0',
-    outputFormat: 'json',
+    request: "GetFeature",
+    service: "WFS",
+    version: "1.1.0",
+    outputFormat: "json",
     typeName: layer,
-    srsName: 'EPSG:4326',
-  }
+    srsName: "EPSG:4326",
+  };
 
   if (filter) {
-    params.CQL_FILTER = `${propertyName}='${filter}'`
+    params.CQL_FILTER = `${propertyName}='${filter}'`;
   } else if (propertyName) {
-    params.propertyName = propertyName
+    params.propertyName = propertyName;
   }
 
   if (maxFeatures) {
-    params.maxFeatures = maxFeatures
+    params.maxFeatures = maxFeatures;
   }
 
-  return `${url}?${queryString.stringify(params)}`
+  return `${url}/wms?${queryString.stringify(params)}`;
 }

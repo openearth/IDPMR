@@ -2,7 +2,7 @@
   {
     "id": "mangrove-2015",
     "name": "Mangrove 2015",
-    "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
+    "url": "https://deltaresdata.openearth.eu/geoserver/indonesia",
     "version": "1.1.0",
     "layer": "gmw_v3_2015_vec",
     "description": "Layer showing the mangroves in Indonesia in 2015. The mangrove layer is based on the Global Mangrove Watch (GMW) dataset. The dataset is available at <a href='https://www.globalmangrovewatch.org/' target='blank' rel='noopener noreferrer'>Global Mangrove Watch</a>."
@@ -10,7 +10,7 @@
   {
     "id": "mangrove-2016",
     "name": "Mangrove 2016",
-    "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
+    "url": "https://deltaresdata.openearth.eu/geoserver/indonesia",
     "version": "1.1.0",
     "layer": "gmw_v3_2016_vec",
     "description": "Layer showing the mangroves in Indonesia in 2016. The mangrove layer is based on the Global Mangrove Watch (GMW) dataset. The dataset is available at <a href='https://www.globalmangrovewatch.org/' target='blank' rel='noopener noreferrer'>Global Mangrove Watch</a>."
@@ -18,7 +18,7 @@
   {
     "id": "mangrove-2017",
     "name": "Mangrove 2017",
-    "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
+    "url": "https://deltaresdata.openearth.eu/geoserver/indonesia",
     "version": "1.1.0",
     "layer": "gmw_v3_2017_vec",
     "description": "Layer showing the mangroves in Indonesia in 2017. The mangrove layer is based on the Global Mangrove Watch (GMW) dataset. The dataset is available at <a href='https://www.globalmangrovewatch.org/' target='blank' rel='noopener noreferrer'>Global Mangrove Watch</a>."
@@ -26,7 +26,7 @@
   {
     "id": "mangrove-2019",
     "name": "Mangrove 2019",
-    "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
+    "url": "https://deltaresdata.openearth.eu/geoserver/indonesia",
     "version": "1.1.0",
     "layer": "gmw_v3_2019_vec",
     "description": "Layer showing the mangroves in Indonesia in 2018. The mangrove layer is based on the Global Mangrove Watch (GMW) dataset. The dataset is available at <a href='https://www.globalmangrovewatch.org/' target='blank' rel='noopener noreferrer'>Global Mangrove Watch</a>."
@@ -34,7 +34,7 @@
   {
     "id": "mangrove-2020",
     "name": "Mangrove 2020",
-    "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
+    "url": "https://deltaresdata.openearth.eu/geoserver/indonesia",
     "version": "1.1.0",
     "layer": "gmw_v3_2020_vec",
     "description": "Layer showing the mangroves in Indonesia in 2019. The mangrove layer is based on the Global Mangrove Watch (GMW) dataset. The dataset is available at <a href='https://www.globalmangrovewatch.org/' target='blank' rel='noopener noreferrer'>Global Mangrove Watch</a>."

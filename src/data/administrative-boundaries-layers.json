@@ -2,7 +2,7 @@
   {
     "id": "level-1",
     "name": "Provinces",
-    "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
+    "url": "https://deltaresdata.openearth.eu/geoserver/indonesia",
     "version": "1.1.0",
     "layer": "regions_admin1",
     "propertyName": "name_1"
@@ -10,7 +10,7 @@
   {
     "id": "level-2",
     "name": "Regencies",
-    "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
+    "url": "https://deltaresdata.openearth.eu/geoserver/indonesia",
     "version": "1.1.0",
     "layer": "regions_admin2",
     "propertyName": "name_2"
