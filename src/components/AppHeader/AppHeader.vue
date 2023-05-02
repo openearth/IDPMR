@@ -11,19 +11,19 @@
     </v-toolbar-title>
 
     <introduction-dialog class="ml-auto mr-2" />
-    <login-dialog />
+    <authentication />
   </v-app-bar>
 </template>
 
 <script>
 import IntroductionDialog from "../IntroductionDialog/IntroductionDialog.vue";
-import LoginDialog from "../LoginDialog/LoginDialog.vue";
+import Authentication from "../Authentication/Authentication.vue";
 
 export default {
   name: "AppHeader",
   components: {
     IntroductionDialog,
-    LoginDialog,
+    Authentication,
   },
   props: {
     title: {
