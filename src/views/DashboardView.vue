@@ -8,7 +8,9 @@
     <template slot="sidebar">
       <h2 class="text-h6 mb-4">Spatial data</h2>
 
-      <div class="dashboard-view__scrollable-list">
+      <div
+        class="dashboard-view__scrollable-list overflow-hidden overflow-y-auto pr-2"
+      >
         <layers-list
           :layers="layers"
           :initiallySelectedLayers="mangroveLayers"
@@ -228,8 +230,5 @@ export default {
 <style>
 .dashboard-view__scrollable-list {
   max-height: 300px;
-  overflow: hidden;
-  overflow-y: auto;
-  padding-right: 10px;
 }
 </style>
