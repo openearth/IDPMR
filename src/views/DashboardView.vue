@@ -9,11 +9,7 @@
       <h2 class="text-h6 mb-4">Spatial data</h2>
 
       <div class="dashboard-view__scrollable-list overflow-y-auto pr-2">
-        <layers-list
-          :layers="layers"
-          :initiallySelectedLayers="mangroveLayers"
-          @select-layers="setMangroveLayers"
-        />
+        <layers-list :layers="layers" @select-layers="setMangroveLayers" />
       </div>
     </template>
 
@@ -207,8 +203,6 @@ export default {
         })
       );
 
-      console.log(this.selectedLayer);
-      console.log(areaData);
       this.annualProgressData = areaData;
 
       this.loading = false;

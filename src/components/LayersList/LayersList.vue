@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
 import draggable from "vuedraggable";
 import LayerCard from "@/components/LayerCard/LayerCard.vue";
 
@@ -29,44 +30,41 @@ export default {
       type: Array,
       required: true,
     },
-    initiallySelectedLayers: {
-      type: Array,
-      default: () => [],
-    },
   },
   data() {
     return {
-      activeLayers: [],
       sortedLayers: [],
     };
   },
+  computed: {
+    ...mapState("data", { activeLayers: "mangroveLayers" }),
+  },
   methods: {
+    ...mapActions("data", ["setMangroveLayers"]),
     toggleLayer(layer) {
-      if (this.activeLayers.some((l) => l.id === layer.id)) {
-        this.activeLayers = this.activeLayers.filter((l) => l.id !== layer.id);
-      } else {
-        this.activeLayers.push(layer);
-      }
-    },
+      const selectedLayers = this.activeLayers.some((l) => l.id === layer.id)
+        ? this.activeLayers.filter((l) => l.id !== layer.id)
+        : [...this.activeLayers, layer];
 
-    updateLayers() {
+      this.updateLayers(selectedLayers);
+    },
+    updateLayers(layers) {
       const activeSortedLayers = this.sortedLayers.filter((layer) =>
-        this.activeLayers.some((l) => l.id === layer.id)
+        layers.some((l) => l.id === layer.id)
       );
 
       this.$emit("select-layers", { layers: activeSortedLayers });
     },
   },
   mounted() {
-    this.activeLayers = [...this.initiallySelectedLayers];
     this.sortedLayers = [...this.layers];
   },
   watch: {
-    activeLayers() {
-      this.updateLayers();
-    },
     layers() {
       this.sortedLayers = [...this.layers];
+    },
+    sortedLayers() {
+      this.updateLayers(this.activeLayers);
     },
   },
 };
