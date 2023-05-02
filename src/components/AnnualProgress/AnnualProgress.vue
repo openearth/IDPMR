@@ -2,14 +2,10 @@
   <v-card-subtitle v-if="message">{{ message }}</v-card-subtitle>
   <div v-else>
     <v-chart ref="chart" class="chart" :option="option" />
-    <v-btn
-      v-if="currentUser"
-      icon
-      @click="downloadChart"
-      class="annual-progress__download-button"
-    >
-      <v-icon> mdi-download </v-icon>
-    </v-btn>
+    <download-chart-button
+      :chart="$refs.chart"
+      filename="annual-progress.png"
+    />
   </div>
 </template>
 
@@ -19,15 +15,15 @@ import { CanvasRenderer } from "echarts/renderers";
 import { BarChart } from "echarts/charts";
 import { GridComponent } from "echarts/components";
 import VChart from "vue-echarts";
-import { mapState } from "vuex";
 import propertiesToChartData from "@/lib/properties-to-chart-data";
-import downloadFile from "@/lib/download-file";
+import DownloadChartButton from "../DownloadChartButton/DownloadChartButton.vue";
 
 use([CanvasRenderer, BarChart, GridComponent]);
 
 export default {
   components: {
     VChart,
+    DownloadChartButton,
   },
 
   props: {
@@ -36,8 +32,6 @@ export default {
       required: true,
     },
   },
-
-  computed: mapState(["currentUser"]),
 
   data() {
     return {
@@ -88,22 +82,6 @@ export default {
       this.option.xAxis.data = [];
       this.option.series[0].data = [];
     },
-    downloadChart() {
-      downloadFile(
-        "annual-progress.png",
-        this.$refs.chart.getDataURL({
-          type: "png",
-        })
-      );
-    },
   },
 };
 </script>
-
-<style>
-.annual-progress__download-button {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-}
-</style>

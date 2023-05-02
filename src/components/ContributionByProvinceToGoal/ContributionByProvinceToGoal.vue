@@ -1,14 +1,10 @@
 <template>
   <div>
     <v-chart ref="chart" class="chart" :option="option" />
-    <v-btn
-      v-if="currentUser"
-      icon
-      @click="downloadChart"
-      class="contribution-by-province-to-goal__download-button"
-    >
-      <v-icon> mdi-download </v-icon>
-    </v-btn>
+    <download-chart-button
+      :chart="$refs.chart"
+      filename="contribution-by-province.png"
+    />
   </div>
 </template>
 
@@ -17,15 +13,15 @@ import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
 import { PieChart } from "echarts/charts";
 import { TooltipComponent } from "echarts/components";
-import { mapState } from "vuex";
 import VChart from "vue-echarts";
-import downloadFile from "@/lib/download-file";
+import DownloadChartButton from "../DownloadChartButton/DownloadChartButton.vue";
 
 use([CanvasRenderer, PieChart, TooltipComponent]);
 
 export default {
   components: {
     VChart,
+    DownloadChartButton,
   },
 
   props: {
@@ -34,8 +30,6 @@ export default {
       required: true,
     },
   },
-
-  computed: mapState(["currentUser"]),
 
   data() {
     return {
@@ -65,22 +59,6 @@ export default {
     updateChart(data) {
       this.option.series[0].data = data;
     },
-    downloadChart() {
-      downloadFile(
-        "contribution-by-province.png",
-        this.$refs.chart.getDataURL({
-          type: "png",
-        })
-      );
-    },
   },
 };
 </script>
-
-<style>
-.contribution-by-province-to-goal__download-button {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-}
-</style>
