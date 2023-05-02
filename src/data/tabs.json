@@ -6,43 +6,53 @@
     "layers": [
       {
         "id": "mangrove-2015",
-        "name": "Mangrove 2015",
+        "name": "Mangrove Extent 2015",
         "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
         "version": "1.1.0",
         "layer": "gmw_v3_2015_vec",
-        "description": "Layer showing the mangroves in Indonesia in 2015. The mangrove layer is based on the Global Mangrove Watch (GMW) dataset. The dataset is available at <a href='https://www.globalmangrovewatch.org/' target='blank' rel='noopener noreferrer'>Global Mangrove Watch</a>."
+        "description": "Map with mangrove extent for 2015.",
+        "source": "<a href='https://data.unep-wcmc.org/datasets/45' target='_blank' rel='noopener noreferrer'>UN WMCM</a>",
+        "metadata": "<a href='https://data.unep-wcmc.org/pdfs/45/GMW_001_Metadata.pdf?1657017163' target='_blank' rel='noopener noreferrer'>https://data.unep-wcmc.org/pdfs/45/GMW_001_Metadata.pdf?1657017163</a>"
       },
       {
         "id": "mangrove-2016",
-        "name": "Mangrove 2016",
+        "name": "Mangrove Extent 2016",
         "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
         "version": "1.1.0",
         "layer": "gmw_v3_2016_vec",
-        "description": "Layer showing the mangroves in Indonesia in 2015. The mangrove layer is based on the Global Mangrove Watch (GMW) dataset. The dataset is available at <a href='https://www.globalmangrovewatch.org/' target='blank' rel='noopener noreferrer'>Global Mangrove Watch</a>."
+        "description": "Map with mangrove extent for 2016.",
+        "source": "<a href='https://data.unep-wcmc.org/datasets/45' target='_blank' rel='noopener noreferrer'>UN WMCM</a>",
+        "metadata": "<a href='https://data.unep-wcmc.org/pdfs/45/GMW_001_Metadata.pdf?1657017163' target='_blank' rel='noopener noreferrer'>https://data.unep-wcmc.org/pdfs/45/GMW_001_Metadata.pdf?1657017163</a>"
       },
       {
         "id": "mangrove-2017",
-        "name": "Mangrove 2017",
+        "name": "Mangrove Extent 2017",
         "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
         "version": "1.1.0",
         "layer": "gmw_v3_2017_vec",
-        "description": "Layer showing the mangroves in Indonesia in 2015. The mangrove layer is based on the Global Mangrove Watch (GMW) dataset. The dataset is available at <a href='https://www.globalmangrovewatch.org/' target='blank' rel='noopener noreferrer'>Global Mangrove Watch</a>."
+        "description": "Map with mangrove extent for 2017.",
+        "source": "<a href='https://data.unep-wcmc.org/datasets/45' target='_blank' rel='noopener noreferrer'>UN WMCM</a>",
+        "metadata": "<a href='https://data.unep-wcmc.org/pdfs/45/GMW_001_Metadata.pdf?1657017163' target='_blank' rel='noopener noreferrer'>https://data.unep-wcmc.org/pdfs/45/GMW_001_Metadata.pdf?1657017163</a>"
       },
       {
         "id": "mangrove-2019",
-        "name": "Mangrove 2019",
+        "name": "Mangrove Extent 2019",
         "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
         "version": "1.1.0",
         "layer": "gmw_v3_2019_vec",
-        "description": "Layer showing the mangroves in Indonesia in 2015. The mangrove layer is based on the Global Mangrove Watch (GMW) dataset. The dataset is available at <a href='https://www.globalmangrovewatch.org/' target='blank' rel='noopener noreferrer'>Global Mangrove Watch</a>."
+        "description": "Map with mangrove extent for 2019.",
+        "source": "<a href='https://data.unep-wcmc.org/datasets/45' target='_blank' rel='noopener noreferrer'>UN WMCM</a>",
+        "metadata": "<a href='https://data.unep-wcmc.org/pdfs/45/GMW_001_Metadata.pdf?1657017163' target='_blank' rel='noopener noreferrer'>https://data.unep-wcmc.org/pdfs/45/GMW_001_Metadata.pdf?1657017163</a>"
       },
       {
         "id": "mangrove-2020",
-        "name": "Mangrove 2020",
+        "name": "Mangrove Extent 2020",
         "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
         "version": "1.1.0",
         "layer": "gmw_v3_2020_vec",
-        "description": "Layer showing the mangroves in Indonesia in 2015. The mangrove layer is based on the Global Mangrove Watch (GMW) dataset. The dataset is available at <a href='https://www.globalmangrovewatch.org/' target='blank' rel='noopener noreferrer'>Global Mangrove Watch</a>."
+        "description": "Map with mangrove extent for 2020.",
+        "source": "<a href='https://data.unep-wcmc.org/datasets/45' target='_blank' rel='noopener noreferrer'>UN WMCM</a>",
+        "metadata": "<a href='https://data.unep-wcmc.org/pdfs/45/GMW_001_Metadata.pdf?1657017163' target='_blank' rel='noopener noreferrer'>https://data.unep-wcmc.org/pdfs/45/GMW_001_Metadata.pdf?1657017163</a>"
       }
     ]
   },
@@ -53,24 +63,30 @@
     "layers": [
       {
         "id": "prm-2020",
-        "name": "Acceleration of rehabilitiation 2020",
+        "name": "Mangrove Rehabilitation 2020",
         "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
         "version": "1.1.0",
-        "layer": "prm_2020"
+        "layer": "prm_2020",
+        "description": "Map with mangrove rehabilitation acceleration for 2020.",
+        "source": "<a href='https://www.padatkaryamangrove.info/peta' target='_blank' rel='noopener noreferrer'>MAP | PKM (padatkaryamangrove.info)</a>"
       },
       {
         "id": "prm-2021",
-        "name": "Acceleration of rehabilitiation 2021",
+        "name": "Mangrove Rehabilitation 2021",
         "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
         "version": "1.1.0",
-        "layer": "prm_2021"
+        "layer": "prm_2021",
+        "description": "Map with mangrove rehabilitation acceleration for 2020.",
+        "source": "<a href='https://www.padatkaryamangrove.info/peta' target='_blank' rel='noopener noreferrer'>MAP | PKM (padatkaryamangrove.info)</a>"
       },
       {
         "id": "prm-2022",
-        "name": "Acceleration of rehabilitiation 2022",
+        "name": "Mangrove Rehabilitation 2022",
         "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
         "version": "1.1.0",
-        "layer": "prm_2022"
+        "layer": "prm_2022",
+        "description": "Map with mangrove rehabilitation acceleration for 2020.",
+        "source": "<a href='https://www.padatkaryamangrove.info/peta' target='_blank' rel='noopener noreferrer'>MAP | PKM (padatkaryamangrove.info)</a>"
       }
     ]
   }
