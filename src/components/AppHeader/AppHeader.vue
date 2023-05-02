@@ -17,6 +17,7 @@
     </v-tabs>
 
     <introduction-dialog class="mr-2" />
+
     <authentication />
   </v-app-bar>
 </template>

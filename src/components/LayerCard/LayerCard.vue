@@ -1,10 +1,12 @@
 <template>
   <v-card class="layer-card" outlined>
-    <v-card-title>
+    <v-card-title class="layer-card__title flex-nowrap">
       <v-icon class="layer-card__drag-icon" left> mdi-drag-vertical </v-icon>
-      <span class="text-subtitle-1" :class="{ 'font-weight-bold': active }">{{
-        layer.name
-      }}</span>
+      <span
+        class="text-subtitle-1 mr-8"
+        :class="{ 'font-weight-bold': active }"
+        >{{ layer.name }}</span
+      >
       <div class="layer-card__action-icons">
         <v-btn icon @click="toggleLayer">
           <v-icon v-if="active">mdi-eye</v-icon>
@@ -42,6 +44,10 @@ export default {
 </script>
 
 <style>
+.layer-card__title {
+  word-break: break-word;
+  margin-right: 80px; /* width of action icons */
+}
 .layer-card__drag-icon {
   cursor: move;
 }
