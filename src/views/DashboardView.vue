@@ -141,9 +141,7 @@ export default {
         ...this.$router.currentRoute,
         query: {
           ...this.$router.currentRoute.query,
-          layers: this.$store.state.data.mangroveLayers
-            .map((layer) => layer.id)
-            .join(","),
+          layers: this.mangroveLayers.map((layer) => layer.id).join(","),
         },
       });
     },

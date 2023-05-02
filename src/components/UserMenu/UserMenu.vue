@@ -19,9 +19,6 @@ import { mapActions } from "vuex";
 export default {
   methods: {
     ...mapActions("authentication", ["removeCurrentUser"]),
-    validate() {
-      this.$refs.form.validate();
-    },
     logout() {
       this.removeCurrentUser();
     },
