@@ -49,16 +49,23 @@
       {
         "id": "prm-2020",
         "name": "PRM 2020",
-        "url": "https://services3.arcgis.com/AvRv3WI698ynGlkI/arcgis/rest/services/PRM_2020/FeatureServer/0",
+        "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
         "version": "1.1.0",
-        "layer": "gmw_v3_2015_vec"
+        "layer": "prm_2020"
       },
       {
         "id": "prm-2021",
         "name": "PRM 2021",
-        "url": "https://services3.arcgis.com/AvRv3WI698ynGlkI/arcgis/rest/services/PRM_2021/FeatureServer/0",
+        "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
         "version": "1.1.0",
-        "layer": "gmw_v3_2016_vec"
+        "layer": "prm_2021"
+      },
+      {
+        "id": "prm-2022",
+        "name": "PRM 2022",
+        "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
+        "version": "1.1.0",
+        "layer": "prm_2022"
       }
     ]
   }
