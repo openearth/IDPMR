@@ -13,6 +13,7 @@ export default new Vuex.Store({
     wmsAdministrativeBoundariesLayer: null,
     selectedLayer: null,
     selectedFeature: null,
+    currentUser: null,
   },
   mutations: {
     SET_MANGROVE_LAYERS(state, { layers }) {
@@ -32,7 +33,10 @@ export default new Vuex.Store({
     },
     SET_SELECTED_LAYER(state, { layer }) {
       state.selectedLayer = layer;
-    }
+    },
+    SET_CURRENT_USER(state, { currentUser }) {
+      state.currentUser = currentUser;
+    },
   },
   actions: {
     setMangroveLayers({ commit }, { layers }) {
@@ -66,6 +70,12 @@ export default new Vuex.Store({
     },
     setSelectedLayer({ commit }, { layer }) {
       commit("SET_SELECTED_LAYER", { layer });
-    }
+    },
+    setCurrentUser({ commit }, { currentUser }) {
+      commit("SET_CURRENT_USER", { currentUser });
+    },
+    removeCurrentUser({ commit }) {
+      commit("SET_CURRENT_USER", { currentUser: null });
+    },
   },
 });
