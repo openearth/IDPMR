@@ -10,13 +10,19 @@
           <v-icon v-if="active">mdi-eye</v-icon>
           <v-icon v-else> mdi-eye-off </v-icon>
         </v-btn>
+        <layer-information-dialog :layer="layer" />
       </div>
     </v-card-title>
   </v-card>
 </template>
 
 <script>
+import LayerInformationDialog from "../LayerInformationDialog/LayerInformationDialog.vue";
+
 export default {
+  components: {
+    LayerInformationDialog,
+  },
   props: {
     layer: {
       type: Object,
@@ -40,6 +46,7 @@ export default {
   cursor: move;
 }
 .layer-card__action-icons {
+  display: flex;
   position: absolute;
   right: 16px;
 }

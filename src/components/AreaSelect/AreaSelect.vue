@@ -85,9 +85,6 @@ export default {
 
       return false;
     },
-    layerIsCountry() {
-      return this.selectedLayer === "country";
-    },
   },
   methods: {
     ...mapActions([
@@ -149,6 +146,8 @@ export default {
       if (this.selectedLayer?.id) {
         this.setAdministrativeBoundariesLayer({ layer: this.selectedLayer });
         this.getFeatures();
+      } else {
+        this.removeAdministrativeBoundariesLayer();
       }
     },
     selectedFeatureName() {

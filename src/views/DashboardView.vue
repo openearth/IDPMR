@@ -8,11 +8,13 @@
     <template slot="sidebar">
       <h2 class="text-h6 mb-4">Spatial data</h2>
 
-      <layers-list
-        :layers="layers"
-        :initiallySelectedLayers="mangroveLayers"
-        @select-layers="setMangroveLayers"
-      />
+      <div class="dashboard-view__scrollable-list overflow-y-auto pr-2">
+        <layers-list
+          :layers="layers"
+          :initiallySelectedLayers="mangroveLayers"
+          @select-layers="setMangroveLayers"
+        />
+      </div>
     </template>
 
     <template slot="main">
@@ -103,7 +105,7 @@ export default {
     selectedFeature(value) {
       this.resetChartData();
 
-      if (value?.properties.name_1 || value?.properties.name_2) {
+      if (value?.properties[this.selectedLayer.propertyName]) {
         this.getSelectedFeatureData(value);
       }
     },
@@ -196,13 +198,9 @@ export default {
       const { data: areaData } = await axios(
         buildFeatureUrl({
           ...this.selectedLayer,
-          layer:
-            this.selectedLayer.name === "Provinces"
-              ? "indonesia:regions_admin1"
-              : "indonesia:regions_admin2",
+          layer: `indonesia:${this.selectedLayer.layer}`,
           filter:
-            this.selectedFeature.properties.name_1 ||
-            this.selectedFeature.properties.name_2,
+            this.selectedFeature.properties[this.selectedLayer.propertyName],
         })
       );
 
@@ -222,3 +220,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.dashboard-view__scrollable-list {
+  max-height: 300px;
+}
+</style>
