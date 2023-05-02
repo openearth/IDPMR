@@ -11,8 +11,8 @@
       <div class="dashboard-view__scrollable-list overflow-y-auto pr-2">
         <layers-list
           :layers="layers"
-          :initiallySelectedLayers="mangroveLayers"
-          @select-layers="setMangroveLayers"
+          :initiallySelectedLayers="dataLayers"
+          @select-layers="setDataLayers"
         />
       </div>
     </template>
@@ -77,7 +77,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("data", ["mangroveLayers", "selectedFeature", "selectedLayer"]),
+    ...mapState("data", ["dataLayers", "selectedFeature", "selectedLayer"]),
     selectedLayerIsCountry() {
       return this.selectedLayer === "country";
     },
@@ -119,7 +119,7 @@ export default {
     this.initializeStore();
 
     this.unwatch = this.$store.watch(
-      (state) => state.data.mangroveLayers,
+      (state) => state.data.dataLayers,
       this.syncRouteToStore
     );
   },
@@ -128,15 +128,15 @@ export default {
   },
   methods: {
     ...mapActions("data", [
-      "setMangroveLayers",
-      "setMangroveLayersById",
+      "setDataLayers",
+      "setDataLayersById",
       "removeSelectedFeature",
     ]),
     initializeStore() {
       const layers = this.$route.query.layers;
 
       if (layers) {
-        this.setMangroveLayersById({
+        this.setDataLayersById({
           layerIds: layers.split(","),
         });
       }
@@ -146,7 +146,7 @@ export default {
         ...this.$router.currentRoute,
         query: {
           ...this.$router.currentRoute.query,
-          layers: this.mangroveLayers.map((layer) => layer.id).join(","),
+          layers: this.dataLayers.map((layer) => layer.id).join(","),
         },
       });
     },

@@ -4,22 +4,22 @@ import tabs from "@/data/tabs.json";
 export default {
   namespaced: true,
   state: {
-    mangroveLayers: [],
-    wmsMangroveLayers: [],
+    dataLayers: [],
+    wmsDataLayers: [],
     administrativeBoundariesLayer: null,
     wmsAdministrativeBoundariesLayer: null,
     selectedLayer: null,
     selectedFeature: null,
   },
   mutations: {
-    SET_MANGROVE_LAYERS(state, { layers }) {
-      state.mangroveLayers = layers;
+    SET_DATA_LAYERS(state, { layers }) {
+      state.dataLayers = layers;
     },
     SET_ADMINISTRATIVE_BOUNDARIES_LAYER(state, { layer }) {
       state.administrativeBoundariesLayer = layer;
     },
-    SET_WMS_MANGROVE_LAYERS(state, { wmsLayers }) {
-      state.wmsMangroveLayers = wmsLayers;
+    SET_WMS_DATA_LAYERS(state, { wmsLayers }) {
+      state.wmsDataLayers = wmsLayers;
     },
     SET_WMS_ADMINISTRATIVE_BOUNDARIES_LAYER(state, { wmsLayer }) {
       state.wmsAdministrativeBoundariesLayer = wmsLayer;
@@ -32,20 +32,20 @@ export default {
     },
   },
   actions: {
-    setMangroveLayers({ commit }, { layers }) {
-      commit("SET_MANGROVE_LAYERS", { layers });
+    setDataLayers({ commit }, { layers }) {
+      commit("SET_DATA_LAYERS", { layers });
       const wmsLayers = layers.map((layer) => buildWmsLayer(layer));
-      commit("SET_WMS_MANGROVE_LAYERS", { wmsLayers });
+      commit("SET_WMS_DATA_LAYERS", { wmsLayers });
     },
-    setMangroveLayersById({ commit }, { layerIds }) {
+    setDataLayersById({ commit }, { layerIds }) {
       const allLayers = tabs.map((tab) => tab.layers).flat();
       const layers = allLayers.filter((layer) => layerIds.includes(layer.id));
 
-      commit("SET_MANGROVE_LAYERS", { layers: layers });
+      commit("SET_DATA_LAYERS", { layers: layers });
 
       const wmsLayers = layers.map((layer) => buildWmsLayer(layer));
 
-      commit("SET_WMS_MANGROVE_LAYERS", { wmsLayers });
+      commit("SET_WMS_DATA_LAYERS", { wmsLayers });
     },
     setAdministrativeBoundariesLayer({ commit }, { layer }) {
       commit("SET_ADMINISTRATIVE_BOUNDARIES_LAYER", { layer });

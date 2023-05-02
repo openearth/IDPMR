@@ -34,10 +34,7 @@ export default {
     selectedLegend: null,
     showLegend: false,
   }),
-  computed: mapState("data", [
-    "mangroveLayers",
-    "administrativeBoundariesLayers",
-  ]),
+  computed: mapState("data", ["dataLayers", "administrativeBoundariesLayers"]),
   methods: {
     toggleLegend() {
       this.showLegend = !this.showLegend;
