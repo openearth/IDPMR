@@ -11,20 +11,19 @@
     </v-toolbar-title>
 
     <introduction-dialog class="ml-auto mr-2" />
-
-    <v-btn fab small outlined>
-      <v-icon> mdi-account </v-icon>
-    </v-btn>
+    <authentication />
   </v-app-bar>
 </template>
 
 <script>
 import IntroductionDialog from "../IntroductionDialog/IntroductionDialog.vue";
+import Authentication from "../Authentication/Authentication.vue";
 
 export default {
   name: "AppHeader",
   components: {
     IntroductionDialog,
+    Authentication,
   },
   props: {
     title: {

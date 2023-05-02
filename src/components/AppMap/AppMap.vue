@@ -68,7 +68,7 @@ export default {
     };
   },
 
-  computed: mapState({
+  computed: mapState("data", {
     mangroveLayers: "wmsMangroveLayers",
     administrativeBoundariesLayer: "wmsAdministrativeBoundariesLayer",
     selectedFeature: "selectedFeature",

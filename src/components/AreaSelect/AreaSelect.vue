@@ -48,7 +48,7 @@ export default {
     };
   },
   computed: {
-    ...mapState({
+    ...mapState("data", {
       initiallySelectedLayer: "administrativeBoundariesLayer",
       initiallySelectedFeature: "selectedFeature",
       selectedLayer: "selectedLayer",
@@ -87,7 +87,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions([
+    ...mapActions("data", [
       "setAdministrativeBoundariesLayer",
       "removeAdministrativeBoundariesLayer",
       "setSelectedFeature",
@@ -176,4 +176,3 @@ export default {
   margin-top: 16px;
 }
 </style>
-  

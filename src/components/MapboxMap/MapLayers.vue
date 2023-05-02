@@ -23,8 +23,8 @@
     </v-card-text>
   </v-card>
 </template>
-  
-  <script>
+
+<script>
 import { mapState } from "vuex";
 
 export default {
@@ -34,7 +34,10 @@ export default {
     selectedLegend: null,
     showLegend: false,
   }),
-  computed: mapState(["mangroveLayers", "administrativeBoundariesLayers"]),
+  computed: mapState("data", [
+    "mangroveLayers",
+    "administrativeBoundariesLayers",
+  ]),
   methods: {
     toggleLegend() {
       this.showLegend = !this.showLegend;
@@ -42,8 +45,8 @@ export default {
   },
 };
 </script>
-  
-  <style>
+
+<style>
 .map-layer.v-card {
   bottom: 0;
   display: flex;
