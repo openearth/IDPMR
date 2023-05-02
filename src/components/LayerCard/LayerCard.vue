@@ -20,6 +20,9 @@
 import LayerInformationDialog from "../LayerInformationDialog/LayerInformationDialog.vue";
 
 export default {
+  components: {
+    LayerInformationDialog,
+  },
   props: {
     layer: {
       type: Object,
@@ -29,9 +32,6 @@ export default {
       type: Boolean,
       required: true,
     },
-  },
-  components: {
-    LayerInformationDialog,
   },
   methods: {
     toggleLayer() {
