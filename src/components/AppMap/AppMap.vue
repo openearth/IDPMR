@@ -98,12 +98,6 @@ export default {
         this.fitToBounds();
       }
     },
-
-    administrativeBoundariesLayer(value) {
-      if (!value) {
-        this.fitToBounds();
-      }
-    },
   },
 };
 </script>

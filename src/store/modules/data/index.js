@@ -48,6 +48,8 @@ export default {
       commit("SET_WMS_MANGROVE_LAYERS", { wmsLayers });
     },
     setAdministrativeBoundariesLayer({ commit }, { layer }) {
+      commit("SET_SELECTED_FEATURE", { selectedFeature: null });
+
       commit("SET_ADMINISTRATIVE_BOUNDARIES_LAYER", { layer });
       const wmsLayer = buildWmsLayer(layer);
       commit("SET_WMS_ADMINISTRATIVE_BOUNDARIES_LAYER", { wmsLayer });
