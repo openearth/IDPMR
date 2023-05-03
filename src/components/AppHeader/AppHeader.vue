@@ -10,15 +10,28 @@
       {{ title }}
     </v-toolbar-title>
 
-    <v-tabs class="app-header__tabs mr-4" v-model="currentTab" right>
+    <v-tabs
+      class="app-header__tabs mr-4"
+      v-if="!$vuetify.breakpoint.mobile"
+      v-model="currentTab"
+      right
+    >
       <v-tab v-for="tab in tabs" :key="tab.id" :to="tab.slug" exact-path>
         {{ tab.title }}
       </v-tab>
     </v-tabs>
 
-    <introduction-dialog class="mr-2" />
+    <introduction-dialog class="ml-auto mr-2" />
 
     <authentication />
+
+    <template v-slot:extension v-if="$vuetify.breakpoint.mobile">
+      <v-tabs class="app-header__tabs mr-4" v-model="currentTab" centered>
+        <v-tab v-for="tab in tabs" :key="tab.id" :to="tab.slug" exact-path>
+          {{ tab.title }}
+        </v-tab>
+      </v-tabs>
+    </template>
   </v-app-bar>
 </template>
 
