@@ -1,6 +1,6 @@
 <template>
   <v-card-subtitle v-if="message">{{ message }}</v-card-subtitle>
-  <v-chart v-else class="chart" :option="option" />
+  <v-chart v-else ref="chart" class="chart" :option="option" />
 </template>
 
 <script>
@@ -115,9 +115,16 @@ export default {
         0
       );
     },
+    resizeChart() {
+      this.$refs.chart?.resize();
+    },
   },
   mounted() {
     this.updateChart();
+    window.addEventListener("resize", this.resizeChart);
+  },
+  beforeUnmount() {
+    window.removeEventListener("resize", this.resizeChart);
   },
 };
 </script>
