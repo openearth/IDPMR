@@ -61,7 +61,7 @@ export default {
   methods: {
     async updateChart() {
       if (!this.feature || !this.feature.properties.name_1) {
-        this.message = "Chart data unavailable";
+        this.message = "No data available";
         this.resetChartData();
         return;
       }

@@ -154,7 +154,7 @@ export default {
       }
     },
     selectedFeatureName() {
-      if (this.selectedFeatureName !== "") {
+      if (this.selectedFeatureName && this.selectedFeatureName !== "") {
         this.getSelectedFeature();
       } else {
         this.removeSelectedFeature();

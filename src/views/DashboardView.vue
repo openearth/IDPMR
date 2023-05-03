@@ -117,10 +117,10 @@ export default {
   },
   watch: {
     selectedLayer(value) {
+      this.removeSelectedFeature();
       this.resetChartData();
 
       if (value === "country") {
-        this.removeSelectedFeature();
         this.getCountryArea();
         this.getProvincesArea();
       }

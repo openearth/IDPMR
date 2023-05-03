@@ -67,13 +67,17 @@ export default {
         this.message = "";
       } else {
         this.resetChartData();
-        this.message = "Chart data unavailable";
+        this.message = "No data available";
       }
     },
     resetChartData() {
       this.option.xAxis.data = [];
       this.option.series[0].data = [];
     },
+  },
+
+  mounted() {
+    this.updateChart(this.data);
   },
 };
 </script>
