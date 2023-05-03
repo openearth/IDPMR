@@ -23,10 +23,27 @@
       <extend-rehabilitated-mangrove v-if="progress" :progress="progress" />
       <v-card-subtitle v-else>No data available</v-card-subtitle>
     </template>
-    <template slot="meta-2">
-      <h2 class="text-h6 mb-4">Annual progress (ha)</h2>
+    <template v-if="currentTab === 'mangrove-extent'" slot="meta-2">
+      <h2 class="text-h6 mb-4">
+        Annual progress (ha)
+        <span v-if="selectedFeature">
+          |
+          {{ selectedFeatureName }}</span
+        >
+      </h2>
 
       <annual-progress :data="annualProgressData" />
+    </template>
+    <template v-else slot="meta-2">
+      <h2 class="text-h6 mb-4">
+        Hectares rehabilitated
+        <span v-if="selectedFeature">
+          |
+          {{ selectedFeatureName }}</span
+        >
+      </h2>
+
+      <hectares-rehabilitated :feature="selectedFeature" />
     </template>
     <template slot="meta-3">
       <h2 class="text-h6 mb-4">Contribution by province to goal (%)</h2>
@@ -51,6 +68,7 @@ import AppMap from "@/components/AppMap/AppMap.vue";
 import ExtendRehabilitatedMangrove from "@/components/ExtendRehabilitatedMangrove/ExtendRehabilitatedMangrove.vue";
 import AnnualProgress from "@/components/AnnualProgress/AnnualProgress.vue";
 import ContributionByProvinceToGoal from "@/components/ContributionByProvinceToGoal/ContributionByProvinceToGoal.vue";
+import HectaresRehabilitated from "@/components/HectaresRehabilitated/HectaresRehabilitated.vue";
 import buildFeatureUrl from "@/lib/build-feature-url";
 
 const geoserverIndonesiaBaseUrl =
@@ -65,6 +83,7 @@ export default {
     ExtendRehabilitatedMangrove,
     AnnualProgress,
     ContributionByProvinceToGoal,
+    HectaresRehabilitated,
   },
   data() {
     return {
@@ -91,6 +110,9 @@ export default {
     },
     layers() {
       return tabs.find((tab) => tab.id === this.currentTab)?.layers || [];
+    },
+    selectedFeatureName() {
+      return this.selectedFeature?.properties[this.selectedLayer?.propertyName];
     },
   },
   watch: {
@@ -198,8 +220,7 @@ export default {
         buildFeatureUrl({
           ...this.selectedLayer,
           layer: `indonesia:${this.selectedLayer.layer}`,
-          filter:
-            this.selectedFeature.properties[this.selectedLayer.propertyName],
+          filter: this.selectedFeatureName,
         })
       );
 
