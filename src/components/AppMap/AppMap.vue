@@ -27,7 +27,6 @@
       <map-style-control
         :initial-style="mapConfig.style"
         position="bottom-right"
-        @map-style-changed="onMapStyleChanged"
       />
       <map-fitbounds-control
         :fitToBounds="fitToBounds"
@@ -94,9 +93,6 @@ export default {
     zoomToSelectedFeature() {
       const boundingBox = bbox(this.selectedFeature);
       this.$root.map.fitBounds(boundingBox, { padding: 80 });
-    },
-    onMapStyleChanged(style) {
-      this.mapConfig.styleId = style;
     },
   },
 
