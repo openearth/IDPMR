@@ -24,5 +24,5 @@ export default function ({
     { encode, sort: false }
   );
 
-  return `${url}?${params}`;
+  return `${url}/wms?${params}`;
 }

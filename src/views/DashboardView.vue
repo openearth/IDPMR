@@ -46,7 +46,7 @@
       <hectares-rehabilitated :feature="selectedFeature" />
     </template>
     <template slot="meta-3">
-      <h2 class="text-h6 mb-4">Contribution by province to goal (%)</h2>
+      <h2 class="text-h6 mb-4 mr-10">Contribution by province to goal (%)</h2>
 
       <contribution-by-province-to-goal
         v-if="selectedLayerIsCountry"

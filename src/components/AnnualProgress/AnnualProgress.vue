@@ -1,6 +1,9 @@
 <template>
   <v-card-subtitle v-if="message">{{ message }}</v-card-subtitle>
-  <v-chart v-else ref="chart" class="chart" :option="option" />
+  <div v-else>
+    <v-chart ref="chart" class="chart" :option="option" />
+    <download-chart-button filename="annual-progress.png" />
+  </div>
 </template>
 
 <script>
@@ -10,12 +13,14 @@ import { BarChart } from "echarts/charts";
 import { GridComponent } from "echarts/components";
 import VChart from "vue-echarts";
 import propertiesToChartData from "@/lib/properties-to-chart-data";
+import DownloadChartButton from "../DownloadChartButton/DownloadChartButton.vue";
 
 use([CanvasRenderer, BarChart, GridComponent]);
 
 export default {
   components: {
     VChart,
+    DownloadChartButton,
   },
 
   props: {
