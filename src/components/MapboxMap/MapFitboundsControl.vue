@@ -53,14 +53,14 @@ export default {
 
     addToMap(map) {
       const { $control } = this.$refs;
-      const control = new MapControlFitbounds($control);
+      const control = new MapFitboundsControl($control);
       map.addControl(control, this.position);
       this.showControl = true;
     },
   },
 };
 
-class MapControlFitbounds {
+class MapFitboundsControl {
   constructor($element) {
     this._container = $element;
   }

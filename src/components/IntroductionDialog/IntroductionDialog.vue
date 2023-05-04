@@ -12,7 +12,13 @@
       </template>
 
       <v-card>
-        <v-card-title class="text-h5"> Introduction </v-card-title>
+        <v-toolbar flat>
+          <v-toolbar-title class="text-h5">Introduction</v-toolbar-title>
+          <v-spacer />
+          <v-btn icon>
+            <v-icon> mdi-close </v-icon>
+          </v-btn>
+        </v-toolbar>
 
         <v-card-text>
           <p>
