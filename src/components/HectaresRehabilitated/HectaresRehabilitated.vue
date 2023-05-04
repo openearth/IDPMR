@@ -1,6 +1,9 @@
 <template>
   <v-card-subtitle v-if="message">{{ message }}</v-card-subtitle>
-  <v-chart v-else ref="chart" class="chart" :option="option" />
+  <div v-else>
+    <v-chart ref="chart" class="chart" :option="option" />
+    <download-chart-button filename="hectares-rehabilitated.png" />
+  </div>
 </template>
 
 <script>
@@ -11,6 +14,7 @@ import { CanvasRenderer } from "echarts/renderers";
 import { BarChart } from "echarts/charts";
 import { GridComponent } from "echarts/components";
 import VChart from "vue-echarts";
+import DownloadChartButton from "../DownloadChartButton/DownloadChartButton.vue";
 import buildFeatureUrl from "@/lib/build-feature-url";
 
 use([CanvasRenderer, BarChart, GridComponent]);
@@ -18,6 +22,7 @@ use([CanvasRenderer, BarChart, GridComponent]);
 export default {
   components: {
     VChart,
+    DownloadChartButton,
   },
 
   props: {
