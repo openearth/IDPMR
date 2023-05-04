@@ -2,10 +2,7 @@
   <v-card-subtitle v-if="message">{{ message }}</v-card-subtitle>
   <div v-else>
     <v-chart ref="chart" class="chart" :option="option" />
-    <download-chart-button
-      :chart="$refs.chart"
-      filename="annual-progress.png"
-    />
+    <download-chart-button filename="annual-progress.png" />
   </div>
 </template>
 

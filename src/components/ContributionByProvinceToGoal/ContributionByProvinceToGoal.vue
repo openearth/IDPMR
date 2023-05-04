@@ -1,10 +1,7 @@
 <template>
   <div>
     <v-chart ref="chart" class="chart" :option="option" />
-    <download-chart-button
-      :chart="$refs.chart"
-      filename="contribution-by-province.png"
-    />
+    <download-chart-button filename="contribution-by-province.png" />
   </div>
 </template>
 
