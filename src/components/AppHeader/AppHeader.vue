@@ -86,4 +86,7 @@ export default {
 .app-header__tabs.v-tabs {
   width: auto;
 }
+.v-tabs-bar__content {
+  width: 100%;
+}
 </style>
