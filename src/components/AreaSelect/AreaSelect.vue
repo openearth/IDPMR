@@ -110,11 +110,14 @@ export default {
         );
       }
       // If there is a selected feature on the store, set it
+      // otherwise reset it
       if (this.initiallySelectedFeature) {
         this.selectedFeatureName =
           this.initiallySelectedFeature.properties[
             this.selectedLayer.propertyName
           ];
+      } else {
+        this.selectedFeatureName = null;
       }
 
       this.loading = false;
@@ -151,7 +154,7 @@ export default {
       }
     },
     selectedFeatureName() {
-      if (this.selectedFeatureName !== "") {
+      if (this.selectedFeatureName && this.selectedFeatureName !== "") {
         this.getSelectedFeature();
       } else {
         this.removeSelectedFeature();

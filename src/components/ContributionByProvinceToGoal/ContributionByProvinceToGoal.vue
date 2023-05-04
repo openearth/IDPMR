@@ -56,6 +56,17 @@ export default {
     updateChart(data) {
       this.option.series[0].data = data;
     },
+    resizeChart() {
+      this.$refs.chart?.resize();
+    },
+  },
+
+  mounted() {
+    window.addEventListener("resize", this.resizeChart);
+  },
+
+  beforeUnmount() {
+    window.removeEventListener("resize", this.resizeChart);
   },
 };
 </script>

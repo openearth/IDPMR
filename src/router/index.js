@@ -1,7 +1,16 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import tabs from "@/data/tabs";
 
 Vue.use(VueRouter);
+
+const tabRoutes = tabs
+  .filter((tab) => tab.slug !== "/")
+  .map((tab) => ({
+    path: tab.slug,
+    name: tab.id,
+    component: () => import("../views/DashboardView.vue"),
+  }));
 
 const router = new VueRouter({
   mode: "history",
@@ -12,6 +21,7 @@ const router = new VueRouter({
       name: "dashboard",
       component: () => import("../views/DashboardView.vue"),
     },
+    ...tabRoutes,
   ],
 });
 
@@ -36,6 +46,5 @@ router.replace = function replace(location, onResolve, onReject) {
     return Promise.reject(err);
   });
 };
-
 
 export default router;

@@ -12,6 +12,9 @@ const opts = {
       },
     },
   },
+  breakpoint: {
+    mobileBreakpoint: "sm",
+  },
 };
 
 export default new Vuetify(opts);

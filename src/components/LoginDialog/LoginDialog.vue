@@ -1,5 +1,9 @@
 <template>
-  <v-dialog v-model="dialog" width="500">
+  <v-dialog
+    :fullscreen="$vuetify.breakpoint.mobile"
+    v-model="dialog"
+    width="500"
+  >
     <template v-slot:activator="{ on, attrs }">
       <v-btn fab small outlined v-bind="attrs" v-on="on">
         <v-icon> mdi-account </v-icon>

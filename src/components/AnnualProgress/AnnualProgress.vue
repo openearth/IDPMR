@@ -72,13 +72,25 @@ export default {
         this.message = "";
       } else {
         this.resetChartData();
-        this.message = "Chart data unavailable";
+        this.message = "No data available";
       }
     },
     resetChartData() {
       this.option.xAxis.data = [];
       this.option.series[0].data = [];
     },
+    resizeChart() {
+      this.$refs.chart?.resize();
+    },
+  },
+
+  mounted() {
+    this.updateChart(this.data);
+    window.addEventListener("resize", this.resizeChart);
+  },
+
+  beforeUnmount() {
+    window.removeEventListener("resize", this.resizeChart);
   },
 };
 </script>

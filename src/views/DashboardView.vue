@@ -9,11 +9,7 @@
       <h2 class="text-h6 mb-4">Spatial data</h2>
 
       <div class="dashboard-view__scrollable-list overflow-y-auto pr-2">
-        <layers-list
-          :layers="layers"
-          :initiallySelectedLayers="mangroveLayers"
-          @select-layers="setMangroveLayers"
-        />
+        <layers-list :layers="layers" @select-layers="setMangroveLayers" />
       </div>
     </template>
 
@@ -27,10 +23,27 @@
       <extend-rehabilitated-mangrove v-if="progress" :progress="progress" />
       <v-card-subtitle v-else>No data available</v-card-subtitle>
     </template>
-    <template slot="meta-2">
-      <h2 class="text-h6 mb-4 mr-10">Annual progress (ha)</h2>
+    <template v-if="currentTab === 'mangrove-extent'" slot="meta-2">
+      <h2 class="text-h6 mb-4">
+        Annual progress (ha)
+        <span v-if="selectedFeature">
+          |
+          {{ selectedFeatureName }}</span
+        >
+      </h2>
 
       <annual-progress :data="annualProgressData" />
+    </template>
+    <template v-else slot="meta-2">
+      <h2 class="text-h6 mb-4">
+        Hectares rehabilitated
+        <span v-if="selectedFeature">
+          |
+          {{ selectedFeatureName }}</span
+        >
+      </h2>
+
+      <hectares-rehabilitated :feature="selectedFeature" />
     </template>
     <template slot="meta-3">
       <h2 class="text-h6 mb-4 mr-10">Contribution by province to goal (%)</h2>
@@ -47,7 +60,7 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import axios from "axios";
-import layers from "@/data/mangrove-layers";
+import tabs from "@/data/tabs";
 import DashboardLayout from "@/components/DashboardLayout/DashboardLayout.vue";
 import AreaSelect from "@/components/AreaSelect/AreaSelect.vue";
 import LayersList from "@/components/LayersList/LayersList.vue";
@@ -55,6 +68,7 @@ import AppMap from "@/components/AppMap/AppMap.vue";
 import ExtendRehabilitatedMangrove from "@/components/ExtendRehabilitatedMangrove/ExtendRehabilitatedMangrove.vue";
 import AnnualProgress from "@/components/AnnualProgress/AnnualProgress.vue";
 import ContributionByProvinceToGoal from "@/components/ContributionByProvinceToGoal/ContributionByProvinceToGoal.vue";
+import HectaresRehabilitated from "@/components/HectaresRehabilitated/HectaresRehabilitated.vue";
 import buildFeatureUrl from "@/lib/build-feature-url";
 
 const geoserverIndonesiaBaseUrl =
@@ -69,10 +83,10 @@ export default {
     ExtendRehabilitatedMangrove,
     AnnualProgress,
     ContributionByProvinceToGoal,
+    HectaresRehabilitated,
   },
   data() {
     return {
-      layers,
       annualProgressData: {},
       contributionByProvinceToGoalData: [],
     };
@@ -91,13 +105,22 @@ export default {
 
       return null;
     },
+    currentTab() {
+      return tabs.find((tab) => tab.slug === this.$route.path)?.id;
+    },
+    layers() {
+      return tabs.find((tab) => tab.id === this.currentTab)?.layers || [];
+    },
+    selectedFeatureName() {
+      return this.selectedFeature?.properties[this.selectedLayer?.propertyName];
+    },
   },
   watch: {
     selectedLayer(value) {
+      this.removeSelectedFeature();
       this.resetChartData();
 
       if (value === "country") {
-        this.removeSelectedFeature();
         this.getCountryArea();
         this.getProvincesArea();
       }
@@ -197,8 +220,7 @@ export default {
         buildFeatureUrl({
           ...this.selectedLayer,
           layer: `indonesia:${this.selectedLayer.layer}`,
-          filter:
-            this.selectedFeature.properties[this.selectedLayer.propertyName],
+          filter: this.selectedFeatureName,
         })
       );
 
