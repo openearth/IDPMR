@@ -77,7 +77,6 @@ export default {
   display: grid;
   grid-template-columns: auto 1fr;
   row-gap: 8px;
-  -moz-column-gap: 16px;
   column-gap: 16px;
 }
 .layer-information-dialog__list > div {
