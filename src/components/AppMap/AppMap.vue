@@ -12,6 +12,7 @@
         v-if="administrativeBoundariesLayer"
         :key="administrativeBoundariesLayer.id"
         :options="administrativeBoundariesLayer"
+        :opacity="0.5"
       />
 
       <v-mapbox-layer
