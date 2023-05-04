@@ -1,5 +1,8 @@
 <template>
-  <v-chart class="chart" :option="option" />
+  <div>
+    <v-chart ref="chart" class="chart" :option="option" />
+    <download-chart-button filename="contribution-by-province.png" />
+  </div>
 </template>
 
 <script>
@@ -8,12 +11,14 @@ import { CanvasRenderer } from "echarts/renderers";
 import { PieChart } from "echarts/charts";
 import { TooltipComponent } from "echarts/components";
 import VChart from "vue-echarts";
+import DownloadChartButton from "../DownloadChartButton/DownloadChartButton.vue";
 
 use([CanvasRenderer, PieChart, TooltipComponent]);
 
 export default {
   components: {
     VChart,
+    DownloadChartButton,
   },
 
   props: {

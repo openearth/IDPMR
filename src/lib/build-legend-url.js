@@ -15,5 +15,5 @@ export default function ({ url, layer }) {
       "fontAntiAliasing:true;fontColor:0x000000;fontSize:16;labelMargin:8;dpi:90;",
   });
 
-  return `${url}?${params}`;
+  return `${url}/wms?${params}`;
 }
