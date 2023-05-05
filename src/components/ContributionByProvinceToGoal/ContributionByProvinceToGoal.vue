@@ -30,6 +30,7 @@ export default {
       option: {
         tooltip: {
           trigger: "item",
+          valueFormatter: (value) => value.toFixed(2),
         },
         series: [
           {
