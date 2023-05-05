@@ -6,7 +6,7 @@
     @click="changeMapStyle"
     v-show="showControl"
   >
-    <v-icon color="black">mdi-map</v-icon>
+    <v-icon color="black">mdi-layers-triple</v-icon>
   </button>
 </template>
 
