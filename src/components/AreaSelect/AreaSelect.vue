@@ -28,7 +28,6 @@
 <script>
 import layers from "@/data/administrative-boundaries-layers";
 import { mapActions, mapState } from "vuex";
-import axios from "axios";
 import buildFeatureUrl from "@/lib/build-feature-url";
 
 const defaultLayer = { text: "Country", value: "country" };
@@ -101,7 +100,8 @@ export default {
       this.loading = true;
       // If the features are already loaded, don't fetch them again
       if (!this.selectedLayer.features) {
-        const { data } = await axios(buildFeatureUrl(this.selectedLayer));
+        const response = await fetch(buildFeatureUrl(this.selectedLayer));
+        const data = await response.json();
         this.$set(this.selectedLayer, "features", data.features);
         this.layers = this.layers.map((layer) =>
           this.selectedLayer.id === layer.id
@@ -125,12 +125,13 @@ export default {
     async getSelectedFeature() {
       this.loading = true;
 
-      const { data } = await axios(
+      const response = await fetch(
         buildFeatureUrl({
           ...this.selectedLayer,
           filter: this.selectedFeatureName,
         })
       );
+      const data = await response.json();
 
       if (data.features[0]) {
         this.setSelectedFeature({ selectedFeature: data.features[0] });

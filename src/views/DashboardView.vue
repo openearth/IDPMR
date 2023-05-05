@@ -23,7 +23,7 @@
       <extend-rehabilitated-mangrove v-if="progress" :progress="progress" />
       <v-card-subtitle v-else>No data available</v-card-subtitle>
     </template>
-    <template v-if="currentTab === 'mangrove-extent'" slot="meta-2">
+    <template v-if="isMangroveExtentTab" slot="meta-2">
       <h2 class="text-h6 mb-4">
         Annual progress (ha)
         <span v-if="selectedFeature">
@@ -45,7 +45,7 @@
 
       <hectares-rehabilitated :feature="selectedFeature" />
     </template>
-    <template slot="meta-3">
+    <template v-if="isMangroveExtentTab" slot="meta-3">
       <h2 class="text-h6 mb-4 mr-10">Contribution by province to goal (%)</h2>
 
       <contribution-by-province-to-goal
@@ -54,12 +54,22 @@
       />
       <v-card-subtitle v-else>No data available</v-card-subtitle>
     </template>
+    <template v-else slot="meta-3">
+      <h2 class="text-h6 mb-4">
+        Species composition
+        <span v-if="selectedFeature">
+          |
+          {{ selectedFeatureName }}</span
+        >
+      </h2>
+
+      <species-composition :feature="selectedFeature" />
+    </template>
   </dashboard-layout>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
-import axios from "axios";
 import tabs from "@/data/tabs";
 import DashboardLayout from "@/components/DashboardLayout/DashboardLayout.vue";
 import AreaSelect from "@/components/AreaSelect/AreaSelect.vue";
@@ -69,6 +79,7 @@ import ExtendRehabilitatedMangrove from "@/components/ExtendRehabilitatedMangrov
 import AnnualProgress from "@/components/AnnualProgress/AnnualProgress.vue";
 import ContributionByProvinceToGoal from "@/components/ContributionByProvinceToGoal/ContributionByProvinceToGoal.vue";
 import HectaresRehabilitated from "@/components/HectaresRehabilitated/HectaresRehabilitated.vue";
+import SpeciesComposition from "@/components/SpeciesComposition/SpeciesComposition.vue";
 import buildFeatureUrl from "@/lib/build-feature-url";
 
 const geoserverIndonesiaBaseUrl =
@@ -84,6 +95,7 @@ export default {
     AnnualProgress,
     ContributionByProvinceToGoal,
     HectaresRehabilitated,
+    SpeciesComposition,
   },
   data() {
     return {
@@ -113,6 +125,9 @@ export default {
     },
     selectedFeatureName() {
       return this.selectedFeature?.properties[this.selectedLayer?.propertyName];
+    },
+    isMangroveExtentTab() {
+      return this.currentTab === "mangrove-extent";
     },
   },
   watch: {
@@ -169,7 +184,7 @@ export default {
       });
     },
     async getCountryArea() {
-      const { data } = await axios(
+      const response = await fetch(
         buildFeatureUrl({
           url: geoserverIndonesiaBaseUrl,
           maxFeatures: 1,
@@ -177,16 +192,17 @@ export default {
         })
       );
 
-      this.annualProgressData = data;
+      this.annualProgressData = await response.json();
     },
     async getProvincesArea() {
-      const { data } = await axios(
+      const response = await fetch(
         buildFeatureUrl({
           url: geoserverIndonesiaBaseUrl,
           propertyName: "name_1,mg_area2020",
           layer: "indonesia:regions_admin1",
         })
       );
+      const data = await response.json();
 
       let totalRestoredArea = 0;
 
@@ -216,7 +232,7 @@ export default {
       this.contributionByProvinceToGoalData = contributionByProvinceToGoalData;
     },
     async getSelectedFeatureData() {
-      const { data: areaData } = await axios(
+      const response = await fetch(
         buildFeatureUrl({
           ...this.selectedLayer,
           layer: `indonesia:${this.selectedLayer.layer}`,
@@ -224,7 +240,7 @@ export default {
         })
       );
 
-      this.annualProgressData = areaData;
+      this.annualProgressData = await response.json();
 
       this.loading = false;
     },

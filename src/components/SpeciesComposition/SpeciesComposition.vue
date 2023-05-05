@@ -2,7 +2,7 @@
   <v-card-subtitle v-if="message">{{ message }}</v-card-subtitle>
   <div v-else>
     <v-chart ref="chart" class="chart" :option="option" />
-    <download-chart-button filename="hectares-rehabilitated.png" />
+    <download-chart-button filename="species-composition.png" />
   </div>
 </template>
 
@@ -10,13 +10,13 @@
 import tabs from "@/data/tabs";
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
-import { BarChart } from "echarts/charts";
-import { GridComponent } from "echarts/components";
+import { PieChart } from "echarts/charts";
+import { TooltipComponent } from "echarts/components";
 import VChart from "vue-echarts";
 import DownloadChartButton from "../DownloadChartButton/DownloadChartButton.vue";
 import buildFeatureUrl from "@/lib/build-feature-url";
 
-use([CanvasRenderer, BarChart, GridComponent]);
+use([CanvasRenderer, PieChart, TooltipComponent]);
 
 export default {
   components: {
@@ -33,26 +33,22 @@ export default {
   data() {
     return {
       option: {
-        grid: {
-          containLabel: true,
-        },
-        xAxis: {
-          type: "category",
-          data: [],
-        },
-        yAxis: {
-          type: "value",
+        tooltip: {
+          trigger: "item",
         },
         series: [
           {
+            type: "pie",
+            radius: "50%",
+            avoidLabelOverlap: false,
             data: [],
-            color: ["#1976d2"],
-            type: "bar",
           },
         ],
       },
       message: "",
-      layers: tabs.find((tab) => tab.id === "mangrove-rehabilitation").layers,
+      layer: tabs
+        .find((tab) => tab.id === "mangrove-rehabilitation")
+        .layers.find((layer) => layer.id === "prm-2021"),
     };
   },
 
@@ -70,55 +66,55 @@ export default {
         return;
       }
 
-      const { years, hectares } = await this.getChartData();
+      const data = await this.getChartData();
 
+      if (data.length === 0) {
+        this.message = "No data available";
+        this.resetChartData();
+        return;
+      }
+
+      this.option.series[0].data = data;
       this.message = "";
-      this.option.xAxis.data = years;
-      this.option.series[0].data = hectares;
     },
     resetChartData() {
-      this.option.xAxis.data = [];
       this.option.series[0].data = [];
     },
     async getChartData() {
-      const years = [];
-      const hectares = [];
-      for (const layer of this.layers) {
-        const { year, hectare } = await this.getFeatureData(
-          this.feature,
-          layer
-        );
-
-        years.push(year);
-        hectares.push(hectare);
-      }
-
-      return {
-        years,
-        hectares,
-      };
-    },
-    async getFeatureData(feature, layer) {
       const response = await fetch(
         buildFeatureUrl({
-          ...layer,
-          layer: layer.layer,
+          ...this.layer,
+          layer: this.layer.layer,
           propertyName: "name_1",
-          filter: feature.properties.name_1,
+          filter: this.feature.properties.name_1,
         })
       );
       const data = await response.json();
 
-      return {
-        year: layer.id.split("-")[1],
-        hectare: this.getHectaresRehabilitated(data),
-      };
-    },
-    getHectaresRehabilitated(featureCollection) {
-      return featureCollection.features.reduce(
-        (hectares, feature) => hectares + feature.properties.luas_ha,
+      const dataPerSpecies = this.getDataPerSpecies(data);
+
+      const total = Object.values(dataPerSpecies).reduce(
+        (total, hectares) => total + hectares,
         0
       );
+
+      return Object.entries(dataPerSpecies).map(([species, hectares]) => ({
+        name: species,
+        value: (hectares / total) * 100,
+      }));
+    },
+    getDataPerSpecies(data) {
+      return data?.features.reduce((dataPerSpecies, feature) => {
+        const species = feature.properties.species;
+
+        if (!dataPerSpecies[species]) {
+          dataPerSpecies[species] = 0;
+        }
+
+        dataPerSpecies[species] += feature.properties.luas_ha;
+
+        return dataPerSpecies;
+      }, {});
     },
     resizeChart() {
       this.$refs.chart?.resize();
