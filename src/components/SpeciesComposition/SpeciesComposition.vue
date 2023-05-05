@@ -1,27 +1,16 @@
 <template>
   <v-card-subtitle v-if="message">{{ message }}</v-card-subtitle>
-  <div v-else>
-    <v-chart ref="chart" class="chart" :option="option" />
-    <download-chart-button filename="species-composition.png" />
-  </div>
+  <pie-chart v-else :data="data" />
 </template>
 
 <script>
 import tabs from "@/data/tabs";
-import { use } from "echarts/core";
-import { CanvasRenderer } from "echarts/renderers";
-import { PieChart } from "echarts/charts";
-import { TooltipComponent } from "echarts/components";
-import VChart from "vue-echarts";
-import DownloadChartButton from "../DownloadChartButton/DownloadChartButton.vue";
+import PieChart from "../PieChart/PieChart.vue";
 import buildFeatureUrl from "@/lib/build-feature-url";
-
-use([CanvasRenderer, PieChart, TooltipComponent]);
 
 export default {
   components: {
-    VChart,
-    DownloadChartButton,
+    PieChart,
   },
 
   props: {
@@ -32,23 +21,11 @@ export default {
 
   data() {
     return {
-      option: {
-        tooltip: {
-          trigger: "item",
-        },
-        series: [
-          {
-            type: "pie",
-            radius: "50%",
-            avoidLabelOverlap: false,
-            data: [],
-          },
-        ],
-      },
       message: "",
       layer: tabs
         .find((tab) => tab.id === "mangrove-rehabilitation")
         .layers.find((layer) => layer.id === "prm-2021"),
+      data: [],
     };
   },
 
@@ -74,11 +51,11 @@ export default {
         return;
       }
 
-      this.option.series[0].data = data;
+      this.data = data;
       this.message = "";
     },
     resetChartData() {
-      this.option.series[0].data = [];
+      this.data = [];
     },
     async getChartData() {
       const response = await fetch(
@@ -116,16 +93,9 @@ export default {
         return dataPerSpecies;
       }, {});
     },
-    resizeChart() {
-      this.$refs.chart?.resize();
-    },
   },
   mounted() {
     this.updateChart();
-    window.addEventListener("resize", this.resizeChart);
-  },
-  beforeUnmount() {
-    window.removeEventListener("resize", this.resizeChart);
   },
 };
 </script>

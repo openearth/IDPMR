@@ -1,46 +1,23 @@
 <template>
-  <div>
-    <v-chart ref="chart" class="chart" :option="option" />
-    <download-chart-button filename="contribution-by-province.png" />
-  </div>
+  <pie-chart :data="data" />
 </template>
 
 <script>
 import layers from "@/data/administrative-boundaries-layers";
-import { use } from "echarts/core";
-import { CanvasRenderer } from "echarts/renderers";
-import { PieChart } from "echarts/charts";
-import { TooltipComponent } from "echarts/components";
-import VChart from "vue-echarts";
-import DownloadChartButton from "../DownloadChartButton/DownloadChartButton.vue";
+import PieChart from "../PieChart/PieChart.vue";
 import buildFeatureUrl from "@/lib/build-feature-url";
-
-use([CanvasRenderer, PieChart, TooltipComponent]);
 
 const AREA = 600000;
 
 export default {
   components: {
-    VChart,
-    DownloadChartButton,
+    PieChart,
   },
 
   data() {
     return {
-      option: {
-        tooltip: {
-          trigger: "item",
-        },
-        series: [
-          {
-            type: "pie",
-            radius: "50%",
-            avoidLabelOverlap: false,
-            data: [],
-          },
-        ],
-      },
       layer: layers.find((layer) => layer.id === "level-1"),
+      data: [],
     };
   },
 
@@ -54,7 +31,7 @@ export default {
       );
       const data = await response.json();
 
-      this.option.series[0].data = this.getContributionByProvince(data);
+      this.data = this.getContributionByProvince(data);
     },
     getContributionByProvince(data) {
       let totalRestoredArea = 0;
@@ -84,21 +61,10 @@ export default {
     getPercentage(value, total) {
       return (value / total) * 100;
     },
-    resetChartData() {
-      this.option.series[0].data = [];
-    },
-    resizeChart() {
-      this.$refs.chart?.resize();
-    },
   },
 
   mounted() {
     this.updateChart();
-    window.addEventListener("resize", this.resizeChart);
-  },
-
-  beforeUnmount() {
-    window.removeEventListener("resize", this.resizeChart);
   },
 };
 </script>
