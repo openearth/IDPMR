@@ -48,10 +48,7 @@
     <template v-if="isMangroveExtentTab" slot="meta-3">
       <h2 class="text-h6 mb-4 mr-10">Contribution by province to goal (%)</h2>
 
-      <contribution-by-province-to-goal
-        v-if="selectedLayerIsCountry"
-        :data="contributionByProvinceToGoalData"
-      />
+      <contribution-by-province-to-goal v-if="selectedLayerIsCountry" />
       <v-card-subtitle v-else>No data available</v-card-subtitle>
     </template>
     <template v-else slot="meta-3">
@@ -100,7 +97,6 @@ export default {
   data() {
     return {
       annualProgressData: {},
-      contributionByProvinceToGoalData: [],
     };
   },
   computed: {
@@ -137,7 +133,6 @@ export default {
 
       if (value === "country") {
         this.getCountryArea();
-        this.getProvincesArea();
       }
     },
     selectedFeature(value) {
@@ -193,43 +188,6 @@ export default {
       );
 
       this.annualProgressData = await response.json();
-    },
-    async getProvincesArea() {
-      const response = await fetch(
-        buildFeatureUrl({
-          url: geoserverIndonesiaBaseUrl,
-          propertyName: "name_1,mg_area2020",
-          layer: "indonesia:regions_admin1",
-        })
-      );
-      const data = await response.json();
-
-      let totalRestoredArea = 0;
-
-      const contributionByProvinceToGoalData = data?.features.map((feature) => {
-        const area = feature?.properties?.mg_area2020;
-        totalRestoredArea += area;
-
-        return {
-          name: feature?.properties?.name_1,
-          value: this.getPercentage(area, 600000),
-        };
-      });
-
-      const toRestoreArea = this.getPercentage(
-        600000 - totalRestoredArea,
-        600000
-      );
-
-      contributionByProvinceToGoalData.push({
-        value: toRestoreArea,
-        name: "To Restore",
-        itemStyle: {
-          color: "#D3D3D3",
-        },
-      });
-
-      this.contributionByProvinceToGoalData = contributionByProvinceToGoalData;
     },
     async getSelectedFeatureData() {
       const response = await fetch(
