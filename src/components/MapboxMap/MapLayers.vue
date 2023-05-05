@@ -25,8 +25,6 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-
 export default {
   data: () => ({
     maxLayersHeight: "calc(100vh - 106px)", // subtracts toolbar, margin and padding.
@@ -34,10 +32,6 @@ export default {
     selectedLegend: null,
     showLegend: false,
   }),
-  computed: mapState("data", [
-    "mangroveLayers",
-    "administrativeBoundariesLayers",
-  ]),
   methods: {
     toggleLegend() {
       this.showLegend = !this.showLegend;

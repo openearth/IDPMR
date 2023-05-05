@@ -3,7 +3,7 @@
     <v-mapbox
       class="app-map__map"
       :access-token="mapConfig.accessToken"
-      map-style="mapbox://styles/siggyf/ckww2c33f0xlf15nujlx41fe2"
+      :map-style="mapConfig.style"
       :center="mapConfig.center"
       :zoom="mapConfig.zoom"
       @mb-created="onMapCreated"
@@ -12,7 +12,7 @@
         v-if="administrativeBoundariesLayer"
         :key="administrativeBoundariesLayer.id"
         :options="administrativeBoundariesLayer"
-        :opacity="0.3"
+        :opacity="0.5"
       />
 
       <v-mapbox-layer
@@ -24,7 +24,11 @@
       <map-draw-control :drawn-feature="selectedFeature" />
 
       <v-mapbox-geocoder />
-      <map-control-fitbounds
+      <map-style-control
+        :initial-style="mapConfig.style"
+        position="bottom-right"
+      />
+      <map-fitbounds-control
         :fitToBounds="fitToBounds"
         position="bottom-right"
       />
@@ -44,21 +48,23 @@
 import { mapState } from "vuex";
 import { bbox } from "@turf/turf";
 import MapLegend from "@/components/MapboxMap/MapLegend.vue";
-import MapControlFitbounds from "@/components/MapboxMap/MapControlFitbounds.vue";
+import MapFitboundsControl from "@/components/MapboxMap/MapFitboundsControl.vue";
+import MapStyleControl from "@/components/MapboxMap/MapStyleControl.vue";
 import MapDrawControl from "@/components/MapboxMap/MapDrawControl.vue";
 
 export default {
   components: {
-    MapControlFitbounds,
+    MapFitboundsControl,
     MapLegend,
     MapDrawControl,
+    MapStyleControl,
   },
 
   data() {
     return {
       mapConfig: {
         accessToken: process.env.VUE_APP_MAPBOX_TOKEN,
-        style: "mapbox://styles/siggyf/ckww2c33f0xlf15nujlx41fe2",
+        style: "mapbox://styles/voorhoede/clh8u52h600wh01pn73ns8zy8",
         center: [118.69, -3.64],
         zoom: 3.5,
         navigationOptions: {
@@ -113,5 +119,9 @@ export default {
 .app-map__map {
   height: 100%;
   width: 100%;
+}
+
+.app-map .mapboxgl-ctrl-attrib-inner a {
+  color: #aeaeae;
 }
 </style>
