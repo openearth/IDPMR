@@ -26,7 +26,7 @@
     <authentication />
 
     <template v-slot:extension v-if="$vuetify.breakpoint.mobile">
-      <v-tabs class="app-header__tabs mr-4" v-model="currentTab" centered>
+      <v-tabs class="app-header__tabs" v-model="currentTab" centered>
         <v-tab v-for="tab in tabs" :key="tab.id" :to="tab.slug" exact-path>
           {{ tab.title }}
         </v-tab>
