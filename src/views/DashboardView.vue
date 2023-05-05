@@ -23,7 +23,7 @@
       <extend-rehabilitated-mangrove v-if="progress" :progress="progress" />
       <v-card-subtitle v-else>No data available</v-card-subtitle>
     </template>
-    <template v-if="currentTab === 'mangrove-extent'" slot="meta-2">
+    <template v-if="isMangroveExtentTab" slot="meta-2">
       <h2 class="text-h6 mb-4">
         Annual progress (ha)
         <span v-if="selectedFeature">
@@ -45,7 +45,7 @@
 
       <hectares-rehabilitated :feature="selectedFeature" />
     </template>
-    <template slot="meta-3">
+    <template v-if="isMangroveExtentTab" slot="meta-3">
       <h2 class="text-h6 mb-4 mr-10">Contribution by province to goal (%)</h2>
 
       <contribution-by-province-to-goal
@@ -53,6 +53,17 @@
         :data="contributionByProvinceToGoalData"
       />
       <v-card-subtitle v-else>No data available</v-card-subtitle>
+    </template>
+    <template v-else slot="meta-3">
+      <h2 class="text-h6 mb-4">
+        Species composition
+        <span v-if="selectedFeature">
+          |
+          {{ selectedFeatureName }}</span
+        >
+      </h2>
+
+      <species-composition :feature="selectedFeature" />
     </template>
   </dashboard-layout>
 </template>
@@ -69,6 +80,7 @@ import ExtendRehabilitatedMangrove from "@/components/ExtendRehabilitatedMangrov
 import AnnualProgress from "@/components/AnnualProgress/AnnualProgress.vue";
 import ContributionByProvinceToGoal from "@/components/ContributionByProvinceToGoal/ContributionByProvinceToGoal.vue";
 import HectaresRehabilitated from "@/components/HectaresRehabilitated/HectaresRehabilitated.vue";
+import SpeciesComposition from "@/components/SpeciesComposition/SpeciesComposition.vue";
 import buildFeatureUrl from "@/lib/build-feature-url";
 
 const geoserverIndonesiaBaseUrl =
@@ -84,6 +96,7 @@ export default {
     AnnualProgress,
     ContributionByProvinceToGoal,
     HectaresRehabilitated,
+    SpeciesComposition,
   },
   data() {
     return {
@@ -113,6 +126,9 @@ export default {
     },
     selectedFeatureName() {
       return this.selectedFeature?.properties[this.selectedLayer?.propertyName];
+    },
+    isMangroveExtentTab() {
+      return this.currentTab === "mangrove-extent";
     },
   },
   watch: {
