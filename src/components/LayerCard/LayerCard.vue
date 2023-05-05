@@ -68,5 +68,6 @@ export default {
   display: flex;
   position: absolute;
   right: 16px;
+  align-items: center;
 }
 </style>
