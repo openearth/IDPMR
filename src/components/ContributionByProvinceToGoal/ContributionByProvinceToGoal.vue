@@ -17,6 +17,8 @@ import buildFeatureUrl from "@/lib/build-feature-url";
 
 use([CanvasRenderer, PieChart, TooltipComponent]);
 
+const AREA = 600000;
+
 export default {
   components: {
     VChart,
@@ -63,14 +65,11 @@ export default {
 
         return {
           name: feature?.properties?.name_1,
-          value: this.getPercentage(area, 600000),
+          value: this.getPercentage(area, AREA),
         };
       });
 
-      const toRestoreArea = this.getPercentage(
-        600000 - totalRestoredArea,
-        600000
-      );
+      const toRestoreArea = this.getPercentage(AREA - totalRestoredArea, AREA);
 
       contributionByProvince.push({
         value: toRestoreArea,
