@@ -1,53 +1,47 @@
 <template>
-  <v-dialog
-    :fullscreen="$vuetify.breakpoint.mobile"
-    v-model="dialog"
-    width="500"
+  <app-dialog
+    :open.sync="dialog"
+    title="Login"
+    icon="mdi-account"
+    :outline-icon="true"
   >
-    <template v-slot:activator="{ on, attrs }">
-      <v-btn fab small outlined v-bind="attrs" v-on="on">
-        <v-icon> mdi-account </v-icon>
-      </v-btn>
+    <template v-slot:content>
+      <v-form ref="form" v-model="valid">
+        <v-text-field
+          prepend-icon="mdi-account"
+          name="email"
+          label="Email"
+          type="text"
+          required
+          v-model="email"
+          :rules="emailRules"
+        ></v-text-field>
+        <v-text-field
+          id="password"
+          prepend-icon="mdi-lock"
+          name="password"
+          label="Password"
+          type="password"
+          v-model="password"
+          :rules="passwordRules"
+        ></v-text-field>
+      </v-form>
     </template>
 
-    <v-card>
-      <v-card-title class="text-h5"> Login </v-card-title>
-
-      <v-card-text>
-        <v-form ref="form" v-model="valid">
-          <v-text-field
-            prepend-icon="mdi-account"
-            name="email"
-            label="Email"
-            type="text"
-            required
-            v-model="email"
-            :rules="emailRules"
-          ></v-text-field>
-          <v-text-field
-            id="password"
-            prepend-icon="mdi-lock"
-            name="password"
-            label="Password"
-            type="password"
-            v-model="password"
-            :rules="passwordRules"
-          ></v-text-field>
-        </v-form>
-      </v-card-text>
-
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="primary" @click="login" :disabled="!valid">Login</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+    <template v-slot:actions>
+      <v-btn color="primary" @click="login" :disabled="!valid">Login</v-btn>
+    </template>
+  </app-dialog>
 </template>
 
 <script>
 import { mapActions } from "vuex";
+import AppDialog from "../AppDialog/AppDialog.vue";
 
 export default {
+  components: {
+    AppDialog,
+  },
   data() {
     return {
       dialog: false,
