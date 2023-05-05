@@ -1,5 +1,10 @@
 <template>
-  <draggable tag="ul" v-model="sortedLayers" class="layers-list">
+  <draggable
+    tag="ul"
+    v-model="sortedLayers"
+    class="layers-list"
+    :options="{ handle: '.layer-card__drag-icon' }"
+  >
     <li class="layers-list__item" v-for="layer in sortedLayers" :key="layer.id">
       <layer-card
         :layer="layer"
