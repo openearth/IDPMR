@@ -71,7 +71,7 @@ export default {
       this.dialog = value;
     },
     dialog(value) {
-      this.$emit("update-open", value);
+      this.$emit("update:open", value);
     },
   },
   mounted() {

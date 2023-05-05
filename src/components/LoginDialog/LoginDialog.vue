@@ -1,10 +1,9 @@
 <template>
   <app-dialog
-    :open="dialog"
+    :open.sync="dialog"
     title="Login"
     icon="mdi-account"
     :outline-icon="true"
-    @update-open="updateDialog"
   >
     <template v-slot:content>
       <v-form ref="form" v-model="valid">
@@ -71,9 +70,6 @@ export default {
           currentUser: { email: this.email, password: this.password },
         });
       }
-    },
-    updateDialog(value) {
-      this.dialog = value;
     },
   },
 };

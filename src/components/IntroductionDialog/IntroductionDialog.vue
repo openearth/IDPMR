@@ -1,10 +1,9 @@
 <template>
   <app-dialog
-    :open="dialog"
+    :open.sync="dialog"
     title="Introduction"
     icon="mdi-information-symbol"
     :outline-icon="true"
-    @update-open="updateDialog"
   >
     <template v-slot:content>
       <p>
@@ -48,11 +47,6 @@ export default {
       this.dialog = true;
       localStorage.introductionDialog = true;
     }
-  },
-  methods: {
-    updateDialog(value) {
-      this.dialog = value;
-    },
   },
 };
 </script>

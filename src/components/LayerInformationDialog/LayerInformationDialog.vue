@@ -1,10 +1,5 @@
 <template>
-  <app-dialog
-    :open="dialog"
-    :title="layer.name"
-    icon="mdi-information"
-    @update-open="updateDialog"
-  >
+  <app-dialog :open.sync="dialog" :title="layer.name" icon="mdi-information">
     <template v-slot:content>
       <dl class="layer-information-dialog__list">
         <div v-if="layer.description">
@@ -52,11 +47,6 @@ export default {
     return {
       dialog: false,
     };
-  },
-  methods: {
-    updateDialog(value) {
-      this.dialog = value;
-    },
   },
 };
 </script>
