@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import tabs from "@/data/tabs";
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
@@ -82,7 +81,7 @@ export default {
       this.option.series[0].data = [];
     },
     async getChartData() {
-      const { data } = await axios(
+      const response = await fetch(
         buildFeatureUrl({
           ...this.layer,
           layer: this.layer.layer,
@@ -90,6 +89,7 @@ export default {
           filter: this.feature.properties.name_1,
         })
       );
+      const data = await response.json();
 
       const dataPerSpecies = this.getDataPerSpecies(data);
 

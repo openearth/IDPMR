@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import tabs from "@/data/tabs";
 import { use } from "echarts/core";
 import { CanvasRenderer } from "echarts/renderers";
@@ -100,7 +99,7 @@ export default {
       };
     },
     async getFeatureData(feature, layer) {
-      const { data } = await axios(
+      const response = await fetch(
         buildFeatureUrl({
           ...layer,
           layer: layer.layer,
@@ -108,6 +107,7 @@ export default {
           filter: feature.properties.name_1,
         })
       );
+      const data = await response.json();
 
       return {
         year: layer.id.split("-")[1],

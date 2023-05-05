@@ -70,7 +70,6 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-import axios from "axios";
 import tabs from "@/data/tabs";
 import DashboardLayout from "@/components/DashboardLayout/DashboardLayout.vue";
 import AreaSelect from "@/components/AreaSelect/AreaSelect.vue";
@@ -185,7 +184,7 @@ export default {
       });
     },
     async getCountryArea() {
-      const { data } = await axios(
+      const response = await fetch(
         buildFeatureUrl({
           url: geoserverIndonesiaBaseUrl,
           maxFeatures: 1,
@@ -193,16 +192,17 @@ export default {
         })
       );
 
-      this.annualProgressData = data;
+      this.annualProgressData = await response.json();
     },
     async getProvincesArea() {
-      const { data } = await axios(
+      const response = await fetch(
         buildFeatureUrl({
           url: geoserverIndonesiaBaseUrl,
           propertyName: "name_1,mg_area2020",
           layer: "indonesia:regions_admin1",
         })
       );
+      const data = await response.json();
 
       let totalRestoredArea = 0;
 
@@ -232,7 +232,7 @@ export default {
       this.contributionByProvinceToGoalData = contributionByProvinceToGoalData;
     },
     async getSelectedFeatureData() {
-      const { data: areaData } = await axios(
+      const response = await fetch(
         buildFeatureUrl({
           ...this.selectedLayer,
           layer: `indonesia:${this.selectedLayer.layer}`,
@@ -240,7 +240,7 @@ export default {
         })
       );
 
-      this.annualProgressData = areaData;
+      this.annualProgressData = await response.json();
 
       this.loading = false;
     },
