@@ -120,4 +120,8 @@ export default {
   height: 100%;
   width: 100%;
 }
+
+.app-map .mapboxgl-ctrl-attrib-inner a {
+  color: #aeaeae;
+}
 </style>
