@@ -27,10 +27,12 @@
       <map-style-control
         :initial-style="mapConfig.style"
         position="bottom-right"
+        class="app-map__control"
       />
       <map-fitbounds-control
         :fitToBounds="fitToBounds"
         position="bottom-right"
+        class="app-map__control"
       />
       <v-mapbox-navigation-control
         :options="mapConfig.navigationOptions"
@@ -123,5 +125,20 @@ export default {
 
 .app-map .mapboxgl-ctrl-attrib-inner a {
   color: #aeaeae;
+}
+
+.app-map__control {
+  width: 30px;
+  height: 30px;
+  padding: 3px;
+  background-color: white;
+  outline: 0;
+  border: 0;
+  border-radius: 4px;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+.app-map__control:hover {
+  background-color: #f2f2f2; /* #ffffff + rgba(0, 0, 0, 0.05) */
 }
 </style>

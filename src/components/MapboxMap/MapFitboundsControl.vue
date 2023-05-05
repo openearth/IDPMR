@@ -74,20 +74,3 @@ class MapFitboundsControl {
   }
 }
 </script>
-
-<style>
-.map-fitbounds-control {
-  width: 30px;
-  height: 30px;
-  padding: 3px;
-  background-color: white;
-  outline: 0;
-  border: 0;
-  border-radius: 4px;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-}
-
-.map-fitbounds-control:hover {
-  background-color: #f2f2f2; /* #ffffff + rgba(0, 0, 0, 0.05) */
-}
-</style>
