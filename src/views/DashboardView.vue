@@ -1,12 +1,12 @@
 <template>
   <dashboard-layout>
     <template slot="settings">
-      <h2 class="text-h6 mb-4">Administrative level</h2>
+      <h2 class="text-h6 mb-4">Tingkat administrasi</h2>
 
       <area-select />
     </template>
     <template slot="sidebar">
-      <h2 class="text-h6 mb-4">Spatial data</h2>
+      <h2 class="text-h6 mb-4">Data spasial</h2>
 
       <div class="dashboard-view__scrollable-list overflow-y-auto pr-2">
         <layers-list :layers="layers" @select-layers="setMangroveLayers" />
@@ -18,7 +18,7 @@
     </template>
 
     <template slot="meta-1">
-      <h2 class="text-h6 mb-4">Extent rehabilitated mangrove (ha)</h2>
+      <h2 class="text-h6 mb-4">Kemajuan rehabilitasi mangrove (ha)</h2>
 
       <extend-rehabilitated-mangrove v-if="progress" :progress="progress" />
       <v-card-subtitle v-else>No data available</v-card-subtitle>
@@ -36,7 +36,7 @@
     </template>
     <template v-else slot="meta-2">
       <h2 class="text-h6 mb-4">
-        Hectares rehabilitated
+        Jumlah hektar yang direhabilitasi per tahun
         <span v-if="selectedFeature">
           |
           {{ selectedFeatureName }}</span
@@ -53,7 +53,7 @@
     </template>
     <template v-else slot="meta-3">
       <h2 class="text-h6 mb-4">
-        Species composition
+        Komposisi spesies mangrove
         <span v-if="selectedFeature">
           |
           {{ selectedFeatureName }}</span

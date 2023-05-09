@@ -22,4 +22,5 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
-src/components/AppMap/AppMap.vue
+
+AppMap.vue

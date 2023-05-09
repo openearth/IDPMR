@@ -75,6 +75,7 @@ ul.layers-list {
   list-style: none;
   padding: 0;
   margin: 0;
+  height: 150px
 }
 
 .layers-list__item + .layers-list__item {

@@ -76,11 +76,11 @@ export default {
 
 <style>
 .app-header__app-bar {
-  background: rgb(19, 81, 55);
+  background: rgb(41, 73, 39);
   background: linear-gradient(
-    36deg,
-    rgba(19, 81, 55, 1) 71%,
-    rgba(71, 116, 27, 1) 100%
+    25deg,
+    rgba(18, 27, 27, 1) 25%,
+    rgba(35, 90, 90, 1) 100%
   );
 }
 .app-header__tabs.v-tabs {

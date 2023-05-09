@@ -1,5 +1,5 @@
 <template>
-  <div class="grey lighten-3 dashboard-layout">
+  <div class="darkgrey lighten-3 dashboard-layout">
     <v-container class="dashboard-layout__container">
       <v-row>
         <v-col cols="12" :md="6" :lg="4">
@@ -45,13 +45,17 @@ export default {};
 <style>
 .dashboard-layout {
   height: 100%;
+  background: rgb(60, 60, 60);
 }
 
 .dashboard-layout__container {
   height: 100%;
+  background: rgb(60, 60, 60);
+  padding: 0px
 }
 
 .dashboard-layout__main {
   height: 100%;
+  background: rgb(41, 73, 39);
 }
 </style>

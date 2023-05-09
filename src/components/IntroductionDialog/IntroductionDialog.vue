@@ -7,15 +7,13 @@
   >
     <template v-slot:content>
       <p>
-        The IDPMR portal is the viewport of the Integrated Data Management
-        Platform for Mangrove Rehabilitation and is in use to better coordinate
-        and monitor progress of mangrove rehabilitation.
+        Portal IDPMR adalah viewport dari Integrated Data
+          Platform untuk Rehabilitasi Mangrove dan digunakan untuk koordinasi yang lebih baik
+          dan memantau kemajuan rehabilitasi mangrove.
       </p>
       <p>
-        World Bank are working with the Coordinating Ministry of Maritime
-        Affairs and Investment (CMMAI) to enable a data-driven approach to
-        manage and monitore the rehabilitation of Indonesia’s mangrove
-        resources.
+        IDPMR bertujuan untuk menginformasikan pengambilan keputusan 
+        sehubungan dengan upaya nasional untuk rehabilitasi mangrove.
       </p>
       <p>
         It comprises four main components, namely, Institutional Arrangements,

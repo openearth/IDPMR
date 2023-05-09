@@ -101,8 +101,8 @@
         "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
         "version": "1.1.0",
         "layer": "Profitable_mangrove_blue_carbon",
-        "description": "Profitable blue carbon potential from Yiwen et al. (2022)",
-        "source": "National University of Singapore, Centre for Nature-based Climate Solutions. Zeng Yiwen"
+        "description": "Profitable blue carbon potential from Yiwen et al. (2022), https://doi.org/10.1016/j.cub.2021.01.070",
+        "source": "https://carbonprospecting.org National University of Singapore, Centre for Nature-based Climate Solutions"
       }
     ]
   }

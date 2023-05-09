@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <app-header title="IDPMR" theme="dark" />
+    <app-header title="Platform Data Terintegrasi untuk Rehabilitasi Mangrove (IDPMR)" theme="dark"/>
 
     <v-main>
       <router-view />
