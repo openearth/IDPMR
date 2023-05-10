@@ -30,7 +30,7 @@ import layers from "@/data/administrative-boundaries-layers";
 import { mapActions, mapState } from "vuex";
 import buildFeatureUrl from "@/lib/build-feature-url";
 
-const defaultLayer = { text: "Country", value: "country" };
+const defaultLayer = { text: "Nasional", value: "country" };
 
 export default {
   components: {},

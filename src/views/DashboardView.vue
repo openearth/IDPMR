@@ -18,14 +18,14 @@
     </template>
 
     <template slot="meta-1">
-      <h2 class="text-h6 mb-4">Kemajuan rehabilitasi mangrove (ha)</h2>
+      <h2 class="text-h6 mb-4">Progres rehabilitasi mangrove (ha)</h2>
 
       <extend-rehabilitated-mangrove v-if="progress" :progress="progress" />
       <v-card-subtitle v-else>No data available</v-card-subtitle>
     </template>
     <template v-if="isMangroveExtentTab" slot="meta-2">
       <h2 class="text-h6 mb-4">
-        Annual progress (ha)
+        Progres tahunan (ha)
         <span v-if="selectedFeature">
           |
           {{ selectedFeatureName }}</span
@@ -46,7 +46,7 @@
       <hectares-rehabilitated :feature="selectedFeature" />
     </template>
     <template v-if="isMangroveExtentTab" slot="meta-3">
-      <h2 class="text-h6 mb-4 mr-10">Contribution by province to goal (%)</h2>
+      <h2 class="text-h6 mb-4 mr-10">Kontribusi setiap provinsi (%)</h2>
 
       <contribution-by-province-to-goal v-if="selectedLayerIsCountry" />
       <v-card-subtitle v-else>No data available</v-card-subtitle>

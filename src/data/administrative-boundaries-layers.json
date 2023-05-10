@@ -1,7 +1,7 @@
 [
   {
     "id": "level-1",
-    "name": "Provinces",
+    "name": "Provinsi",
     "url": "https://deltaresdata.openearth.eu/geoserver/indonesia",
     "version": "1.1.0",
     "layer": "regions_admin1",
@@ -9,7 +9,7 @@
   },
   {
     "id": "level-2",
-    "name": "Regencies",
+    "name": "Kabupaten",
     "url": "https://deltaresdata.openearth.eu/geoserver/indonesia",
     "version": "1.1.0",
     "layer": "regions_admin2",
