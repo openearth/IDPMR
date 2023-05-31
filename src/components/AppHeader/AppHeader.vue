@@ -76,7 +76,7 @@ export default {
 
 <style>
 .app-header__app-bar {
-  background: rgb(41, 73, 39);
+  background: rgb(18, 27, 27);
   background: linear-gradient(
     25deg,
     rgba(18, 27, 27, 1) 25%,

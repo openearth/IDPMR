@@ -1,6 +1,6 @@
 <template>
   <div class="darkgrey lighten-3 dashboard-layout">
-    <v-container class="dashboard-layout__container">
+    <v-container class="dashboard-layout__container pt-0">
       <v-row>
         <v-col cols="12" :md="6" :lg="4">
           <v-card class="pa-4 mb-4 rounded-lg" outlined tile>
@@ -45,17 +45,13 @@ export default {};
 <style>
 .dashboard-layout {
   height: 100%;
-  background: rgb(60, 60, 60);
 }
 
 .dashboard-layout__container {
   height: 100%;
-  background: rgb(60, 60, 60);
-  padding: 0px
 }
 
 .dashboard-layout__main {
   height: 100%;
-  background: rgb(41, 73, 39);
 }
 </style>

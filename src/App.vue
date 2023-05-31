@@ -1,6 +1,9 @@
 <template>
-  <v-app>
-    <app-header title="Platform Data Terintegrasi untuk Rehabilitasi Mangrove (IDPMR)" theme="dark"/>
+  <v-app class="app">
+    <app-header
+      title="Platform Data Terintegrasi untuk Rehabilitasi Mangrove (IDPMR)"
+      theme="dark"
+    />
 
     <v-main>
       <router-view />
@@ -17,3 +20,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.app.theme--light.v-application {
+  background-color: #3c3c3c;
+}
+</style>
