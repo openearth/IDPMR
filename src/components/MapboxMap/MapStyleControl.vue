@@ -31,8 +31,8 @@ export default {
     showControl: false,
     currentStyle: "",
     styles: {
-      dark: "mapbox://styles/voorhoede/clh8vjw3600x501pg1dzk7vw3",
-      light: "mapbox://styles/voorhoede/clh8u52h600wh01pn73ns8zy8",
+      dark: 'mapbox://styles/mapbox/dark-v11',
+      light: 'mapbox://styles/mapbox/light-v11',
     },
   }),
 

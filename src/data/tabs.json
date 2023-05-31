@@ -2,11 +2,11 @@
   {
     "id": "mangrove-extent",
     "slug": "/",
-    "title": "Mangrove Extent",
+    "title": "Peta Mangrove Nasional",
     "layers": [
       {
         "id": "mangrove-2015",
-        "name": "Mangrove Extent 2015",
+        "name": "Luas tutupan mangrove 2015",
         "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
         "version": "1.1.0",
         "layer": "gmw_v3_2015_vec",
@@ -16,7 +16,7 @@
       },
       {
         "id": "mangrove-2016",
-        "name": "Mangrove Extent 2016",
+        "name": "Luas tutupan mangrove 2016",
         "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
         "version": "1.1.0",
         "layer": "gmw_v3_2016_vec",
@@ -26,7 +26,7 @@
       },
       {
         "id": "mangrove-2017",
-        "name": "Mangrove Extent 2017",
+        "name": "Luas tutupan mangrove 2017",
         "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
         "version": "1.1.0",
         "layer": "gmw_v3_2017_vec",
@@ -36,7 +36,7 @@
       },
       {
         "id": "mangrove-2019",
-        "name": "Mangrove Extent 2019",
+        "name": "Luas tutupan mangrove 2019",
         "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
         "version": "1.1.0",
         "layer": "gmw_v3_2019_vec",
@@ -46,7 +46,7 @@
       },
       {
         "id": "mangrove-2020",
-        "name": "Mangrove Extent 2020",
+        "name": "Luas tutupan mangrove 2020",
         "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
         "version": "1.1.0",
         "layer": "gmw_v3_2020_vec",
@@ -59,11 +59,11 @@
   {
     "id": "mangrove-rehabilitation",
     "slug": "/mangrove-rehabilitation",
-    "title": "Mangrove Rehabilitation",
+    "title": "Rehabilitasi Mangrove",
     "layers": [
       {
         "id": "prm-2020",
-        "name": "Mangrove Rehabilitation 2020",
+        "name": "Rehabilitasi mangrove 2020",
         "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
         "version": "1.1.0",
         "layer": "prm_2020",
@@ -72,7 +72,7 @@
       },
       {
         "id": "prm-2021",
-        "name": "Mangrove Rehabilitation 2021",
+        "name": "Rehabilitasi mangrove 2021",
         "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
         "version": "1.1.0",
         "layer": "prm_2021",
@@ -81,12 +81,28 @@
       },
       {
         "id": "prm-2022",
-        "name": "Mangrove Rehabilitation 2022",
+        "name": "Rehabilitasi mangrove 2022",
         "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
         "version": "1.1.0",
         "layer": "prm_2022",
         "description": "Map with mangrove rehabilitation acceleration for 2020.",
         "source": "<a href='https://www.padatkaryamangrove.info/peta' target='_blank' rel='noopener noreferrer'>MAP | PKM (padatkaryamangrove.info)</a>"
+      }
+    ]
+  },
+  {
+    "id": "blue-carbon",
+    "slug": "/blue-carbon",
+    "title": "Blue Carbon",
+    "layers": [
+      {
+        "id": "bc-mangroves",
+        "name": "Profitable blue carbon 2022",
+        "url": "https://deltaresdata.openearth.eu/geoserver/indonesia/wms",
+        "version": "1.1.0",
+        "layer": "Profitable_mangrove_blue_carbon",
+        "description": "Profitable blue carbon potential from Yiwen et al. (2022), https://doi.org/10.1016/j.cub.2021.01.070",
+        "source": "https://carbonprospecting.org National University of Singapore, Centre for Nature-based Climate Solutions"
       }
     ]
   }

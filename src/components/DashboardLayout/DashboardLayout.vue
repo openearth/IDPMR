@@ -1,6 +1,6 @@
 <template>
-  <div class="grey lighten-3 dashboard-layout">
-    <v-container class="dashboard-layout__container">
+  <div class="grey darken-3 dashboard-layout">
+    <v-container class="dashboard-layout__container pt-0">
       <v-row>
         <v-col cols="12" :md="6" :lg="4">
           <v-card class="pa-4 mb-4 rounded-lg" outlined tile>
