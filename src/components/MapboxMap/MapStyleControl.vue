@@ -17,7 +17,7 @@ export default {
   inject: ["getMap"],
 
   props: {
-    initialStyle: {
+    currentStyle: {
       type: String,
       required: true,
     },
@@ -29,10 +29,9 @@ export default {
 
   data: () => ({
     showControl: false,
-    currentStyle: "",
     styles: {
-      dark: 'mapbox://styles/mapbox/dark-v11',
-      light: 'mapbox://styles/mapbox/light-v11',
+      dark: "mapbox://styles/mapbox/dark-v11",
+      light: "mapbox://styles/mapbox/light-v11",
     },
   }),
 
@@ -42,7 +41,6 @@ export default {
     if (map && map.loaded()) {
       this.addToMap(map);
     }
-    this.currentStyle = this.initialStyle;
   },
 
   computed: mapState("data", [
@@ -68,26 +66,11 @@ export default {
     },
 
     changeMapStyle() {
-      const map = this.getMap();
-
-      this.currentStyle =
+      const newStyle =
         this.currentStyle === this.styles.light
           ? this.styles.dark
           : this.styles.light;
-
-      map.setStyle(this.currentStyle);
-
-      // Changing the style removes all layers and sources
-      // We need to re-add them
-      // https://github.com/mapbox/mapbox-gl-js/issues/4006
-      map.on("style.load", () => {
-        this.setMangroveLayers({ layers: this.mangroveLayers });
-        if (this.administrativeBoundariesLayer) {
-          this.setAdministrativeBoundariesLayer({
-            layer: this.administrativeBoundariesLayer,
-          });
-        }
-      });
+      this.$emit("update-style", newStyle);
     },
   },
 };

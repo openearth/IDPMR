@@ -25,7 +25,8 @@
 
       <v-mapbox-geocoder />
       <map-style-control
-        :initial-style="mapConfig.style"
+        :current-style="mapConfig.style"
+        @update-style="updateStyle"
         position="bottom-right"
         class="app-map__control"
       />
@@ -66,7 +67,7 @@ export default {
     return {
       mapConfig: {
         accessToken: process.env.VUE_APP_MAPBOX_TOKEN,
-        style: "mapbox://styles/voorhoede/clh8u52h600wh01pn73ns8zy8",
+        style: "mapbox://styles/mapbox/light-v11",
         center: [118.69, -3.64],
         zoom: 3.5,
         navigationOptions: {
@@ -95,6 +96,9 @@ export default {
     zoomToSelectedFeature() {
       const boundingBox = bbox(this.selectedFeature);
       this.$root.map.fitBounds(boundingBox, { padding: 80 });
+    },
+    updateStyle(style) {
+      this.mapConfig.style = style;
     },
   },
 
